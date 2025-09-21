@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=3 uid="uid://dvvvhr68fa6xo"]
+
+[ext_resource type="Script" uid="uid://dp4crsfs3sro2" path="res://Scenes/MainMenu/Scripts/Menu.gd" id="1_v763k"]
+[ext_resource type="Texture2D" uid="uid://dtlcrwqpv4o8i" path="res://Scenes/MainMenu/Sprites/MainMenuFinalFinal.png" id="2_qgdf6"]
+[ext_resource type="Texture2D" uid="uid://cvrpl8bby41ac" path="res://Scenes/MainMenu/Sprites/Start_Idle_Button.png" id="3_0qgbs"]
+[ext_resource type="Texture2D" uid="uid://cmjrov8naj63q" path="res://Scenes/MainMenu/Sprites/Start_Hover_Button.png" id="4_adu2g"]
+[ext_resource type="PackedScene" uid="uid://di7q7m4tmr0i7" path="res://Scenes/Transition.tscn" id="5_adu2g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0qgbs"]
+atlas = ExtResource("2_qgdf6")
+region = Rect2(0, 0, 450, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adu2g"]
+atlas = ExtResource("2_qgdf6")
+region = Rect2(450, 0, 450, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0l8wx"]
+atlas = ExtResource("2_qgdf6")
+region = Rect2(900, 0, 450, 250)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_agesy"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_0qgbs")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_adu2g")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_0l8wx")
+}],
+"loop": true,
+"name": &"main_anime",
+"speed": 8.0
+}]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_v763k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(239, 135)
+sprite_frames = SubResource("SpriteFrames_agesy")
+animation = &"main_anime"
+frame_progress = 0.475033
+
+[node name="Buttons_Manager" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StartButton" type="TextureButton" parent="Buttons_Manager"]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 76.0
+offset_right = 457.0
+offset_bottom = 97.0
+texture_normal = ExtResource("3_0qgbs")
+texture_hover = ExtResource("4_adu2g")
+
+[node name="ExitButton" type="Button" parent="Buttons_Manager"]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 101.0
+offset_right = 447.0
+offset_bottom = 122.0
+theme_override_font_sizes/font_size = 9
+text = "Exit"
+alignment = 0
+
+[node name="Transition" parent="." instance=ExtResource("5_adu2g")]
+visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 480.0
+offset_bottom = 270.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[connection signal="pressed" from="Buttons_Manager/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Buttons_Manager/ExitButton" to="." method="_on_exit_button_pressed"]
