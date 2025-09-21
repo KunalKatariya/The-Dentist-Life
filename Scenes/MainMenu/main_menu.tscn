@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dvvvhr68fa6xo"]
+[gd_scene load_steps=11 format=3 uid="uid://dvvvhr68fa6xo"]
 
 [ext_resource type="Script" uid="uid://dp4crsfs3sro2" path="res://Scenes/MainMenu/Scripts/Menu.gd" id="1_v763k"]
 [ext_resource type="Texture2D" uid="uid://dtlcrwqpv4o8i" path="res://Scenes/MainMenu/Sprites/MainMenuFinalFinal.png" id="2_qgdf6"]
 [ext_resource type="Texture2D" uid="uid://cvrpl8bby41ac" path="res://Scenes/MainMenu/Sprites/Start_Idle_Button.png" id="3_0qgbs"]
 [ext_resource type="Texture2D" uid="uid://cmjrov8naj63q" path="res://Scenes/MainMenu/Sprites/Start_Hover_Button.png" id="4_adu2g"]
 [ext_resource type="PackedScene" uid="uid://di7q7m4tmr0i7" path="res://Scenes/Transition.tscn" id="5_adu2g"]
+[ext_resource type="AudioStream" uid="uid://dp5ctybwc8lqu" path="res://Scenes/MainMenu/MainMenu.ogg" id="6_0l8wx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0qgbs"]
 atlas = ExtResource("2_qgdf6")
@@ -83,6 +84,10 @@ offset_right = 480.0
 offset_bottom = 270.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_0l8wx")
+autoplay = true
 
 [connection signal="pressed" from="Buttons_Manager/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Buttons_Manager/ExitButton" to="." method="_on_exit_button_pressed"]
