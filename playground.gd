@@ -12,6 +12,7 @@ func _ready():
 
 	# Connect animation finished signal
 	anim_player.animation_finished.connect(_on_animation_finished)
+	
 
 func _input(event):
 	if event.is_action_pressed("esc") and !going_back:

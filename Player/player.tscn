@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://l162wshmnvw"]
+[gd_scene load_steps=13 format=3 uid="uid://l162wshmnvw"]
 
 [ext_resource type="Script" uid="uid://055pf26ixbfj" path="res://Player/Scripts/player.gd" id="1_4ntmi"]
 [ext_resource type="Texture2D" uid="uid://cjtt8x61ootgl" path="res://Player/Sprites/Player-doctor-32l.png" id="2_4ntmi"]
 [ext_resource type="Texture2D" uid="uid://cmkd5sn7p64jc" path="res://Player/Sprites/Shadow.png" id="3_btcbx"]
 [ext_resource type="Script" uid="uid://dfbt5rf1co56g" path="res://Player/Scripts/player_camera.gd" id="4_gwnis"]
 [ext_resource type="AudioStream" uid="uid://dj3syubp1b0in" path="res://Player/footSteps.ogg" id="5_k53q1"]
-[ext_resource type="PackedScene" uid="uid://di7q7m4tmr0i7" path="res://Scenes/Transition.tscn" id="6_fhl08"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_edjgo"]
 
@@ -138,6 +137,3 @@ stream = ExtResource("5_k53q1")
 volume_db = 3.0
 pitch_scale = 1.5
 parameters/looping = true
-
-[node name="Transition" parent="." instance=ExtResource("6_fhl08")]
-visible = false

@@ -4,6 +4,8 @@ extends Node2D
 @onready var exit_button = $Buttons_Manager/ExitButton
 @onready var transition = $Transition
 @onready var anim_player = $Transition/AnimationPlayer
+@onready var music_player = $AudioStreamPlayer
+
 
 var button_type = null
 
@@ -11,6 +13,14 @@ func _ready():
 	$Transition.show()
 	$Transition/AnimationPlayer.play("Fade_In")
 	$AnimatedSprite2D.play("main_anime")
+	var stream = music_player.stream
+	if stream is AudioStreamOggVorbis:
+		stream.loop = true
+		print("Loop enabled")
+	else:
+		print("Stream is not OGGVorbis:", stream)
+
+	music_player.play()
 	start_button.pressed.connect(_on_start_button_pressed)
 	exit_button.pressed.connect(_on_exit_button_pressed)
 
