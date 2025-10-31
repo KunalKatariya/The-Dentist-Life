@@ -1,0 +1,176 @@
+[gd_scene load_steps=16 format=3 uid="uid://cufcap803xbo4"]
+
+[ext_resource type="Texture2D" uid="uid://dkj0qrdig5x5x" path="res://GUI/dialog_system/sprites/text-bubble.png" id="1_5yhxf"]
+[ext_resource type="Script" uid="uid://c32qaokjqehhp" path="res://GUI/dialog_system/scripts/dialog_system.gd" id="1_umqd7"]
+[ext_resource type="FontFile" uid="uid://yuw4ksyq4ol5" path="res://GUI/fonts/Abaddon Light.ttf" id="2_ns6ro"]
+[ext_resource type="FontFile" uid="uid://cowcfehw5e7hp" path="res://GUI/fonts/Abaddon Bold.ttf" id="3_qocm2"]
+[ext_resource type="Texture2D" uid="uid://bnekwysou1gf2" path="res://Scenes/NPC/Portraits/BF_Dialogue.png" id="4_qocm2"]
+[ext_resource type="FontFile" uid="uid://de4lblt4l8jru" path="res://GUI/fonts/m5x7.ttf" id="5_dwuo2"]
+[ext_resource type="AudioStream" uid="uid://bnn3fdtfnhenc" path="res://GUI/dialog_system/audio/voice_blip.wav" id="6_8tyrm"]
+[ext_resource type="Script" uid="uid://wwdbtrq53l0" path="res://GUI/dialog_system/scripts/dialog_portrait.gd" id="6_vyuf5"]
+
+[sub_resource type="Gradient" id="Gradient_lyean"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5yhxf"]
+gradient = SubResource("Gradient_lyean")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mhrrj"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+texture = ExtResource("1_5yhxf")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_umqd7"]
+content_margin_left = 6.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 1.0
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Animation" id="Animation_dwuo2"]
+resource_name = "default"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.4, 0.966667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.34842, 0.69302, 0.426224, 1), Color(0.34842, 0.69302, 0.426224, 1), Color(0.704176, 0.916775, 0.960189, 1), Color(0.34842, 0.69302, 0.426224, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_umqd7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.34842, 0.69302, 0.426224, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8tyrm"]
+_data = {
+&"RESET": SubResource("Animation_umqd7"),
+&"default": SubResource("Animation_dwuo2")
+}
+
+[node name="DialogSystem" type="CanvasLayer"]
+process_mode = 3
+layer = 0
+script = ExtResource("1_umqd7")
+
+[node name="DialogUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="DialogUI"]
+modulate = Color(0, 0, 0, 0.529412)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -144.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = SubResource("GradientTexture2D_5yhxf")
+
+[node name="PanelContainer" type="PanelContainer" parent="DialogUI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -369.0
+offset_top = -82.0
+offset_right = -10.0
+offset_bottom = -13.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_mhrrj")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="DialogUI/PanelContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.439216, 0.396078, 0.321569, 1)
+theme_override_fonts/normal_font = ExtResource("2_ns6ro")
+theme_override_fonts/bold_font = ExtResource("3_qocm2")
+bbcode_enabled = true
+text = "Example [b]Text[/b]
+[wave]Hey there Dr G![/wave]"
+scroll_active = false
+
+[node name="NameLabel" type="Label" parent="DialogUI"]
+layout_mode = 0
+offset_left = 113.0
+offset_top = 169.0
+offset_right = 153.0
+offset_bottom = 192.0
+theme_override_colors/font_color = Color(0.894118, 0.862745, 0.796078, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = ExtResource("3_qocm2")
+text = "KUNAL"
+
+[node name="PortraitSprite" type="Sprite2D" parent="DialogUI"]
+position = Vector2(53, 191)
+texture = ExtResource("4_qocm2")
+hframes = 4
+script = ExtResource("6_vyuf5")
+
+[node name="Timer" type="Timer" parent="DialogUI"]
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="DialogUI"]
+stream = ExtResource("6_8tyrm")
+max_polyphony = 9
+playback_type = 1
+
+[node name="DialogProgressIndicator" type="PanelContainer" parent="DialogUI"]
+modulate = Color(0.34842, 0.69302, 0.426224, 1)
+layout_mode = 0
+offset_left = 440.0
+offset_top = 248.0
+offset_right = 474.0
+offset_bottom = 262.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_umqd7")
+
+[node name="Label" type="Label" parent="DialogUI/DialogProgressIndicator"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_dwuo2")
+text = "NEXT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DialogUI/DialogProgressIndicator"]
+libraries = {
+&"": SubResource("AnimationLibrary_8tyrm")
+}
+autoplay = "default"

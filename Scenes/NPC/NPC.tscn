@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://vqxpr5gl3id8"]
+[gd_scene load_steps=17 format=3 uid="uid://vqxpr5gl3id8"]
 
 [ext_resource type="Script" uid="uid://c2cx56nh4r1ys" path="res://Scenes/NPC/Npc.gd" id="1_u75bn"]
 [ext_resource type="Texture2D" uid="uid://d26plwe62od3k" path="res://Scenes/NPC/Sprites/BF_Final_Long.png" id="2_u75bn"]
@@ -73,25 +73,76 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_u75bn"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u4vjm"]
+radius = 6.0
+height = 32.0
+
+[sub_resource type="Animation" id="Animation_u4vjm"]
+resource_name = "idle"
+length = 0.4472
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_37ake"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tlawm"]
+_data = {
+&"RESET": SubResource("Animation_37ake"),
+&"idle": SubResource("Animation_u4vjm")
+}
 
 [node name="Npc" type="CharacterBody2D"]
-z_index = 1
 collision_layer = 65
-collision_mask = 16
+collision_mask = 17
 script = ExtResource("1_u75bn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
 sprite_frames = SubResource("SpriteFrames_uy66f")
 animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_u75bn")
+position = Vector2(0, -13)
+shape = SubResource("CapsuleShape2D_u4vjm")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 0.466667)
 show_behind_parent = true
 z_index = -1
-position = Vector2(0, 15)
+position = Vector2(0, 9.53674e-07)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("3_u4vjm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -14)
+texture = ExtResource("2_u75bn")
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_tlawm")
+}
