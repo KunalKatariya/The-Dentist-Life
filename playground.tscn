@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://ciw0kec5ov53g"]
+[gd_scene load_steps=24 format=4 uid="uid://ciw0kec5ov53g"]
 
 [ext_resource type="Script" uid="uid://cmit16kjp8r88" path="res://playground.gd" id="1_pio1y"]
 [ext_resource type="PackedScene" uid="uid://l162wshmnvw" path="res://Player/player.tscn" id="1_rupst"]
@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://fawxjldjbuod" path="res://Interactable/dialog/dialog_interaction.tscn" id="13_yjl7g"]
 [ext_resource type="Script" uid="uid://celflw5ft7uxm" path="res://Interactable/dialog/scripts/dialog_text.gd" id="15_jgc46"]
 [ext_resource type="Resource" uid="uid://dx2wb25x8vc6l" path="res://Scenes/NPC/npc_player.tres" id="16_dk0co"]
+[ext_resource type="Script" uid="uid://7vi16mdgedas" path="res://Interactable/dialog/scripts/dialog_choice.gd" id="17_ycdrs"]
+[ext_resource type="Script" uid="uid://d2l41jli2hb5k" path="res://Interactable/dialog/scripts/dialog_branch.gd" id="18_5m40n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pi42a"]
 texture = ExtResource("5_ynsuh")
@@ -3454,4 +3456,34 @@ metadata/_custom_type_script = "uid://celflw5ft7uxm"
 script = ExtResource("15_jgc46")
 text = "I don't know what you talking about babe."
 npc_info = ExtResource("13_f7pug")
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="DialogText4" type="Node" parent="Npc/DialogInteraction"]
+script = ExtResource("15_jgc46")
+text = "What do you wanna do now?"
+npc_info = ExtResource("13_f7pug")
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="DialogChoice" type="Node" parent="Npc/DialogInteraction"]
+script = ExtResource("17_ycdrs")
+metadata/_custom_type_script = "uid://7vi16mdgedas"
+
+[node name="DialogBranch" type="Node" parent="Npc/DialogInteraction/DialogChoice"]
+script = ExtResource("18_5m40n")
+text = "Play Badminton"
+metadata/_custom_type_script = "uid://d2l41jli2hb5k"
+
+[node name="DialogText" type="Node" parent="Npc/DialogInteraction/DialogChoice/DialogBranch"]
+script = ExtResource("15_jgc46")
+text = "Alright then, follow me!!"
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="DialogBranch2" type="Node" parent="Npc/DialogInteraction/DialogChoice"]
+script = ExtResource("18_5m40n")
+text = "Surprise me!!"
+metadata/_custom_type_script = "uid://d2l41jli2hb5k"
+
+[node name="DialogText" type="Node" parent="Npc/DialogInteraction/DialogChoice/DialogBranch2"]
+script = ExtResource("15_jgc46")
+text = "Prepare to be amazed gurl! ;)"
 metadata/_custom_type_script = "uid://celflw5ft7uxm"

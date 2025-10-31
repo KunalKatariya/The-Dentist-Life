@@ -19,6 +19,7 @@ func _ready() -> void:
 	for c in get_children():
 		if c is DialogItem:
 			dialog_items.append(c)
+	pass
 
 func _on_area_enter(body: Node) -> void:
 	print("Player entered dialog area")  # Debug
