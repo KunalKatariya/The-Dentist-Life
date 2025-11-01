@@ -8,6 +8,8 @@ signal finished
 @export var enabled: bool = true
 var dialog_items: Array[DialogItem] = []
 var player_in_area: bool = false
+@export var auto_trigger: bool = false  # default false
+
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -21,6 +23,10 @@ func _ready() -> void:
 			dialog_items.append(c)
 	if not DialogSystem.finished.is_connected(_on_dialog_finished):
 		DialogSystem.finished.connect(_on_dialog_finished)
+	# AUTO-TRIGGER: simulate player entering area
+	if auto_trigger and not dialog_items.is_empty():
+		player_in_area = true
+		player_interact()
 	pass
 
 func _on_area_enter(body: Node) -> void:

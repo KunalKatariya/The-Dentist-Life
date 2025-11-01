@@ -1,0 +1,141 @@
+[gd_scene load_steps=16 format=3 uid="uid://bj3w7q8by0abi"]
+
+[ext_resource type="Script" uid="uid://bshvr6f3uipj" path="res://Scenes/Surprise/Scripts/Surprise.gd" id="1_w4v56"]
+[ext_resource type="Texture2D" uid="uid://nuw4fnvy5gur" path="res://Scenes/Surprise/Sprites/Surprise1.png" id="1_wa1j5"]
+[ext_resource type="Texture2D" uid="uid://davbcxpru2gge" path="res://Scenes/Surprise/Sprites/Surprise2.png" id="2_hcrte"]
+[ext_resource type="PackedScene" uid="uid://l162wshmnvw" path="res://Player/player.tscn" id="4_6vbl0"]
+[ext_resource type="PackedScene" uid="uid://vqxpr5gl3id8" path="res://Scenes/NPC/NPC.tscn" id="5_xtgit"]
+[ext_resource type="Resource" uid="uid://bh2kqdns5io8g" path="res://Scenes/NPC/npc_01.tres" id="6_wwh44"]
+[ext_resource type="PackedScene" uid="uid://fawxjldjbuod" path="res://Interactable/dialog/dialog_interaction.tscn" id="7_c353n"]
+[ext_resource type="Script" uid="uid://celflw5ft7uxm" path="res://Interactable/dialog/scripts/dialog_text.gd" id="8_42unu"]
+[ext_resource type="Resource" uid="uid://dx2wb25x8vc6l" path="res://Scenes/NPC/npc_player.tres" id="9_b5ys1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yg7hj"]
+size = Vector2(109, 47)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6vbl0"]
+size = Vector2(166, 61)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5757u"]
+size = Vector2(43, 287.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_twj1g"]
+size = Vector2(43, 287.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtsyh"]
+size = Vector2(43, 16.75)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jvogu"]
+
+[node name="Surprise" type="Node2D"]
+script = ExtResource("1_w4v56")
+
+[node name="BG1" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(237, 143)
+texture = ExtResource("1_wa1j5")
+
+[node name="BG2" type="Sprite2D" parent="."]
+visible = false
+z_index = -2
+position = Vector2(237, 143)
+texture = ExtResource("2_hcrte")
+
+[node name="BGSwitchTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="Player" parent="." instance=ExtResource("4_6vbl0")]
+position = Vector2(238, 247)
+
+[node name="Obstacle1" type="StaticBody2D" parent="."]
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle1"]
+position = Vector2(238.5, 136.5)
+shape = SubResource("RectangleShape2D_yg7hj")
+
+[node name="Obstacle2" type="StaticBody2D" parent="."]
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle2"]
+position = Vector2(246, 29.5)
+shape = SubResource("RectangleShape2D_6vbl0")
+
+[node name="Obstacle3" type="StaticBody2D" parent="."]
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle3"]
+position = Vector2(375, 143.25)
+shape = SubResource("RectangleShape2D_5757u")
+
+[node name="Obstacle4" type="StaticBody2D" parent="."]
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle4"]
+position = Vector2(107, 145)
+shape = SubResource("RectangleShape2D_twj1g")
+
+[node name="Obstacle5" type="StaticBody2D" parent="."]
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle5"]
+position = Vector2(144, 27)
+shape = SubResource("RectangleShape2D_gtsyh")
+
+[node name="Obstacle6" type="StaticBody2D" parent="."]
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle6"]
+position = Vector2(344, 27)
+shape = SubResource("RectangleShape2D_gtsyh")
+
+[node name="Npc" parent="." instance=ExtResource("5_xtgit")]
+z_index = -1
+position = Vector2(174.85, 95.47)
+collision_layer = 81
+npc_resource = ExtResource("6_wwh44")
+
+[node name="DialogInteraction" parent="Npc" instance=ExtResource("7_c353n")]
+position = Vector2(-1, 10)
+
+[node name="DialogText" type="Node" parent="Npc/DialogInteraction"]
+script = ExtResource("8_42unu")
+text = "I hope you liked your gift!"
+npc_info = ExtResource("6_wwh44")
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="DialogText2" type="Node" parent="Npc/DialogInteraction"]
+script = ExtResource("8_42unu")
+text = "Eh! I have seen better lol."
+npc_info = ExtResource("9_b5ys1")
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="DummyDialog" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DummyDialog"]
+position = Vector2(236, 250)
+shape = SubResource("CircleShape2D_jvogu")
+
+[node name="DialogInteraction" parent="DummyDialog" instance=ExtResource("7_c353n")]
+position = Vector2(-1, 10)
+auto_trigger = true
+
+[node name="DialogText2" type="Node" parent="DummyDialog/DialogInteraction"]
+script = ExtResource("8_42unu")
+text = "Where am I?
+Why is it so dark?"
+npc_info = ExtResource("9_b5ys1")
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="DialogText3" type="Node" parent="DummyDialog/DialogInteraction"]
+script = ExtResource("8_42unu")
+text = "Don't worry babe, walk carefully though."
+npc_info = ExtResource("6_wwh44")
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="DialogText4" type="Node" parent="DummyDialog/DialogInteraction"]
+script = ExtResource("8_42unu")
+text = "Go to the visible area to see your surprise!"
+npc_info = ExtResource("6_wwh44")
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
