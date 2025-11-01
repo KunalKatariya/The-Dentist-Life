@@ -2,6 +2,7 @@
 class_name DialogBranch extends DialogItem
 
 @export var text : String = "ok..."
+@export var action_name: String = "" # e.g. "go_to_badminton"
 
 var dialog_items : Array[DialogItem]
 

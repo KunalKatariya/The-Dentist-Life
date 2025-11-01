@@ -116,7 +116,10 @@ func set_dialog_choice(_d : DialogChoice) -> void:
 
 
 func _dialog_choice_selected(_d : DialogBranch) -> void:
-	choice_options.visible = false	
+	var playground = get_tree().get_current_scene()
+	if playground and _d.action_name != "":
+		playground.next_action = _d.action_name
+	choice_options.visible = false
 	show_dialog(_d.dialog_items)
 	pass
 

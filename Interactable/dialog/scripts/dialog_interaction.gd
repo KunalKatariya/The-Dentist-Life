@@ -19,6 +19,8 @@ func _ready() -> void:
 	for c in get_children():
 		if c is DialogItem:
 			dialog_items.append(c)
+	if not DialogSystem.finished.is_connected(_on_dialog_finished):
+		DialogSystem.finished.connect(_on_dialog_finished)
 	pass
 
 func _on_area_enter(body: Node) -> void:
@@ -42,10 +44,10 @@ func player_interact() -> void:
 	player_interacted.emit()
 	print("Player interacted with dialog area")
 	DialogSystem.show_dialog(dialog_items)
-	DialogSystem.finished.connect(_on_dialog_finished)
 
 
 func _on_dialog_finished() -> void:
-	DialogSystem.finished.disconnect(_on_dialog_finished)
+	set_process(true)
+	print("[DialogInteraction] DialogSystem finished signal received!")
 	finished.emit()
 	

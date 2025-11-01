@@ -25,4 +25,11 @@ func _on_player_interacted() -> void:
 	pass
 
 func _on_interaction_finished() -> void:
+	print("[NPC] DialogInteraction finished signal received!")
+	var playground = get_tree().get_current_scene()
+	if playground.has_method("_on_npc_dialog_finished"):
+		print("[NPC] Calling Playground._on_npc_dialog_finished()")
+		playground._on_npc_dialog_finished(self)
+	else:
+		print("[NPC] Playground missing _on_npc_dialog_finished()")
 	pass

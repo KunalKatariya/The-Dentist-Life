@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://ciw0kec5ov53g"]
+[gd_scene load_steps=26 format=4 uid="uid://ciw0kec5ov53g"]
 
 [ext_resource type="Script" uid="uid://cmit16kjp8r88" path="res://playground.gd" id="1_pio1y"]
 [ext_resource type="PackedScene" uid="uid://l162wshmnvw" path="res://Player/player.tscn" id="1_rupst"]
@@ -3389,6 +3389,14 @@ sources/2 = SubResource("TileSetAtlasSource_pio1y")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4bqqs"]
 size = Vector2(21, 39)
 
+[sub_resource type="Curve2D" id="Curve2D_ycdrs"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -742, 263, 0, 0, 0, 0, -744, 310, 0, 0, 0, 0, -689, 387, 0, 0, 0, 0, -539, 392, 0, 0, 0, 0, -253, 421, 0, 0, 0, 0, -168, 434, 0, 0, 0, 0, -168, 488, 0, 0, 0, 0, 234, 487, 0, 0, 0, 0, 236, 711, 0, 0, 0, 0, 469, 712, 0, 0, 0, 0, 471, 627)
+}
+point_count = 11
+
+[sub_resource type="Curve2D" id="Curve2D_5m40n"]
+
 [node name="Playground" type="Node2D"]
 script = ExtResource("1_pio1y")
 
@@ -3432,12 +3440,12 @@ grow_vertical = 1
 
 [node name="Npc" parent="." instance=ExtResource("12_te8jg")]
 z_index = -1
-position = Vector2(115, 164)
+position = Vector2(-742, 261)
 collision_layer = 81
 npc_resource = ExtResource("13_f7pug")
 
 [node name="DialogInteraction" parent="Npc" instance=ExtResource("13_yjl7g")]
-position = Vector2(-1, 12)
+position = Vector2(-1, 10)
 
 [node name="DialogText" type="Node" parent="Npc/DialogInteraction"]
 script = ExtResource("15_jgc46")
@@ -3471,6 +3479,7 @@ metadata/_custom_type_script = "uid://7vi16mdgedas"
 [node name="DialogBranch" type="Node" parent="Npc/DialogInteraction/DialogChoice"]
 script = ExtResource("18_5m40n")
 text = "Play Badminton"
+action_name = "go_to_badminton"
 metadata/_custom_type_script = "uid://d2l41jli2hb5k"
 
 [node name="DialogText" type="Node" parent="Npc/DialogInteraction/DialogChoice/DialogBranch"]
@@ -3481,9 +3490,22 @@ metadata/_custom_type_script = "uid://celflw5ft7uxm"
 [node name="DialogBranch2" type="Node" parent="Npc/DialogInteraction/DialogChoice"]
 script = ExtResource("18_5m40n")
 text = "Surprise me!!"
+action_name = "go_to_surprise"
 metadata/_custom_type_script = "uid://d2l41jli2hb5k"
 
 [node name="DialogText" type="Node" parent="Npc/DialogInteraction/DialogChoice/DialogBranch2"]
 script = ExtResource("15_jgc46")
 text = "Prepare to be amazed gurl! ;)"
 metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="route_to_badminton" type="Path2D" parent="."]
+curve = SubResource("Curve2D_ycdrs")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="route_to_badminton"]
+position = Vector2(-742, 263)
+rotation = 1.61332
+
+[node name="route_to_surprise" type="Path2D" parent="."]
+curve = SubResource("Curve2D_5m40n")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="route_to_surprise"]
