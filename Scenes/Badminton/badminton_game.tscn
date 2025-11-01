@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://dytgti274kp1j"]
+[gd_scene load_steps=34 format=4 uid="uid://dytgti274kp1j"]
 
 [ext_resource type="Texture2D" uid="uid://5g3ggwictw7b" path="res://Tile Maps/Sprites/ChatGPT Image Sep 5, 2025 at 11_26_16 PM.png" id="1_5ajy1"]
 [ext_resource type="Script" uid="uid://cbq14a1vkmhp8" path="res://Scenes/Badminton/Scripts/MatchManager.gd" id="1_ue0uj"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://cnyc7c7t1dc2r" path="res://Scenes/Badminton/Sprites/Shuttlecock.png" id="8_nwkyq"]
 [ext_resource type="AudioStream" uid="uid://dveh2pj2sya83" path="res://Scenes/Badminton/Audio/BadmintonBG.ogg" id="10_nwkyq"]
 [ext_resource type="AudioStream" uid="uid://c6pmvwgdma2fg" path="res://Scenes/Badminton/Audio/shuttleHit.ogg" id="10_qapqc"]
+[ext_resource type="AudioStream" uid="uid://dgldvg0grv078" path="res://Scenes/Badminton/Audio/PlayerPoint.ogg" id="12_wh5xc"]
+[ext_resource type="AudioStream" uid="uid://bvdncburpkqbp" path="res://Scenes/Badminton/Audio/OpponentPoint.ogg" id="13_yvenp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wv8lq"]
 texture = ExtResource("1_5ajy1")
@@ -7073,3 +7075,10 @@ text = "Back"
 stream = ExtResource("10_nwkyq")
 volume_db = -7.823
 autoplay = true
+parameters/looping = true
+
+[node name="PlayerPointSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_wh5xc")
+
+[node name="OpponentPointSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_yvenp")
