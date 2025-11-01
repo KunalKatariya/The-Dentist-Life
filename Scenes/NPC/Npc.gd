@@ -11,6 +11,7 @@ func _ready():
 	pass
 
 func setup_npc() -> void:
+	animation.play("idle")
 	if npc_resource:
 		sprite.texture = npc_resource.sprite
 	pass

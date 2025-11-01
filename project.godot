@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 LevelManager="*res://00_Globals/GlobalLevelManager.gd"
 DialogSystem="*res://GUI/dialog_system/dialog_system.tscn"
 PlayerManager="*res://00_Globals/GlobalPlayerManager.gd"
+GameManager="*res://00_Globals/GameManager.gd"
 
 [display]
 

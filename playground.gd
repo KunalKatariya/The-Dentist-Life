@@ -38,7 +38,7 @@ func _on_npc_dialog_finished(npc_ref: Node):
 			await _npc_guided_walk(path_badminton, "res://Scenes/Badminton/badminton_game.tscn")
 		"go_to_surprise":
 			print("[Playground] Starting surprise route")
-			await _npc_guided_walk(path_surprise, "res://Scenes/SurpriseBuilding/surprise_building.tscn")
+			await _npc_guided_walk(path_surprise, "res://Scenes/Surprise/Surprise.tscn")
 		_:
 			print("[Playground] No valid action set, doing nothing")
 			
@@ -79,6 +79,14 @@ func _npc_guided_walk(path: Path2D, target_scene: String) -> void:
 	# ✅ When tween finishes
 	npc.animation.play("idle")
 	player.animation_player.play("idle")
+	
+	# --- NEW: SAVE FINAL POSITION BEFORE TRANSITION ---
+	var current_scene_path = get_tree().current_scene.scene_file_path
+	
+	# 1. Save the player's final global position in the Playground scene
+	GameManager.scene_positions[current_scene_path] = player.global_position
+	
+	# --- END SAVE ---
 
 	anim_player.play("Fade_Out")
 	await anim_player.animation_finished
@@ -120,3 +128,7 @@ func _on_path_finished(target_scene: String) -> void:
 	anim_player.play("Fade_Out")
 	await anim_player.animation_finished
 	get_tree().change_scene_to_file(target_scene)
+
+
+func _on_scene_trigger_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.

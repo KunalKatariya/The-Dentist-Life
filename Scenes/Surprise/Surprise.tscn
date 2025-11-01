@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bj3w7q8by0abi"]
+[gd_scene load_steps=22 format=3 uid="uid://bj3w7q8by0abi"]
 
 [ext_resource type="Script" uid="uid://bshvr6f3uipj" path="res://Scenes/Surprise/Scripts/Surprise.gd" id="1_w4v56"]
 [ext_resource type="Texture2D" uid="uid://nuw4fnvy5gur" path="res://Scenes/Surprise/Sprites/Surprise1.png" id="1_wa1j5"]
@@ -9,6 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://fawxjldjbuod" path="res://Interactable/dialog/dialog_interaction.tscn" id="7_c353n"]
 [ext_resource type="Script" uid="uid://celflw5ft7uxm" path="res://Interactable/dialog/scripts/dialog_text.gd" id="8_42unu"]
 [ext_resource type="Resource" uid="uid://dx2wb25x8vc6l" path="res://Scenes/NPC/npc_player.tres" id="9_b5ys1"]
+[ext_resource type="Texture2D" uid="uid://breg02auqr3lv" path="res://Scenes/Surprise/Sprites/Gemini_Generated_Image_fi8n4vfi8n4vfi8n-Photoroom.png" id="10_o4hv4"]
+[ext_resource type="AudioStream" uid="uid://cwp47qm5wgytt" path="res://Scenes/Surprise/Audio/Happy-Birthday-_Piano-Version_-_TubeRipper.cc_.ogg" id="11_xtgit"]
+[ext_resource type="PackedScene" uid="uid://bl1up2i0xxn15" path="res://scene_trigger.tscn" id="12_wwh44"]
+[ext_resource type="PackedScene" uid="uid://di7q7m4tmr0i7" path="res://Scenes/Transition.tscn" id="13_c353n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yg7hj"]
 size = Vector2(109, 47)
@@ -27,8 +31,14 @@ size = Vector2(43, 16.75)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jvogu"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_o4hv4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c353n"]
+size = Vector2(80, 19)
+
 [node name="Surprise" type="Node2D"]
 script = ExtResource("1_w4v56")
+audio_stream = ExtResource("11_xtgit")
 
 [node name="BG1" type="Sprite2D" parent="."]
 z_index = -2
@@ -46,7 +56,15 @@ wait_time = 0.5
 autostart = true
 
 [node name="Player" parent="." instance=ExtResource("4_6vbl0")]
+process_mode = 3
 position = Vector2(238, 247)
+
+[node name="PointLight2D2" type="PointLight2D" parent="Player"]
+position = Vector2(-1, 3)
+scale = Vector2(-0.04, -0.04)
+color = Color(1, 1, 1, 0.495)
+energy = 0.2
+texture = ExtResource("10_o4hv4")
 
 [node name="Obstacle1" type="StaticBody2D" parent="."]
 collision_layer = 16
@@ -139,3 +157,43 @@ script = ExtResource("8_42unu")
 text = "Go to the visible area to see your surprise!"
 npc_info = ExtResource("6_wwh44")
 metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(238, 144)
+scale = Vector2(0.05, 0.05)
+color = Color(1, 1, 1, 0.415)
+energy = 0.5
+texture = ExtResource("10_o4hv4")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="InteractionZones" type="Area2D" parent="."]
+position = Vector2(62.18, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZones"]
+position = Vector2(177.82, 161)
+shape = SubResource("CircleShape2D_o4hv4")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_xtgit")
+
+[node name="SceneTrigger" parent="." instance=ExtResource("12_wwh44")]
+position = Vector2(237, 271)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger"]
+z_index = 1
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_c353n")
+
+[node name="Transition" parent="." instance=ExtResource("13_c353n")]
+visible = false
+z_index = 4
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -4381.0
+offset_top = -4303.0
+offset_right = 4640.0
+offset_bottom = 4544.0
+grow_horizontal = 1
+grow_vertical = 1
