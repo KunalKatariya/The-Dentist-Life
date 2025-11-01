@@ -30,6 +30,7 @@ var game_over: bool = false
 @onready var spawn_ball: Marker2D = $Spawns/BallSpawn
 
 func _ready() -> void:
+	player.call_deferred("lock_facing_direction", "left")
 	zone_left.body_entered.connect(_on_zone_left_body_entered)
 	zone_right.body_entered.connect(_on_zone_right_body_entered)
 
@@ -76,10 +77,10 @@ func _point_scored(by_player: bool) -> void:
 
 	if by_player:
 		player_score += 1
-		serving_player = "opponent"
+		serving_player = "player"
 	else:
 		opponent_score += 1
-		serving_player = "player"
+		serving_player = "opponent"
 
 	_update_score()
 
@@ -92,7 +93,7 @@ func _point_scored(by_player: bool) -> void:
 		_reset_rally()
 
 func _update_score() -> void:
-	score_label.text = str(player_score) + " - " + str(opponent_score)
+	score_label.text = str(opponent_score) + " - " + str(player_score)
 
 func _reset_rally() -> void:
 	if game_over:

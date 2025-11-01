@@ -1,14 +1,15 @@
-[gd_scene load_steps=24 format=4 uid="uid://dytgti274kp1j"]
+[gd_scene load_steps=31 format=4 uid="uid://dytgti274kp1j"]
 
 [ext_resource type="Texture2D" uid="uid://5g3ggwictw7b" path="res://Tile Maps/Sprites/ChatGPT Image Sep 5, 2025 at 11_26_16 PM.png" id="1_5ajy1"]
 [ext_resource type="Script" uid="uid://cbq14a1vkmhp8" path="res://Scenes/Badminton/Scripts/MatchManager.gd" id="1_ue0uj"]
 [ext_resource type="Texture2D" uid="uid://c02whcp50wh2b" path="res://Tile Maps/Sprites/Court.png" id="2_ue0uj"]
 [ext_resource type="Script" uid="uid://dgxk5erf6gynn" path="res://Scenes/Badminton/Scripts/PlayerRacket.gd" id="4_g7rpu"]
 [ext_resource type="Script" uid="uid://c16bxre4jwx1k" path="res://Scenes/Badminton/Scripts/Shuttlecock.gd" id="5_pgw2x"]
-[ext_resource type="Texture2D" uid="uid://dodqxhomytpp8" path="res://Scenes/Badminton/Sprites/BadmintonPlayer2.png" id="5_qxu5g"]
+[ext_resource type="Texture2D" uid="uid://cjtt8x61ootgl" path="res://Player/Sprites/Player-doctor-32l.png" id="5_w75av"]
 [ext_resource type="Script" uid="uid://dsmyjjvs7bj8o" path="res://Scenes/Badminton/Scripts/Opponent.gd" id="6_nwkyq"]
-[ext_resource type="Texture2D" uid="uid://laueas7tfrw7" path="res://Scenes/Badminton/Sprites/BadmintonPlayer1.png" id="6_w75av"]
+[ext_resource type="Texture2D" uid="uid://d26plwe62od3k" path="res://Scenes/NPC/Sprites/BF_Final_Long.png" id="7_w75av"]
 [ext_resource type="Texture2D" uid="uid://cnyc7c7t1dc2r" path="res://Scenes/Badminton/Sprites/Shuttlecock.png" id="8_nwkyq"]
+[ext_resource type="AudioStream" uid="uid://c6pmvwgdma2fg" path="res://Scenes/Badminton/Audio/shuttleHit.ogg" id="10_qapqc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wv8lq"]
 texture = ExtResource("1_5ajy1")
@@ -6763,6 +6764,98 @@ size = Vector2(20, 201)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5ajy1"]
 
+[sub_resource type="Animation" id="Animation_gwnis"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_4ntmi"]
+resource_name = "idle_left"
+length = 0.4472
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_btcbx"]
+resource_name = "idle_right"
+length = 0.4472
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_fhl08"]
+resource_name = "walk_left"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [11, 12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_k53q1"]
+resource_name = "walk_right"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k53q1"]
+_data = {
+&"RESET": SubResource("Animation_gwnis"),
+&"idle_left": SubResource("Animation_4ntmi"),
+&"idle_right": SubResource("Animation_btcbx"),
+&"walk_left": SubResource("Animation_fhl08"),
+&"walk_right": SubResource("Animation_k53q1")
+}
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8g7ko"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qxu5g"]
@@ -6871,7 +6964,13 @@ shape = SubResource("CapsuleShape2D_5ajy1")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 position = Vector2(1, 0)
-texture = ExtResource("5_qxu5g")
+texture = ExtResource("5_w75av")
+hframes = 16
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+&"": SubResource("AnimationLibrary_k53q1")
+}
 
 [node name="Opponent" type="CharacterBody2D" parent="."]
 position = Vector2(168, 144)
@@ -6881,7 +6980,8 @@ script = ExtResource("6_nwkyq")
 shape = SubResource("CapsuleShape2D_8g7ko")
 
 [node name="Sprite2D" type="Sprite2D" parent="Opponent"]
-texture = ExtResource("6_w75av")
+texture = ExtResource("7_w75av")
+hframes = 8
 
 [node name="Shuttlecock" type="RigidBody2D" parent="."]
 position = Vector2(251, 136)
@@ -6895,6 +6995,9 @@ shape = SubResource("CircleShape2D_g7rpu")
 
 [node name="Sprite2D" type="Sprite2D" parent="Shuttlecock"]
 texture = ExtResource("8_nwkyq")
+
+[node name="HitSoundPlayer" type="AudioStreamPlayer2D" parent="Shuttlecock"]
+stream = ExtResource("10_qapqc")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -6964,3 +7067,6 @@ text = "Restart Game"
 [node name="BackButtonMenu" type="Button" parent="CanvasLayer/GameOverMenu/VBoxContainer"]
 layout_mode = 2
 text = "Back"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+autoplay = true
