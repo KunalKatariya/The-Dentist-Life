@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://vqxpr5gl3id8"]
+[gd_scene load_steps=18 format=3 uid="uid://vqxpr5gl3id8"]
 
 [ext_resource type="Script" uid="uid://c2cx56nh4r1ys" path="res://Scenes/NPC/Npc.gd" id="1_u75bn"]
 [ext_resource type="Texture2D" uid="uid://d26plwe62od3k" path="res://Scenes/NPC/Sprites/BF_Final_Long.png" id="2_u75bn"]
@@ -109,10 +109,28 @@ tracks/0/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_tlawm"]
+resource_name = "walk_right"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tlawm"]
 _data = {
 &"RESET": SubResource("Animation_37ake"),
-&"idle": SubResource("Animation_u4vjm")
+&"idle": SubResource("Animation_u4vjm"),
+&"walk_right": SubResource("Animation_tlawm")
 }
 
 [node name="Npc" type="CharacterBody2D"]

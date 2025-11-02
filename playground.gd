@@ -108,17 +108,20 @@ func _update_walk_animation(dir: Vector2) -> void:
 	# Choose animation direction based on movement vector
 	if abs(dir.x) > abs(dir.y):
 		if dir.x > 0:
-			npc.animation.play("idle")
+			npc.sprite.flip_h = false
+			npc.animation.play("walk_right")
 			player.animation_player.play("walk_right")
 		else:
-			npc.animation.play("idle")
+			npc.sprite.flip_h = true
+			npc.animation.play("walk_right")
 			player.animation_player.play("walk_left")
 	else:
 		if dir.y > 0:
-			npc.animation.play("idle")
+			npc.sprite.flip_h = false
+			npc.animation.play("walk_right")
 			player.animation_player.play("walk_right")
 		else:
-			npc.animation.play("idle")
+			npc.animation.play("walk_right")
 			player.animation_player.play("walk_right")
 
 func _on_path_finished(target_scene: String) -> void:

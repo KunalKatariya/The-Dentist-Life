@@ -15,6 +15,8 @@ extends CharacterBody2D
 var _cooldown: float = 0.0
 var _ready_to_react: bool = false
 
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
 func _ready() -> void:
 	# small initial delay
 	_ready_to_react = false
@@ -30,6 +32,7 @@ func _physics_process(delta: float) -> void:
 	var list := get_tree().get_nodes_in_group("shuttle")
 	if list.is_empty():
 		velocity = Vector2.ZERO
+		_update_animation(velocity)
 		move_and_slide()
 		return
 	var shuttle := list[0] as RigidBody2D
@@ -42,6 +45,7 @@ func _physics_process(delta: float) -> void:
 	var dy: float = shuttle.global_position.y - global_position.y
 	var vy: float = clampf(dy * 3.0, -speed, speed)
 	velocity = Vector2(0.0, vy)
+	_update_animation(velocity)
 	move_and_slide()
 
 	# Clamp inside allowed half
@@ -53,6 +57,19 @@ func _physics_process(delta: float) -> void:
 		var dist := global_position.distance_to(shuttle.global_position)
 		if dist <= hit_range + reach_error_margin:
 			_try_hit(shuttle)
+
+func _update_animation(current_velocity: Vector2) -> void:
+	var new_anim: String
+	
+	# Check if there is significant vertical movement
+	if abs(current_velocity.y) > 7.0:
+		new_anim = "walk_right"
+	else:
+		new_anim = "idle"
+		
+	# Only change animation if it's different
+	if animation_player.current_animation != new_anim:
+		animation_player.play(new_anim)
 
 func _try_hit(shuttle: RigidBody2D) -> void:
 	var miss_chance := base_miss_chance + (shuttle.linear_velocity.length() / 400.0) * speed_miss_scale

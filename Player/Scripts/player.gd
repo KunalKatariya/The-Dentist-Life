@@ -16,7 +16,6 @@ var input_enabled: bool = true
 # Called when the node enters the scene tree for the first time
 func _ready():
 	call_deferred("_set_saved_position")
-		
 	UpdateAnimation()
 
 func _set_saved_position():
