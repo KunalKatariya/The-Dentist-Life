@@ -5,6 +5,7 @@ extends Node2D
 @onready var transition = $Transition
 @onready var anim_player = $Transition/AnimationPlayer
 @onready var music_player = $AudioStreamPlayer
+@onready var mouse_click = $MouseClick
 
 
 var button_type = null
@@ -29,11 +30,15 @@ func _ready():
 
 func _on_start_button_pressed() -> void:
 	print("Start button pressed")
+	mouse_click.play()
 	button_type = "start"
 	transition.show()
 	anim_player.play("Fade_Out")
 
 func _on_exit_button_pressed() -> void:
+	mouse_click.play()
+	anim_player.play("Fade_Out")
+	await mouse_click.finished
 	get_tree().quit()
 
 func _on_animation_finished(anim_name: String) -> void:
