@@ -42,6 +42,7 @@ func reveal_scene():
 	tween.tween_property(canvas_modulate, "color", Color.WHITE, 3.0)
 	tween.tween_property(light_2d, "energy", 0.0, 3.0)
 
+
 	# --- 4. Wait until both tween + audio finish, then unlock ---
 	var total_time = max(audio_player.stream.get_length(), 3.0)
 	tween.tween_callback(Callable(self, "_on_reveal_finished")).set_delay(total_time)

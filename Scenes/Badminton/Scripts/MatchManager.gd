@@ -91,9 +91,9 @@ func _point_scored(by_player: bool) -> void:
 	_update_score()
 
 	if player_score >= WIN_SCORE:
-		_game_over("Player Wins!")
+		_game_over("Dr. G Wins!")
 	elif opponent_score >= WIN_SCORE:
-		_game_over("Opponent Wins!")
+		_game_over("Kunal Wins!")
 	else:
 		await get_tree().create_timer(0.5).timeout
 		_reset_rally()
