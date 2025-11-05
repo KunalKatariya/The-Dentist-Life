@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://ciw0kec5ov53g"]
+[gd_scene load_steps=28 format=4 uid="uid://ciw0kec5ov53g"]
 
 [ext_resource type="Script" uid="uid://cmit16kjp8r88" path="res://playground.gd" id="1_pio1y"]
 [ext_resource type="PackedScene" uid="uid://l162wshmnvw" path="res://Player/player.tscn" id="1_rupst"]
@@ -19,6 +19,7 @@
 [ext_resource type="Resource" uid="uid://dx2wb25x8vc6l" path="res://Scenes/NPC/npc_player.tres" id="16_dk0co"]
 [ext_resource type="Script" uid="uid://7vi16mdgedas" path="res://Interactable/dialog/scripts/dialog_choice.gd" id="17_ycdrs"]
 [ext_resource type="Script" uid="uid://d2l41jli2hb5k" path="res://Interactable/dialog/scripts/dialog_branch.gd" id="18_5m40n"]
+[ext_resource type="PackedScene" uid="uid://cjn8wqs6tgy71" path="res://Scenes/DayNightCycle/day-night-cycle/demo/daynightcycle_scene.tscn" id="20_x6kx1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pi42a"]
 texture = ExtResource("5_ynsuh")
@@ -3520,3 +3521,5 @@ curve = SubResource("Curve2D_5m40n")
 [node name="PathFollow2D" type="PathFollow2D" parent="route_to_surprise"]
 position = Vector2(-742, 266)
 rotation = 1.61332
+
+[node name="DayNightCycleScene" parent="." instance=ExtResource("20_x6kx1")]

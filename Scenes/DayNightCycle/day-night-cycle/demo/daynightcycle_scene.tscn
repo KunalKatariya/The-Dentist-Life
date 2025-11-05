@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjn8wqs6tgy71"]
+
+[ext_resource type="Script" uid="uid://7aati1nq7jrk" path="res://Scenes/DayNightCycle/day-night-cycle/demo/daynightcycle_scene.gd" id="1_2vpqm"]
+[ext_resource type="Script" uid="uid://btqhu6qqppt1v" path="res://Scenes/DayNightCycle/day-night-cycle/demo/daynightcycle.gd" id="7_2hfvm"]
+[ext_resource type="Texture2D" uid="uid://bkpc1kjm4t2xn" path="res://Scenes/DayNightCycle/assets/daynightcycle-gradient-texture.tres" id="8_q68bt"]
+[ext_resource type="PackedScene" uid="uid://ceolcwatpaicu" path="res://Scenes/DayNightCycle/day-night-cycle/demo/ui/daynightcycle_ui.tscn" id="9_6s66b"]
+
+[node name="DayNightCycleScene" type="Node2D"]
+script = ExtResource("1_2vpqm")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+script = ExtResource("7_2hfvm")
+gradient_texture = ExtResource("8_q68bt")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DayNightCycleUI" parent="CanvasLayer" instance=ExtResource("9_6s66b")]
+offset_left = 7.0
+offset_top = 6.0
+offset_right = 7.0
+offset_bottom = 6.0
