@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_lq4o4")
 npc_name = ""
-dialog_audio_pitch = ""
+dialog_audio_pitch = 1.0
 metadata/_custom_type_script = "uid://b82ljda1pis1g"

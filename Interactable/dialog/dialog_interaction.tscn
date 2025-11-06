@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://biifd06crtwdm" path="res://Interactable/dialog/sprites/dialog_interactable.png" id="1_d3f05"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_crxiu"]
+resource_local_to_scene = true
 size = Vector2(24, 39)
 
 [sub_resource type="Animation" id="Animation_crxiu"]

@@ -6,6 +6,7 @@ extends Node2D  # Or whatever your root node is
 @onready var player = $Player
 @onready var path_badminton = $route_to_badminton
 @onready var path_surprise = $route_to_surprise
+@onready var path_chai = $route_to_chai
 var going_back = false
 var next_action: String = ""
 
@@ -39,6 +40,9 @@ func _on_npc_dialog_finished(npc_ref: Node):
 		"go_to_surprise":
 			print("[Playground] Starting surprise route")
 			await _npc_guided_walk(path_surprise, "res://Scenes/Surprise/Surprise.tscn")
+		"go_to_chai":
+			print("[Playground] Starting chai route")
+			await _npc_guided_walk(path_chai, "res://Scenes/AIChat/AIChat.tscn")
 		_:
 			print("[Playground] No valid action set, doing nothing")
 			

@@ -3393,9 +3393,9 @@ size = Vector2(21, 39)
 
 [sub_resource type="Curve2D" id="Curve2D_ycdrs"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -742, 263, 0, 0, 0, 0, -744, 310, 0, 0, 0, 0, -733, 369, 0, 0, 0, 0, -689, 387, 0, 0, 0, 0, -539, 392, 0, 0, 0, 0, -539, 418, 0, 0, 0, 0, -260, 418, 0, 0, 0, 0, -168, 434, 0, 0, 0, 0, -168, 488, 0, 0, 0, 0, 234, 487, 0, 0, 0, 0, 236, 711, 0, 0, 0, 0, 469, 712, 0, 0, 0, 0, 468, 644)
+"points": PackedVector2Array(0, 0, 0, 0, -743, 263, 0, 0, 0, 0, -744, 323, 0, 0, 0, 0, -737, 365.645, 0, 0, 0, 0, -706, 395.616, 0, 0, 0, 0, -556, 398.613, 0, 0, 0, 0, -505, 417.595, 0, 0, 0, 0, 205, 437.576, 0, 0, 0, 0, 215, 274.734, 0, 0, 0, 0, 627, 275.733, 0, 0, 0, 0, 628, 353.657, 0, 0, 0, 0, 826, 353, 0, 0, 0, 0, 826, 392, 0, 0, 0, 0, 988, 400, 0, 0, 0, 0, 1027, 370, 0, 0, 0, 0, 1028, 277, 0, 0, 0, 0, 1040, 235, 0, 0, 0, 0, 1318, 235, 0, 0, 0, 0, 1393, 235, 0, 0, 0, 0, 1437, 198)
 }
-point_count = 13
+point_count = 19
 
 [sub_resource type="Curve2D" id="Curve2D_5m40n"]
 _data = {
@@ -3508,12 +3508,31 @@ script = ExtResource("15_jgc46")
 text = "Prepare to be amazed gurl! ;)"
 metadata/_custom_type_script = "uid://celflw5ft7uxm"
 
+[node name="DialogBranch3" type="Node" parent="Npc/DialogInteraction/DialogChoice"]
+script = ExtResource("18_5m40n")
+text = "Let's do chai pe charcha! :)"
+action_name = "go_to_chai"
+metadata/_custom_type_script = "uid://d2l41jli2hb5k"
+
+[node name="DialogText" type="Node" parent="Npc/DialogInteraction/DialogChoice/DialogBranch3"]
+script = ExtResource("15_jgc46")
+text = "Uff, mere mann ki baat chheen li haha.."
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
 [node name="route_to_badminton" type="Path2D" parent="."]
 curve = SubResource("Curve2D_ycdrs")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="route_to_badminton"]
-position = Vector2(-742, 263)
-rotation = 1.61332
+position = Vector2(-743, 263)
+rotation = 1.58746
+
+[node name="route_to_chai" type="Path2D" parent="."]
+scale = Vector2(1, 1.00097)
+curve = SubResource("Curve2D_ycdrs")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="route_to_chai"]
+position = Vector2(-743, 263)
+rotation = 1.58746
 
 [node name="route_to_surprise" type="Path2D" parent="."]
 curve = SubResource("Curve2D_5m40n")
