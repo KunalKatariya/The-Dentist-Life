@@ -2,6 +2,8 @@ extends Control
 
 const CHAT_API_URL = "https://npc-backend-ai.onrender.com/chat"
 const API_HEADERS = ["Content-Type: application/json"]
+# Array to store history for full context (Memory)
+var conversation_history: Array = []
 
 @onready var message_display: RichTextLabel = $PanelContainer/VBoxContainer/RichTextLabel
 @onready var message_input: TextEdit = $PanelContainer/VBoxContainer/TextEdit
@@ -15,6 +17,7 @@ const API_HEADERS = ["Content-Type: application/json"]
 
 func _ready():
 	print("Chat system ready")
+	conversation_history.clear()
 	bg_music.play()
 	http_request.request_completed.connect(_on_http_request_completed)
 	_display_message("> Hello girlf!", true)
@@ -51,8 +54,10 @@ func _send_message(message: String):
 	message_input.editable = false
 	
 	npc_portrait.start_speaking()
+	
+	conversation_history.append({"role": "user", "content": message})
 
-	var payload = {"message": message}
+	var payload = {"messages": conversation_history}
 	var body = JSON.stringify(payload)
 	print("[SEND] JSON payload: ", body)
 	print("[SEND] URL: ", CHAT_API_URL)
@@ -100,6 +105,11 @@ func _on_http_request_completed(result, response_code, headers, body):
 	elif response_data.has("response"):
 		ai_response_text = response_data.response
 
+	if ai_response_text == "API_ERROR":
+		print("[ERROR] Python script explicitly returned API_ERROR.")
+		_handle_fatal_error() # This will perform the necessary history cleanup (pop_back)
+		return
+	conversation_history.append({"role": "model", "content": ai_response_text})
 	print("[RESPONSE] Parsed AI response: ", ai_response_text)
 	_display_message("> " + ai_response_text, true)
 
@@ -128,4 +138,6 @@ func _display_message(text: String, is_ai: bool):
 
 func _handle_fatal_error():
 	# Displays the required polite error message
+	if not conversation_history.is_empty():
+		conversation_history.pop_back()
 	_display_message("> I'm sorry babe, I can't talk right now. I have a meeting :( TTYL", true)
