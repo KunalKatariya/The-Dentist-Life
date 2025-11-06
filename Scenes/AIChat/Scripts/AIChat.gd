@@ -9,9 +9,13 @@ const API_HEADERS = ["Content-Type: application/json"]
 @onready var npc_portrait: Sprite2D = $"NPCPortrait"
 @onready var player_portrait: Sprite2D = $"PlayerPortrait"
 @onready var exit_button: TextureButton = $TextureButton
+@onready var npc_message_audio: AudioStreamPlayer = $NPCMessage
+@onready var player_message_audio: AudioStreamPlayer = $PlayerMessage
+@onready var bg_music: AudioStreamPlayer = $BGMusic
 
 func _ready():
 	print("Chat system ready")
+	bg_music.play()
 	http_request.request_completed.connect(_on_http_request_completed)
 	_display_message("> Hello girlf!", true)
 	message_display.scale = Vector2(0.5, 0.5)
@@ -42,6 +46,7 @@ func _on_message_input_gui(event: InputEvent):
 
 func _send_message(message: String):
 	print("[SEND] Preparing HTTP request...")
+	player_message_audio.play()
 	_display_message("> " + message, false)
 	message_input.editable = false
 	
@@ -64,6 +69,7 @@ func _send_message(message: String):
 
 func _on_http_request_completed(result, response_code, headers, body):
 	print("[RESPONSE] Request completed. Result code: ", result, ", HTTP code: ", response_code)
+	npc_message_audio.play()
 	message_input.editable = true
 	message_input.grab_focus()
 

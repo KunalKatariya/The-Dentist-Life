@@ -10,8 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://dc46ygkjeh2kj" path="res://Tile Maps/Sprites/exterior.png" id="5_ynsuh"]
 [ext_resource type="Texture2D" uid="uid://b5k8j552seqxt" path="res://Tile Maps/Sprites/Village_Houses.png" id="6_v7dth"]
 [ext_resource type="Texture2D" uid="uid://b6xf5hk0e4ns" path="res://Tile Maps/Sprites/CourtsAll.png" id="7_v7dth"]
-[ext_resource type="AudioStream" uid="uid://do2a7wim2do27" path="res://Scenes/BGMusicOGG.ogg" id="9_pi42a"]
 [ext_resource type="PackedScene" uid="uid://di7q7m4tmr0i7" path="res://Scenes/Transition.tscn" id="11_te8jg"]
+[ext_resource type="AudioStream" uid="uid://vux2pdsy7goa" path="res://Scenes/PlaygroundBG2.ogg" id="11_x6kx1"]
 [ext_resource type="PackedScene" uid="uid://vqxpr5gl3id8" path="res://Scenes/NPC/NPC.tscn" id="12_te8jg"]
 [ext_resource type="Resource" uid="uid://bh2kqdns5io8g" path="res://Scenes/NPC/npc_01.tres" id="13_f7pug"]
 [ext_resource type="PackedScene" uid="uid://fawxjldjbuod" path="res://Interactable/dialog/dialog_interaction.tscn" id="13_yjl7g"]
@@ -3431,7 +3431,7 @@ position = Vector2(0.5, 1.5)
 shape = SubResource("RectangleShape2D_4bqqs")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_pi42a")
+stream = ExtResource("11_x6kx1")
 autoplay = true
 parameters/looping = true
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://5has3p63n4na"]
+[gd_scene load_steps=16 format=3 uid="uid://5has3p63n4na"]
 
 [ext_resource type="Script" uid="uid://clfmli7y6cpwm" path="res://Scenes/AIChat/Scripts/AIChat.gd" id="1_05bbx"]
 [ext_resource type="Theme" uid="uid://t2i4gcd8b3yn" path="res://GUI/dialog_system/dialog_choice_theme.tres" id="1_ith3m"]
@@ -10,6 +10,9 @@
 [ext_resource type="FontFile" uid="uid://cowcfehw5e7hp" path="res://GUI/fonts/Abaddon Bold.ttf" id="8_xlpas"]
 [ext_resource type="Texture2D" uid="uid://dv0gitywwi4uv" path="res://Scenes/MainMenu/Sprites/Exit_idle_Button_new.png" id="9_jp5ow"]
 [ext_resource type="Texture2D" uid="uid://cfs2srjloqvyg" path="res://Scenes/MainMenu/Sprites/Exit_hover_Button_new.png" id="10_270pq"]
+[ext_resource type="AudioStream" uid="uid://b7dcfx42daoxx" path="res://Scenes/AIChat/Audio/NPCMssg.ogg" id="11_y1rum"]
+[ext_resource type="AudioStream" uid="uid://b7h82lcdy7ypp" path="res://Scenes/AIChat/Audio/PlayerMssg.ogg" id="12_s6ahl"]
+[ext_resource type="AudioStream" uid="uid://co2x6nti7smxr" path="res://Scenes/AIChat/Audio/ChatBGMusic.ogg" id="13_s6ahl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ojkyh"]
 content_margin_left = 5.0
@@ -143,3 +146,14 @@ offset_bottom = 42.96
 scale = Vector2(0.387559, 0.994021)
 texture_normal = ExtResource("9_jp5ow")
 texture_hover = ExtResource("10_270pq")
+
+[node name="NPCMessage" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_y1rum")
+
+[node name="PlayerMessage" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_s6ahl")
+
+[node name="BGMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_s6ahl")
+autoplay = true
+parameters/looping = true
