@@ -1,0 +1,143 @@
+[gd_scene load_steps=13 format=3 uid="uid://5has3p63n4na"]
+
+[ext_resource type="Script" uid="uid://clfmli7y6cpwm" path="res://Scenes/AIChat/Scripts/AIChat.gd" id="1_05bbx"]
+[ext_resource type="Theme" uid="uid://t2i4gcd8b3yn" path="res://GUI/dialog_system/dialog_choice_theme.tres" id="1_ith3m"]
+[ext_resource type="FontFile" uid="uid://de4lblt4l8jru" path="res://GUI/fonts/m5x7.ttf" id="2_ith3m"]
+[ext_resource type="Texture2D" uid="uid://c5f6ek0p0qd3o" path="res://Scenes/Surprise/Sprites/Summer2.png" id="4_ojkyh"]
+[ext_resource type="Texture2D" uid="uid://bnekwysou1gf2" path="res://Scenes/NPC/Portraits/BF_Dialogue.png" id="5_3ftct"]
+[ext_resource type="Script" uid="uid://cfoxctm0uffuc" path="res://Scenes/AIChat/kunal_portrait.gd" id="6_ip71p"]
+[ext_resource type="Texture2D" uid="uid://7lqddw6ejf0f" path="res://Scenes/NPC/Portraits/DrGT.png" id="7_lxgdv"]
+[ext_resource type="FontFile" uid="uid://cowcfehw5e7hp" path="res://GUI/fonts/Abaddon Bold.ttf" id="8_xlpas"]
+[ext_resource type="Texture2D" uid="uid://dv0gitywwi4uv" path="res://Scenes/MainMenu/Sprites/Exit_idle_Button_new.png" id="9_jp5ow"]
+[ext_resource type="Texture2D" uid="uid://cfs2srjloqvyg" path="res://Scenes/MainMenu/Sprites/Exit_hover_Button_new.png" id="10_270pq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ojkyh"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.154665, 0.575675, 0.757989, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.14896, 0.26229, 0, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ftct"]
+content_margin_left = 2.0
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.686266, 0.88339, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="AiChat" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(2.84083, 1.27455)
+size_flags_horizontal = 0
+script = ExtResource("1_05bbx")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 51.49
+offset_top = 13.73
+offset_right = 227.78
+offset_bottom = 232.73
+scale = Vector2(0.378451, 0.845693)
+theme_override_styles/panel = SubResource("StyleBoxFlat_ojkyh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(99.85, 185.58)
+layout_mode = 2
+theme = ExtResource("1_ith3m")
+theme_override_constants/line_separation = 2
+theme_override_fonts/normal_font = ExtResource("2_ith3m")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3ftct")
+bbcode_enabled = true
+scroll_following = true
+
+[node name="TextEdit" type="TextEdit" parent="PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(104.88, 20)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ith3m")
+theme_override_font_sizes/font_size = 16
+placeholder_text = ">>"
+
+[node name="ChatRequest" type="HTTPRequest" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(81.05, 89.71)
+scale = Vector2(0.087, 0.185)
+texture = ExtResource("4_ojkyh")
+
+[node name="NPCPortrait" type="Sprite2D" parent="."]
+position = Vector2(28.29, 100.31)
+scale = Vector2(0.266086, 0.564442)
+texture = ExtResource("5_3ftct")
+hframes = 4
+script = ExtResource("6_ip71p")
+
+[node name="FrameTimer" type="Timer" parent="NPCPortrait"]
+wait_time = 0.3
+autostart = true
+
+[node name="PlayerPortrait" type="Sprite2D" parent="."]
+position = Vector2(140.67, 100.31)
+scale = Vector2(0.266086, 0.564442)
+texture = ExtResource("7_lxgdv")
+hframes = 4
+script = ExtResource("6_ip71p")
+
+[node name="FrameTimer" type="Timer" parent="PlayerPortrait"]
+wait_time = 0.3
+autostart = true
+
+[node name="NameLabel" type="Label" parent="."]
+offset_left = 24.17
+offset_top = 143.06
+offset_right = 67.17
+offset_bottom = 166.06
+scale = Vector2(0.351895, 0.749212)
+theme_override_colors/font_color = Color(0.894118, 0.862745, 0.796078, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = ExtResource("8_xlpas")
+text = "KUNAL"
+
+[node name="NameLabel2" type="Label" parent="."]
+offset_left = 131.47
+offset_top = 143.06
+offset_right = 178.47
+offset_bottom = 166.06
+scale = Vector2(0.351895, 0.707364)
+theme_override_colors/font_color = Color(0.894118, 0.862745, 0.796078, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = ExtResource("8_xlpas")
+text = "GUNIKA"
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 149.18
+offset_top = 2.96
+offset_right = 197.18
+offset_bottom = 42.96
+scale = Vector2(0.387559, 0.994021)
+texture_normal = ExtResource("9_jp5ow")
+texture_hover = ExtResource("10_270pq")

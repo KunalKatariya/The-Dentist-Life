@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://cag75tx80nbft"]
+
+[ext_resource type="Script" uid="uid://dbn8cw3iqkeic" path="res://Scenes/AIChat/MessageBubble/MessageBubble.gd" id="1_kokgt"]
+
+[node name="MessageBubble" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 34.0
+offset_bottom = 39.0
+script = ExtResource("1_kokgt")
+
+[node name="BubblePanel" type="Panel" parent="."]
+layout_mode = 2
+offset_right = 34.0
+offset_bottom = 39.0
+
+[node name="Label" type="Label" parent="BubblePanel"]
+layout_mode = 2
+offset_right = 34.0
+offset_bottom = 39.0
+text = "sdfs dfsdfsdf"
+autowrap_mode = 2
