@@ -69,7 +69,7 @@ func _on_http_request_completed(result, response_code, headers, body):
 
 	if result != HTTPRequest.RESULT_SUCCESS:
 		print("[ERROR] Network request failed with code: ", result)
-		_display_message("AI: [Network Error: Check URL or connection]", true)
+		_handle_fatal_error()
 		return
 
 	var response_text = body.get_string_from_utf8()
@@ -77,17 +77,14 @@ func _on_http_request_completed(result, response_code, headers, body):
 
 	if response_code != 200:
 		print("[ERROR] Server returned HTTP code ", response_code)
-		_display_message("AI: [Server Error {response_code}: {error_body}]".format({
-			"response_code": response_code,
-			"error_body": response_text
-		}), true)
+		_handle_fatal_error()
 		return
 
 	var json = JSON.new()
 	var parse_result = json.parse(response_text)
 	if parse_result != OK:
 		print("[ERROR] Failed to parse JSON response. Code: ", parse_result)
-		_display_message("AI: [Error: Failed to parse JSON response]", true)
+		_handle_fatal_error()
 		return
 
 	var response_data = json.get_data()
@@ -121,3 +118,8 @@ func _display_message(text: String, is_ai: bool):
 	
 	# Scroll to the bottom
 	message_display.call_deferred("scroll_to_line", message_display.get_line_count())
+
+
+func _handle_fatal_error():
+	# Displays the required polite error message
+	_display_message("> I'm sorry babe, I can't talk right now. I have a meeting :( TTYL", true)
