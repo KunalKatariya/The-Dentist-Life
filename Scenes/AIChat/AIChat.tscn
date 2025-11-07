@@ -140,7 +140,7 @@ placeholder_text = ">>"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -2
-position = Vector2(81.05, 89.71)
+position = Vector2(81.05, 94.01)
 scale = Vector2(0.087, 0.183403)
 texture = ExtResource("4_ojkyh")
 
