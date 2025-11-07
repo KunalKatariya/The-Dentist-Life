@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://ciw0kec5ov53g"]
+[gd_scene load_steps=29 format=4 uid="uid://ciw0kec5ov53g"]
 
 [ext_resource type="Script" uid="uid://cmit16kjp8r88" path="res://playground.gd" id="1_pio1y"]
 [ext_resource type="PackedScene" uid="uid://l162wshmnvw" path="res://Player/player.tscn" id="1_rupst"]
@@ -3391,9 +3391,15 @@ sources/2 = SubResource("TileSetAtlasSource_pio1y")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4bqqs"]
 size = Vector2(21, 39)
 
-[sub_resource type="Curve2D" id="Curve2D_ycdrs"]
+[sub_resource type="Curve2D" id="Curve2D_x6kx1"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -743, 263, 0, 0, 0, 0, -744, 323, 0, 0, 0, 0, -737, 365.645, 0, 0, 0, 0, -706, 395.616, 0, 0, 0, 0, -556, 398.613, 0, 0, 0, 0, -505, 417.595, 0, 0, 0, 0, 205, 437.576, 0, 0, 0, 0, 215, 274.734, 0, 0, 0, 0, 627, 275.733, 0, 0, 0, 0, 628, 353.657, 0, 0, 0, 0, 826, 353, 0, 0, 0, 0, 826, 392, 0, 0, 0, 0, 988, 400, 0, 0, 0, 0, 1027, 370, 0, 0, 0, 0, 1028, 277, 0, 0, 0, 0, 1040, 235, 0, 0, 0, 0, 1318, 235, 0, 0, 0, 0, 1393, 235, 0, 0, 0, 0, 1437, 198)
+"points": PackedVector2Array(0, 0, 0, 0, -739.998, 266.475, 0, 0, 0, 0, -743.01, 326.357, 0, 0, 0, 0, -730.961, 370.27, 0, 0, 0, 0, -698.831, 401.209, 0, 0, 0, 0, -524.123, 397.217, 0, 0, 0, 0, -424.721, 396.219, 0, 0, 0, 0, -403.635, 424.164, 0, 0, 0, 0, -250.013, 425.162, 0, 0, 0, 0, -221.899, 444.125, 0, 0, 0, 0, -178.724, 471.072, 0, 0, 0, 0, 137.557, 472.07, 0, 0, 0, 0, 157.639, 497.021, 0, 0, 0, 0, 154.626, 667.684, 0, 0, 0, 0, 188.765, 688.643, 0, 0, 0, 0, 391.586, 690.639, 0, 0, 0, 0, 451.83, 673.673, 0, 0, 0, 0, 468.9, 643.732)
+}
+point_count = 17
+
+[sub_resource type="Curve2D" id="Curve2D_jufm4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -748, 264, 0, 0, 0, 0, -744, 323, 0, 0, 0, 0, -737, 365.645, 0, 0, 0, 0, -706, 395.616, 0, 0, 0, 0, -556, 398.613, 0, 0, 0, 0, -523.119, 416.99, 0, 0, 0, 0, 190.773, 444.125, 0, 0, 0, 0, 215, 274.734, 0, 0, 0, 0, 627, 275.733, 0, 0, 0, 0, 628, 353.657, 0, 0, 0, 0, 826, 353, 0, 0, 0, 0, 826, 392, 0, 0, 0, 0, 988, 400, 0, 0, 0, 0, 1027, 370, 0, 0, 0, 0, 1028, 277, 0, 0, 0, 0, 1040, 235, 0, 0, 0, 0, 1318, 235, 0, 0, 0, 0, 1393, 235, 0, 0, 0, 0, 1432.8, 196.613)
 }
 point_count = 19
 
@@ -3520,19 +3526,20 @@ text = "Uff, mere mann ki baat chheen li haha.."
 metadata/_custom_type_script = "uid://celflw5ft7uxm"
 
 [node name="route_to_badminton" type="Path2D" parent="."]
-curve = SubResource("Curve2D_ycdrs")
+scale = Vector2(0.995949, 1.00197)
+curve = SubResource("Curve2D_x6kx1")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="route_to_badminton"]
-position = Vector2(-743, 263)
-rotation = 1.58746
+position = Vector2(-739.998, 266.475)
+rotation = 1.62106
 
 [node name="route_to_chai" type="Path2D" parent="."]
 scale = Vector2(1, 1.00097)
-curve = SubResource("Curve2D_ycdrs")
+curve = SubResource("Curve2D_jufm4")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="route_to_chai"]
-position = Vector2(-743, 263)
-rotation = 1.58746
+position = Vector2(-748, 264)
+rotation = 1.5031
 
 [node name="route_to_surprise" type="Path2D" parent="."]
 curve = SubResource("Curve2D_5m40n")

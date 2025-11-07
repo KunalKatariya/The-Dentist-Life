@@ -14,9 +14,18 @@ var conversation_history: Array = []
 @onready var npc_message_audio: AudioStreamPlayer = $NPCMessage
 @onready var player_message_audio: AudioStreamPlayer = $PlayerMessage
 @onready var bg_music: AudioStreamPlayer = $BGMusic
+@onready var tea_npc: Sprite2D = $TeaNPC
+@onready var tea_player: Sprite2D = $TeaPlayer
 
 func _ready():
 	print("Chat system ready")
+	var npc_animator = tea_npc.get_node("AnimationPlayer")
+	var player_animator = tea_player.get_node("AnimationPlayer")
+	if npc_animator:
+		npc_animator.play("smoke")
+
+	if player_animator:
+		player_animator.play("smoke2")
 	conversation_history.clear()
 	bg_music.play()
 	http_request.request_completed.connect(_on_http_request_completed)
