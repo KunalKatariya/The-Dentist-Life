@@ -3391,7 +3391,7 @@ sources/1 = SubResource("TileSetAtlasSource_h1jm5")
 sources/2 = SubResource("TileSetAtlasSource_pio1y")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4bqqs"]
-size = Vector2(21, 39)
+size = Vector2(34, 37)
 
 [sub_resource type="Curve2D" id="Curve2D_x6kx1"]
 _data = {
@@ -3437,12 +3437,12 @@ tile_map_data = PackedByteArray("AAAHAAIAAAAAAAMAAAAHAAMAAAAOACwAAAAHAAQAAAAAAAU
 tile_set = SubResource("TileSet_pio1y")
 
 [node name="SceneTrigger" parent="." instance=ExtResource("5_o00ia")]
-position = Vector2(223, 100)
-connected_scene = "badminton_game"
+position = Vector2(1429.01, -95.42)
+connected_scene = "uid://cpik4eq43fhu"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger"]
 z_index = 1
-position = Vector2(0.5, 1.5)
+position = Vector2(4.98999, -2.08)
 shape = SubResource("RectangleShape2D_4bqqs")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
@@ -3558,6 +3558,7 @@ position = Vector2(-742, 266)
 rotation = 1.61332
 
 [node name="DayNightCycleScene" parent="." instance=ExtResource("20_x6kx1")]
+position = Vector2(27, -13)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 z_index = -2
