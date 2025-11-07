@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://ciw0kec5ov53g"]
+[gd_scene load_steps=33 format=4 uid="uid://ciw0kec5ov53g"]
 
 [ext_resource type="Script" uid="uid://cmit16kjp8r88" path="res://playground.gd" id="1_pio1y"]
 [ext_resource type="PackedScene" uid="uid://l162wshmnvw" path="res://Player/player.tscn" id="1_rupst"]
@@ -20,6 +20,8 @@
 [ext_resource type="Script" uid="uid://7vi16mdgedas" path="res://Interactable/dialog/scripts/dialog_choice.gd" id="17_ycdrs"]
 [ext_resource type="Script" uid="uid://d2l41jli2hb5k" path="res://Interactable/dialog/scripts/dialog_branch.gd" id="18_5m40n"]
 [ext_resource type="PackedScene" uid="uid://cjn8wqs6tgy71" path="res://Scenes/DayNightCycle/day-night-cycle/demo/daynightcycle_scene.tscn" id="20_x6kx1"]
+[ext_resource type="Texture2D" uid="uid://cxh3g6jdb1xs7" path="res://Tile Maps/Sprites/Gemini_Generated_Image_3vxlkh3vxlkh3vxl-Photoroom.png" id="21_jufm4"]
+[ext_resource type="Texture2D" uid="uid://d0m8rsnw53f80" path="res://Tile Maps/Sprites/ChatGPT Image Sep 5, 20Clinic.png" id="22_ymgag"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pi42a"]
 texture = ExtResource("5_ynsuh")
@@ -3409,10 +3411,17 @@ _data = {
 }
 point_count = 27
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jufm4"]
+size = Vector2(39.9579, 27.0786)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2qr3"]
+size = Vector2(39.9579, 27.0786)
+
 [node name="Playground" type="Node2D"]
 script = ExtResource("1_pio1y")
 
 [node name="Player" parent="." instance=ExtResource("1_rupst")]
+y_sort_enabled = true
 position = Vector2(234, 142)
 
 [node name="Camera2D2" type="Camera2D" parent="Player"]
@@ -3549,3 +3558,35 @@ position = Vector2(-742, 266)
 rotation = 1.61332
 
 [node name="DayNightCycleScene" parent="." instance=ExtResource("20_x6kx1")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+z_index = -2
+y_sort_enabled = true
+collision_layer = 0
+collision_mask = 65
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(1383.39, 469.9)
+scale = Vector2(0.27, 0.27)
+texture = ExtResource("21_jufm4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1380, 508.5)
+scale = Vector2(4.35458, -4.91163)
+shape = SubResource("RectangleShape2D_jufm4")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+z_index = -2
+y_sort_enabled = true
+collision_layer = 0
+collision_mask = 65
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2"]
+position = Vector2(1433.82, -150.21)
+scale = Vector2(0.17, 0.17)
+texture = ExtResource("22_ymgag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(1380, 508.5)
+scale = Vector2(4.35458, -4.91163)
+shape = SubResource("RectangleShape2D_u2qr3")
