@@ -119,7 +119,7 @@ position = Vector2(-1, 10)
 
 [node name="DialogText" type="Node" parent="Npc/DialogInteraction"]
 script = ExtResource("8_42unu")
-text = "I hope you liked your gift!"
+text = "I hope you liked your gift!!"
 npc_info = ExtResource("6_wwh44")
 metadata/_custom_type_script = "uid://celflw5ft7uxm"
 
@@ -127,6 +127,12 @@ metadata/_custom_type_script = "uid://celflw5ft7uxm"
 script = ExtResource("8_42unu")
 text = "Eh! I have seen better lol."
 npc_info = ExtResource("9_b5ys1")
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="DialogText3" type="Node" parent="Npc/DialogInteraction"]
+script = ExtResource("8_42unu")
+text = "Hehe, I bet you wanted to run my speech in 2x ;)"
+npc_info = ExtResource("6_wwh44")
 metadata/_custom_type_script = "uid://celflw5ft7uxm"
 
 [node name="DummyDialog" type="Area2D" parent="."]

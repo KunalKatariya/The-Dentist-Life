@@ -43,6 +43,8 @@ func _on_npc_dialog_finished(npc_ref: Node):
 		"go_to_chai":
 			print("[Playground] Starting chai route")
 			await _npc_guided_walk(path_chai, "res://Scenes/AIChat/AIChat.tscn")
+		"go_to_exit":
+			print("[Playground] Exiting chat")
 		_:
 			print("[Playground] No valid action set, doing nothing")
 			

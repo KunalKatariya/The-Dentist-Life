@@ -3487,13 +3487,13 @@ metadata/_custom_type_script = "uid://celflw5ft7uxm"
 
 [node name="DialogText3" type="Node" parent="Npc/DialogInteraction"]
 script = ExtResource("15_jgc46")
-text = "I don't know what you talking about babe."
+text = "I don't know what you talking about babe :)"
 npc_info = ExtResource("13_f7pug")
 metadata/_custom_type_script = "uid://celflw5ft7uxm"
 
 [node name="DialogText4" type="Node" parent="Npc/DialogInteraction"]
 script = ExtResource("15_jgc46")
-text = "What do you wanna do now?"
+text = "Anyway, what do you wanna do now?"
 npc_info = ExtResource("13_f7pug")
 metadata/_custom_type_script = "uid://celflw5ft7uxm"
 
@@ -3532,6 +3532,17 @@ metadata/_custom_type_script = "uid://d2l41jli2hb5k"
 [node name="DialogText" type="Node" parent="Npc/DialogInteraction/DialogChoice/DialogBranch3"]
 script = ExtResource("15_jgc46")
 text = "Uff, mere mann ki baat chheen li haha.."
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="DialogBranch4" type="Node" parent="Npc/DialogInteraction/DialogChoice"]
+script = ExtResource("18_5m40n")
+text = "I want some alone time"
+action_name = "go_to_exit"
+metadata/_custom_type_script = "uid://d2l41jli2hb5k"
+
+[node name="DialogText" type="Node" parent="Npc/DialogInteraction/DialogChoice/DialogBranch4"]
+script = ExtResource("15_jgc46")
+text = "Oh :( Okay babe, take care!"
 metadata/_custom_type_script = "uid://celflw5ft7uxm"
 
 [node name="route_to_badminton" type="Path2D" parent="."]
