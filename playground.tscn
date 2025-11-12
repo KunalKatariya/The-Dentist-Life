@@ -3540,7 +3540,7 @@ curve = SubResource("Curve2D_x6kx1")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="route_to_badminton"]
 position = Vector2(-739.998, 266.475)
-rotation = 1.62106
+rotation = 1.62105
 
 [node name="route_to_chai" type="Path2D" parent="."]
 scale = Vector2(1, 1.00097)

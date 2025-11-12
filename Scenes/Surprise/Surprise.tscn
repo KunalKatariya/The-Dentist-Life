@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bshvr6f3uipj" path="res://Scenes/Surprise/Scripts/Surprise.gd" id="1_w4v56"]
 [ext_resource type="Texture2D" uid="uid://nuw4fnvy5gur" path="res://Scenes/Surprise/Sprites/Surprise1.png" id="1_wa1j5"]
+[ext_resource type="AudioStream" uid="uid://bfsecogljv5a3" path="res://Scenes/Surprise/Audio/HBDMessage.ogg" id="2_c353n"]
 [ext_resource type="Texture2D" uid="uid://davbcxpru2gge" path="res://Scenes/Surprise/Sprites/Surprise2.png" id="2_hcrte"]
 [ext_resource type="PackedScene" uid="uid://l162wshmnvw" path="res://Player/player.tscn" id="4_6vbl0"]
 [ext_resource type="PackedScene" uid="uid://vqxpr5gl3id8" path="res://Scenes/NPC/NPC.tscn" id="5_xtgit"]
@@ -10,7 +11,6 @@
 [ext_resource type="Script" uid="uid://celflw5ft7uxm" path="res://Interactable/dialog/scripts/dialog_text.gd" id="8_42unu"]
 [ext_resource type="Resource" uid="uid://dx2wb25x8vc6l" path="res://Scenes/NPC/npc_player.tres" id="9_b5ys1"]
 [ext_resource type="Texture2D" uid="uid://breg02auqr3lv" path="res://Scenes/Surprise/Sprites/Gemini_Generated_Image_fi8n4vfi8n4vfi8n-Photoroom.png" id="10_o4hv4"]
-[ext_resource type="AudioStream" uid="uid://cwp47qm5wgytt" path="res://Scenes/Surprise/Audio/Happy-Birthday-_Piano-Version_-_TubeRipper.cc_.ogg" id="11_xtgit"]
 [ext_resource type="PackedScene" uid="uid://bl1up2i0xxn15" path="res://scene_trigger.tscn" id="12_wwh44"]
 [ext_resource type="PackedScene" uid="uid://di7q7m4tmr0i7" path="res://Scenes/Transition.tscn" id="13_c353n"]
 
@@ -38,7 +38,7 @@ size = Vector2(80, 19)
 
 [node name="Surprise" type="Node2D"]
 script = ExtResource("1_w4v56")
-audio_stream = ExtResource("11_xtgit")
+audio_stream = ExtResource("2_c353n")
 
 [node name="BG1" type="Sprite2D" parent="."]
 z_index = -2
@@ -110,7 +110,7 @@ shape = SubResource("RectangleShape2D_gtsyh")
 
 [node name="Npc" parent="." instance=ExtResource("5_xtgit")]
 z_index = -1
-position = Vector2(174.85, 95.47)
+position = Vector2(173.33, 93.39)
 collision_layer = 81
 npc_resource = ExtResource("6_wwh44")
 
@@ -174,9 +174,6 @@ position = Vector2(62.18, 0)
 position = Vector2(177.82, 161)
 shape = SubResource("CircleShape2D_o4hv4")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("11_xtgit")
-
 [node name="SceneTrigger" parent="." instance=ExtResource("12_wwh44")]
 position = Vector2(237, 271)
 connected_scene = "uid://ciw0kec5ov53g"
@@ -198,3 +195,5 @@ offset_right = 4640.0
 offset_bottom = 4544.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

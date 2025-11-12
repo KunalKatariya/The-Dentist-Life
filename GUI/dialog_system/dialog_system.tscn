@@ -83,6 +83,7 @@ script = ExtResource("1_umqd7")
 
 [node name="DialogUI" type="Control" parent="."]
 process_mode = 4
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
