@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cpik4eq43fhu"]
+[gd_scene load_steps=20 format=3 uid="uid://cpik4eq43fhu"]
 
 [ext_resource type="Texture2D" uid="uid://cubr5s11kot8m" path="res://Scenes/Clinic/Sprites/Geminiclinic.png" id="1_nl862"]
 [ext_resource type="Script" uid="uid://b0qeicqigc818" path="res://Scenes/Clinic/Scripts/Clinic.gd" id="1_rqbh7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c4u8pmvb4rka0" path="res://Tile Maps/Sprites/Tileset-Sheet.png" id="4_nl862"]
 [ext_resource type="PackedScene" uid="uid://bl1up2i0xxn15" path="res://scene_trigger.tscn" id="5_s52m0"]
 [ext_resource type="PackedScene" uid="uid://di7q7m4tmr0i7" path="res://Scenes/Transition.tscn" id="6_bal0l"]
+[ext_resource type="AudioStream" uid="uid://dt5s8m0qwthf5" path="res://Scenes/Clinic/Audio/Brush-Your-Teeth-Kids-Songs-Super-Simple-Songs-_mp3cut.net_.ogg" id="8_wt3vc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s52m0"]
 texture = ExtResource("4_nl862")
@@ -257,3 +258,8 @@ offset_right = 4640.0
 offset_bottom = 4544.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_wt3vc")
+autoplay = true
+parameters/looping = true
