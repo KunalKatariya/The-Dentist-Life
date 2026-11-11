@@ -3,12 +3,16 @@ extends Node
 ## Run with: godot --headless --path . res://tools/test_day2.tscn
 
 var failures: int = 0
+var _save_backup: String = ""
+var _had_save: bool = false
 
 
 func _ready() -> void:
 	await get_tree().process_frame
 	_check(ItemCatalog.TOTAL == 6, "ItemCatalog has six items")
 
+	# Never clobber a real player save when this test runs.
+	_backup_save()
 	GameState.new_game()
 	SceneRouter.next_spawn = &"clinic_door"
 	var clinic: Node = load("res://Scenes/Clinic/Clinic.tscn").instantiate()
@@ -122,3 +126,27 @@ func _check(condition: bool, label: String) -> void:
 	else:
 		failures += 1
 		print("  FAIL ", label)
+
+
+func _backup_save() -> void:
+	_had_save = FileAccess.file_exists(GameState.SAVE_PATH)
+	if not _had_save:
+		return
+	var file := FileAccess.open(GameState.SAVE_PATH, FileAccess.READ)
+	if file != null:
+		_save_backup = file.get_as_text()
+		file.close()
+
+
+func _restore_save() -> void:
+	if _had_save and not _save_backup.is_empty():
+		var file := FileAccess.open(GameState.SAVE_PATH, FileAccess.WRITE)
+		if file != null:
+			file.store_string(_save_backup)
+			file.close()
+	elif not _had_save and FileAccess.file_exists(GameState.SAVE_PATH):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(GameState.SAVE_PATH))
+
+
+func _exit_tree() -> void:
+	_restore_save()
