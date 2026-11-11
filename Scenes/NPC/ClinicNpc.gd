@@ -77,7 +77,7 @@ func _priya_first_dialog() -> Array[DialogItem]:
 	out.append(_line("Who does this?", true))
 	out.append(_line("A sugar creature, I think. Small. Round. Smells like a birthday party. It left a trail of icing to the door."))
 	out.append(_line("Here — a detective notebook and your travel toothbrush. You're going to need both."))
-	out.append(_line("The mirror set is still here, by the way. Blorb — the round green blob by the right-hand chair — is asleep on it. Please don't wake it before I finish my tea."))
+	out.append(_line("The mirror set is still here, by the way. Something round and green is asleep on it. Please don't wake it before I finish my tea."))
 	out.append(_line("I'm going to brush a sugar creature.", true))
 	out.append(_line("That's the most dentist thing you've ever said."))
 	return out
@@ -87,7 +87,7 @@ func _priya_repeat_dialog() -> Array[DialogItem]:
 	var out: Array[DialogItem] = []
 	if not GameState.has_item(&"mirror_set"):
 		out.append(_line("Any luck? The waiting room is getting restless. Mr. Mehta has named his toothache Steve."))
-		out.append(_line("Leave Mr. Mehta alone — he's only here for Steve. Go to Blorb: the round green blob by the right-hand chair, next to the door. It's asleep on the mirror set."))
+		out.append(_line("Leave Mr. Mehta alone — he's only here for Steve. That round green thing is still asleep by the right-hand chair. It's on the mirror set."))
 		out.append(_line("You're enjoying this.", true))
 		out.append(_line("I'm enjoying the tea. The rest is a bonus."))
 	elif GameState.recovered_count() < ItemCatalog.TOTAL:

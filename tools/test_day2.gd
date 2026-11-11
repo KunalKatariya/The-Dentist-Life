@@ -45,10 +45,22 @@ func _ready() -> void:
 	await get_tree().create_timer(2.0).timeout
 	_check(DialogSystem.is_active, "Priya auto-greet dialog is active")
 	_check(not player.input_enabled, "player movement locked during dialog")
-	if DialogSystem.is_active:
-		DialogSystem.hide_dialog()
+	_check(blorb.get_node_or_null("NameLabel") == null, "villain has no floating name label")
+
+	# Advance with real interact presses, the way a player would. This used to
+	# close the box and instantly reopen it on the same key press.
+	var presses := 0
+	while DialogSystem.is_active and presses < 60:
+		_push_interact()
+		presses += 1
 		await get_tree().process_frame
+		await get_tree().process_frame
+	_check(not DialogSystem.is_active, "Priya dialog closes when advanced with E")
+	_check(presses < 60, "Priya dialog advances with E")
 	await get_tree().process_frame
+	await get_tree().process_frame
+	await get_tree().create_timer(0.2).timeout
+	_check(not DialogSystem.is_active, "Priya dialog does not reopen after closing")
 	_check(player.input_enabled, "player movement restored after dialog")
 	_check(GameState.has_flag("met_clerk"), "met_clerk flag set after intro")
 	_check(GameState.has_flag("got_notebook"), "notebook granted after intro")
@@ -57,7 +69,7 @@ func _ready() -> void:
 
 	# HUD and notebook.
 	_check(GameHUD.root.visible, "HUD visible inside the clinic")
-	_check("Blorb" in GameHUD.quest_label.text, "HUD points to Blorb at stage 2")
+	_check("mirror set" in GameHUD.quest_label.text, "HUD points at the mirror set at stage 2")
 	GameHUD.open_notebook()
 	await get_tree().process_frame
 	_check(GameHUD.notebook.visible, "notebook opens")
@@ -119,6 +131,17 @@ func _ready() -> void:
 
 	print("DAY2 SMOKE: %d failure(s)" % failures)
 	get_tree().quit(1 if failures > 0 else 0)
+
+
+func _push_interact() -> void:
+	var press := InputEventAction.new()
+	press.action = "interact"
+	press.pressed = true
+	Input.parse_input_event(press)
+	var release := InputEventAction.new()
+	release.action = "interact"
+	release.pressed = false
+	Input.parse_input_event(release)
 
 
 func _check(condition: bool, label: String) -> void:

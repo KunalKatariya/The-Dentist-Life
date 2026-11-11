@@ -36,6 +36,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		event.is_action_pressed("ui_accept") or
 		event.is_action_pressed("interact")
 	):
+		# While a conversation is open, E belongs to the dialog only.
+		get_viewport().set_input_as_handled()
 		if text_in_progress == true:
 			content.visible_characters = text_length
 			timer.stop()

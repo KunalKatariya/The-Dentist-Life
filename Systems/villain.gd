@@ -11,7 +11,6 @@ var _busy: bool = false
 var _sprite_base_y: float = 0.0
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var prompt: Label = $Prompt
-@onready var name_label: Label = $NameLabel
 @onready var item_sprite: Sprite2D = $ItemSprite
 
 
@@ -26,8 +25,6 @@ func _ready() -> void:
 
 	sprite.texture = data.sprite
 	_sprite_base_y = sprite.position.y
-	name_label.text = data.npc_info.npc_name if data.npc_info != null else data.display_name
-	name_label.visible = not name_label.text.is_empty()
 	item_sprite.visible = false
 	if data.guarded_item_id != &"":
 		var item := ItemCatalog.get_item(data.guarded_item_id)

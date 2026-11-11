@@ -25,6 +25,8 @@ signal finished
 var dialog_items: Array[DialogItem] = []
 var player_in_area: bool = false
 var _dialog_active: bool = false
+# Keep the press that closes a conversation from immediately reopening it.
+var _wait_for_release: bool = false
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -69,9 +71,22 @@ func _on_area_exit(body: Node) -> void:
 	animation_player.play("hide")
 
 
-func _process(delta: float) -> void:
-	if player_in_area and is_available() and Input.is_action_just_pressed("interact"):
-		player_interact()
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_released("interact"):
+		_wait_for_release = false
+		return
+	if not event.is_action_pressed("interact") or event.is_echo():
+		return
+	if _wait_for_release:
+		return
+	if not player_in_area or not is_available() or dialog_items.is_empty():
+		return
+	# Let an open conversation consume the key; otherwise the press that closes
+	# the dialog would immediately reopen it.
+	if DialogSystem.is_active:
+		return
+	get_viewport().set_input_as_handled()
+	player_interact()
 
 
 func player_interact() -> void:
@@ -96,7 +111,7 @@ func _on_dialog_finished() -> void:
 	if not _dialog_active:
 		return
 	_dialog_active = false
-	set_process(true)
+	_wait_for_release = true
 
 	if set_flag_on_finish != "":
 		GameState.set_flag(set_flag_on_finish, true)
