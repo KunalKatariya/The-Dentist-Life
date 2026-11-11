@@ -17,7 +17,16 @@ func _ready():
 
 	# Connect animation finished signal
 	anim_player.animation_finished.connect(_on_animation_finished)
-	
+
+	# Dialog branch actions are routed globally; react to the hub ones here.
+	if not ActionRouter.action_requested.is_connected(_on_action_requested):
+		ActionRouter.action_requested.connect(_on_action_requested)
+
+
+func _on_action_requested(action_name: String) -> void:
+	# Hub-specific dialog branch action. Handled when the dialog finishes.
+	next_action = action_name
+
 
 func _input(event):
 	if event.is_action_pressed("esc") and !going_back:
@@ -29,11 +38,13 @@ func _input(event):
 func _on_animation_finished(anim_name: String) -> void:
 	if anim_name == "Fade_Out" and going_back:
 		# Return to main menu after fade out
-		get_tree().change_scene_to_file("res://Scenes/MainMenu/main_menu.tscn")
+		SceneRouter.go("menu")
 
 func _on_npc_dialog_finished(npc_ref: Node):
-	print("[Playground] NPC dialog finished. next_action =", next_action)
-	match next_action:
+	var action := next_action
+	next_action = ""
+	print("[Playground] NPC dialog finished. next_action =", action)
+	match action:
 		"go_to_badminton":
 			print("[Playground] Starting badminton route")
 			await _npc_guided_walk(path_badminton, "res://Scenes/Badminton/badminton_game.tscn")
@@ -90,13 +101,13 @@ func _npc_guided_walk(path: Path2D, target_scene: String) -> void:
 	var current_scene_path = get_tree().current_scene.scene_file_path
 	
 	# 1. Save the player's final global position in the Playground scene
-	GameManager.scene_positions[current_scene_path] = player.global_position
+	GameState.set_scene_position(current_scene_path, player.global_position)
 	
 	# --- END SAVE ---
 
 	anim_player.play("Fade_Out")
 	await anim_player.animation_finished
-	get_tree().change_scene_to_file(target_scene)
+	SceneRouter.go_to_path(target_scene)
 
 func _on_path_step(follower: PathFollow2D) -> void:
 	# Move NPC
@@ -136,7 +147,7 @@ func _on_path_finished(target_scene: String) -> void:
 
 	anim_player.play("Fade_Out")
 	await anim_player.animation_finished
-	get_tree().change_scene_to_file(target_scene)
+	SceneRouter.go_to_path(target_scene)
 
 
 func _on_scene_trigger_body_entered(body: Node2D) -> void:

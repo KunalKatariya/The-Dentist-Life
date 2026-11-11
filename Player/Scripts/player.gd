@@ -19,10 +19,24 @@ func _ready():
 	UpdateAnimation()
 
 func _set_saved_position():
+	# A spawn point requested by SceneRouter wins over a saved position.
+	var spawn_name := SceneRouter.consume_spawn()
+	if spawn_name != &"":
+		var marker := _find_spawn_point(String(spawn_name))
+		if marker:
+			global_position = marker.global_position
+			return
+
 	var current_scene_path = get_tree().current_scene.scene_file_path
-	if GameManager.scene_positions.has(current_scene_path):
-		var saved_position = GameManager.scene_positions[current_scene_path]
+	if GameState.has_scene_position(current_scene_path):
+		var saved_position = GameState.get_scene_position(current_scene_path)
 		global_position = saved_position
+
+func _find_spawn_point(spawn_name: String) -> Node2D:
+	for node in get_tree().get_nodes_in_group("spawn_points"):
+		if node is Node2D and String(node.name) == spawn_name:
+			return node
+	return null
 
 # Called every frame
 func _process(delta):

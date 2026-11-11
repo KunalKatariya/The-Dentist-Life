@@ -33,7 +33,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if(
 		event.is_action_pressed("ui_accept") or
-		event.is_action_pressed("test")
+		event.is_action_pressed("interact")
 	):
 		if text_in_progress == true:
 			content.visible_characters = text_length
@@ -98,28 +98,44 @@ func set_dialog_text( _d : DialogText ) -> void:
 	pass
 
 func set_dialog_choice(_d : DialogChoice) -> void:
+	# Only show branches whose flag conditions are currently satisfied.
+	var available: Array[DialogBranch] = []
+	for branch in _d.dialog_branches:
+		if branch.is_available():
+			available.append(branch)
+
+	if available.is_empty():
+		hide_dialog()
+		return
+
 	choice_options.visible = true
 	waiting_for_choice = true
 	for c in choice_options.get_children():
 		c.queue_free()
 	
-	for i in _d.dialog_branches.size():
+	for branch in available:
 		var _new_choice : Button = Button.new()
-		_new_choice.text = _d.dialog_branches[i].text
+		_new_choice.text = branch.text
 		_new_choice.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		_new_choice.pressed.connect(_dialog_choice_selected.bind(_d.dialog_branches[i]))
+		_new_choice.pressed.connect(_dialog_choice_selected.bind(branch))
 		choice_options.add_child(_new_choice)
 	
 	await get_tree().process_frame
-	choice_options.get_child(0).grab_focus()
+	if choice_options.get_child_count() > 0:
+		choice_options.get_child(0).grab_focus()
 	pass
 
 
 func _dialog_choice_selected(_d : DialogBranch) -> void:
-	var playground = get_tree().get_current_scene()
-	if playground and _d.action_name != "":
-		playground.next_action = _d.action_name
+	# Route the action through ActionRouter so it works in any scene, not just
+	# the hub. Scene-specific actions are emitted as a signal for the current
+	# scene to handle.
+	if _d.action_name != "":
+		ActionRouter.run(_d.action_name)
 	choice_options.visible = false
+	if _d.dialog_items.is_empty():
+		hide_dialog()
+		return
 	show_dialog(_d.dialog_items)
 	pass
 

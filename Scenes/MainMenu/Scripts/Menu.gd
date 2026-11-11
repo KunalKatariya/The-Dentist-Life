@@ -22,8 +22,10 @@ func _ready():
 		print("Stream is not OGGVorbis:", stream)
 
 	music_player.play()
-	start_button.pressed.connect(_on_start_button_pressed)
-	exit_button.pressed.connect(_on_exit_button_pressed)
+	if not start_button.pressed.is_connected(_on_start_button_pressed):
+		start_button.pressed.connect(_on_start_button_pressed)
+	if not exit_button.pressed.is_connected(_on_exit_button_pressed):
+		exit_button.pressed.connect(_on_exit_button_pressed)
 
 	# Connect animation_finished signal
 	anim_player.animation_finished.connect(_on_animation_finished)
@@ -45,6 +47,6 @@ func _on_animation_finished(anim_name: String) -> void:
 	print("Animation finished:", anim_name)
 	if anim_name == "Fade_Out":
 		if button_type == "start":
-			get_tree().change_scene_to_file("res://playground.tscn")
+			SceneRouter.go("hub")
 		else:
 			get_tree().quit()
