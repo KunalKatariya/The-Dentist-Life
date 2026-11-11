@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="VillainResource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Data/villain_resource.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets_Imported/villains/blorb.png" id="2_sprite"]
+[ext_resource type="Resource" path="res://Scenes/NPC/blorb_npc.tres" id="3_npc"]
+[ext_resource type="PackedScene" path="res://Challenges/brush_off.tscn" id="4_challenge"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"blorb"
+display_name = "Blorb"
+sprite = ExtResource("2_sprite")
+npc_info = ExtResource("3_npc")
+challenge_scene = ExtResource("4_challenge")
+guarded_item_id = &"mirror_set"
+intro_lines = PackedStringArray("Mmm. Shh. Sleeping. This is my mirror now.", "player:You are sleeping on a dental mirror.", "It is a very good mirror. It shows me a beautiful blob.", "player:I am going to brush you.", "You will not. I am un-brushable. I am plaque with ambition.")
+victory_lines = PackedStringArray("Stop! Stop! I am clean! I am fresh!", "player:And the mirror set?", "Take it. Take everything. I need to lie down somewhere minty.", "Tell the dentist lady I am sorry. Tell her I said the mirror was lovely.")
+retreat_lines = PackedStringArray("Heh. You brush like a dentist on holiday.", "player:I will be back.", "Bring a softer brush. That one tickled.")

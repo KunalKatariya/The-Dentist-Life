@@ -1,0 +1,159 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Challenges/challenge_base.gd" id="1_base"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_frame"]
+bg_color = Color(0.117647, 0.105882, 0.156863, 0.968627)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.952941, 0.819608, 0.45098, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_bar_bg"]
+bg_color = Color(0.054902, 0.047059, 0.070588, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_bar_fill"]
+bg_color = Color(0.494118, 0.85098, 0.596078, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="Challenge" type="CanvasLayer"]
+process_mode = 3
+layer = 20
+script = ExtResource("1_base")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0392157, 0.0470588, 0.0784314, 0.733333)
+
+[node name="Frame" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.0
+offset_top = -107.0
+offset_right = 196.0
+offset_bottom = 107.0
+theme_override_styles/panel = SubResource("StyleBox_frame")
+
+[node name="Margin" type="MarginContainer" parent="Frame"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Frame/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Frame/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.921569, 0.698039, 1)
+theme_override_font_sizes/font_size = 16
+text = "Challenge"
+horizontal_alignment = 1
+
+[node name="Instructions" type="Label" parent="Frame/Margin/VBox"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.901961, 0.878431, 0.815686, 1)
+theme_override_font_sizes/font_size = 9
+text = "Instructions"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PlayArea" type="Control" parent="Frame/Margin/VBox"]
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Progress" type="ProgressBar" parent="Frame/Margin/VBox"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBox_bar_bg")
+theme_override_styles/fill = SubResource("StyleBox_bar_fill")
+show_percentage = false
+
+[node name="Status" type="Label" parent="Frame/Margin/VBox"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.74902, 0.729412, 0.678431, 1)
+theme_override_font_sizes/font_size = 9
+horizontal_alignment = 1
+
+[node name="TimerBar" type="ProgressBar" parent="Frame/Margin/VBox"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+modulate = Color(1, 0.74902, 0.588235, 1)
+theme_override_styles/background = SubResource("StyleBox_bar_bg")
+theme_override_styles/fill = SubResource("StyleBox_bar_fill")
+value = 100.0
+show_percentage = false
+
+[node name="ResultPanel" type="PanelContainer" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -58.0
+offset_right = 130.0
+offset_bottom = 58.0
+theme_override_styles/panel = SubResource("StyleBox_frame")
+
+[node name="Margin" type="MarginContainer" parent="ResultPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="ResultPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Result" type="Label" parent="ResultPanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.960784, 0.929412, 0.835294, 1)
+theme_override_font_sizes/font_size = 10
+text = "Result"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Retry" type="Button" parent="ResultPanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Try again"
+
+[node name="Skip" type="Button" parent="ResultPanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "Skip this challenge"
+
+[node name="Continue" type="Button" parent="ResultPanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Continue"

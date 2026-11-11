@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://Challenges/challenge_base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://Challenges/brush_off.gd" id="2_brush"]
+
+[node name="BrushOff" instance=ExtResource("1_base")]
+script = ExtResource("2_brush")
+challenge_title = "Brush Off!"
+instructions = "Blorb is stuck to the mirror set. Mash SPACE or E to brush it clean."
+duration = 20.0
+success_message = "Blorb is minty fresh and mildly embarrassed.\nIt lets go of the mirror set."
+failure_message = "Blorb wriggled free!\nTry again, Doctor."
