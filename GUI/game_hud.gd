@@ -156,6 +156,8 @@ func _quest_text() -> String:
 		return "All equipment recovered. Return to the clinic for reopening day."
 	if stage >= 3:
 		return "Recover the remaining equipment. Kunal in the village may have hints."
+	if stage >= 2:
+		return "Blorb, the round green blob by the right-hand chair, is asleep on the mirror set. Brush it off."
 	if stage >= 1:
 		return "Recover the six pieces of stolen clinic equipment."
 	return "Find out what happened at the clinic."

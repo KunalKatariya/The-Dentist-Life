@@ -57,6 +57,7 @@ func _ready() -> void:
 
 	# HUD and notebook.
 	_check(GameHUD.root.visible, "HUD visible inside the clinic")
+	_check("Blorb" in GameHUD.quest_label.text, "HUD points to Blorb at stage 2")
 	GameHUD.open_notebook()
 	await get_tree().process_frame
 	_check(GameHUD.notebook.visible, "notebook opens")
