@@ -3439,6 +3439,7 @@ tile_set = SubResource("TileSet_pio1y")
 [node name="SceneTrigger" parent="." instance=ExtResource("5_o00ia")]
 position = Vector2(1429.01, -95.42)
 connected_scene = "uid://cpik4eq43fhu"
+spawn_point = &"clinic_door"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneTrigger"]
 z_index = 1

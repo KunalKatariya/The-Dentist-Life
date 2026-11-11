@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cpik4eq43fhu"]
+[gd_scene load_steps=28 format=3 uid="uid://cpik4eq43fhu"]
 
 [ext_resource type="Texture2D" uid="uid://cubr5s11kot8m" path="res://Scenes/Clinic/Sprites/Geminiclinic.png" id="1_nl862"]
 [ext_resource type="Script" uid="uid://b0qeicqigc818" path="res://Scenes/Clinic/Scripts/Clinic.gd" id="1_rqbh7"]
@@ -8,6 +8,14 @@
 [ext_resource type="PackedScene" uid="uid://bl1up2i0xxn15" path="res://scene_trigger.tscn" id="5_s52m0"]
 [ext_resource type="PackedScene" uid="uid://di7q7m4tmr0i7" path="res://Scenes/Transition.tscn" id="6_bal0l"]
 [ext_resource type="AudioStream" uid="uid://dt5s8m0qwthf5" path="res://Scenes/Clinic/Audio/Brush-Your-Teeth-Kids-Songs-Super-Simple-Songs-_mp3cut.net_.ogg" id="8_wt3vc"]
+[ext_resource type="PackedScene" uid="uid://vqxpr5gl3id8" path="res://Scenes/NPC/NPC.tscn" id="9_npc"]
+[ext_resource type="PackedScene" uid="uid://fawxjldjbuod" path="res://Interactable/dialog/dialog_interaction.tscn" id="10_dialog"]
+[ext_resource type="Script" path="res://Scenes/NPC/ClinicNpc.gd" id="11_clinicnpc"]
+[ext_resource type="Resource" path="res://Scenes/NPC/priya.tres" id="12_priya"]
+[ext_resource type="Resource" path="res://Scenes/NPC/mehta.tres" id="13_mehta"]
+[ext_resource type="PackedScene" path="res://Systems/villain.tscn" id="14_villain"]
+[ext_resource type="Resource" path="res://Data/villains/blorb.tres" id="15_blorb"]
+[ext_resource type="PackedScene" path="res://Systems/item_shelf.tscn" id="16_shelf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s52m0"]
 texture = ExtResource("4_nl862")
@@ -263,3 +271,30 @@ grow_vertical = 1
 stream = ExtResource("8_wt3vc")
 autoplay = true
 parameters/looping = true
+
+[node name="Priya" parent="." instance=ExtResource("9_npc")]
+position = Vector2(124, 82)
+npc_resource = ExtResource("12_priya")
+script = ExtResource("11_clinicnpc")
+dialog_key = "priya"
+auto_greet = true
+
+[node name="DialogInteraction" parent="Priya" instance=ExtResource("10_dialog")]
+
+[node name="Mehta" parent="." instance=ExtResource("9_npc")]
+position = Vector2(155, 176)
+npc_resource = ExtResource("13_mehta")
+script = ExtResource("11_clinicnpc")
+dialog_key = "mehta"
+
+[node name="DialogInteraction" parent="Mehta" instance=ExtResource("10_dialog")]
+
+[node name="Blorb" parent="." instance=ExtResource("14_villain")]
+position = Vector2(300, 182)
+data = ExtResource("15_blorb")
+
+[node name="ItemShelf" parent="." instance=ExtResource("16_shelf")]
+position = Vector2(240, 44)
+
+[node name="clinic_door" type="Node2D" parent="." groups=["spawn_points"]]
+position = Vector2(241, 205)

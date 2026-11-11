@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Systems/item_shelf.gd" id="1_shelf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shelf"]
+size = Vector2(96, 48)
+
+[node name="ItemShelf" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_shelf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 24)
+shape = SubResource("RectangleShape2D_shelf")
+
+[node name="Slots" type="Node2D" parent="."]
+
+[node name="Prompt" type="Label" parent="."]
+visible = false
+offset_left = -14.0
+offset_top = -40.0
+offset_right = 14.0
+offset_bottom = -24.0
+theme_override_colors/font_color = Color(1, 0.93, 0.55, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.07, 0.1, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 10
+text = "E"
+horizontal_alignment = 1
+vertical_alignment = 1

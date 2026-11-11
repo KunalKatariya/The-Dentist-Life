@@ -1,0 +1,158 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://GUI/game_hud.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_light"]
+bg_color = Color(0.980392, 0.945098, 0.858824, 0.941176)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.411765, 0.337255, 0.231373, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_notebook"]
+bg_color = Color(0.980392, 0.945098, 0.858824, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.411765, 0.337255, 0.231373, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="GameHUD" type="CanvasLayer"]
+process_mode = 3
+layer = 10
+script = ExtResource("1_hud")
+
+[node name="Root" type="Control" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CounterPanel" type="PanelContainer" parent="Root"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 146.0
+offset_bottom = 26.0
+theme_override_styles/panel = SubResource("StyleBox_light")
+
+[node name="Counter" type="Label" parent="Root/CounterPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.266667, 0.211765, 0.14902, 1)
+theme_override_font_sizes/font_size = 9
+text = "EQUIPMENT  0 / 6"
+vertical_alignment = 1
+
+[node name="Hint" type="Label" parent="Root"]
+offset_left = 8.0
+offset_top = 28.0
+offset_right = 170.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0.980392, 0.945098, 0.858824, 1)
+theme_override_colors/font_outline_color = Color(0.156863, 0.12549, 0.0901961, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 8
+text = "N  Notebook"
+
+[node name="ToastPanel" type="PanelContainer" parent="Root"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -236.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 28.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBox_light")
+
+[node name="Toast" type="Label" parent="Root/ToastPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.266667, 0.211765, 0.14902, 1)
+theme_override_font_sizes/font_size = 8
+text = "Item recovered!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Notebook" type="Control" parent="Root"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="Root/Notebook"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0352941, 0.0313725, 0.0470588, 0.560784)
+
+[node name="Panel" type="PanelContainer" parent="Root/Notebook"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -107.0
+offset_right = 160.0
+offset_bottom = 107.0
+theme_override_styles/panel = SubResource("StyleBox_notebook")
+
+[node name="Margin" type="MarginContainer" parent="Root/Notebook/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Root/Notebook/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="Root/Notebook/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.266667, 0.211765, 0.14902, 1)
+theme_override_font_sizes/font_size = 12
+text = "DETECTIVE NOTEBOOK"
+horizontal_alignment = 1
+
+[node name="Quest" type="Label" parent="Root/Notebook/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.352941, 0.282353, 0.196078, 1)
+theme_override_font_sizes/font_size = 9
+text = "Recover the six pieces of stolen clinic equipment."
+autowrap_mode = 3
+
+[node name="Progress" type="Label" parent="Root/Notebook/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.470588, 0.392157, 0.286275, 1)
+theme_override_font_sizes/font_size = 8
+text = "Equipment recovered:  0 / 6"
+
+[node name="Items" type="VBoxContainer" parent="Root/Notebook/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Spacer" type="Control" parent="Root/Notebook/Panel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Close" type="Button" parent="Root/Notebook/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "Close  (N)"

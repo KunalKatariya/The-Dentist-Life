@@ -77,9 +77,17 @@ func _process(delta: float) -> void:
 func player_interact() -> void:
 	if not is_available() or dialog_items.is_empty() or _dialog_active:
 		return
+	if DialogSystem.is_active:
+		return
 	_dialog_active = true
 	player_interacted.emit()
 	DialogSystem.show_dialog(dialog_items)
+
+
+## Replaces the lines shown by this interaction. Used by NPCs whose dialog
+## depends on quest state.
+func set_dialog_items(items: Array[DialogItem]) -> void:
+	dialog_items = items
 
 
 func _on_dialog_finished() -> void:
