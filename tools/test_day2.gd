@@ -40,10 +40,12 @@ func _ready() -> void:
 	# Priya auto-greets the player shortly after arrival.
 	await get_tree().create_timer(2.0).timeout
 	_check(DialogSystem.is_active, "Priya auto-greet dialog is active")
+	_check(not player.input_enabled, "player movement locked during dialog")
 	if DialogSystem.is_active:
 		DialogSystem.hide_dialog()
 		await get_tree().process_frame
 	await get_tree().process_frame
+	_check(player.input_enabled, "player movement restored after dialog")
 	_check(GameState.has_flag("met_clerk"), "met_clerk flag set after intro")
 	_check(GameState.has_flag("got_notebook"), "notebook granted after intro")
 	_check(GameState.has_flag("got_toothbrush"), "toothbrush granted after intro")

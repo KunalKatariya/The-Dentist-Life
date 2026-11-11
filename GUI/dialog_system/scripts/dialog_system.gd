@@ -12,6 +12,7 @@ var text_speed : float = 0.02
 var text_length : int = 0
 var plain_text : String
 var waiting_for_choice : bool = false
+var _input_player : Node = null
 
 @onready var dialog_ui : Control = $DialogUI
 @onready var content : RichTextLabel = $DialogUI/PanelContainer/RichTextLabel
@@ -57,6 +58,9 @@ func show_dialog(_items : Array[ DialogItem ]) -> void:
 	dialog_ui.process_mode = Node.PROCESS_MODE_ALWAYS
 	dialog_items = _items
 	dialog_item_index = 0
+	# The clinic player is PROCESS_MODE_ALWAYS, so pausing the tree alone does
+	# not stop movement. Lock it while the conversation is on screen.
+	_set_player_input(false)
 	get_tree().paused = true
 	await get_tree().process_frame
 	start_dialog()
@@ -68,6 +72,7 @@ func hide_dialog() -> void:
 	dialog_ui.visible = false
 	dialog_ui.process_mode = Node.PROCESS_MODE_DISABLED
 	get_tree().paused = false
+	_set_player_input(true)
 	finished.emit()
 	dialog_item_index = 0  # Reset for next time
 	pass
@@ -170,3 +175,19 @@ func _on_timer_timeout() -> void:
 		show_dialog_button_indicator(true)
 		text_in_progress = false
 	pass
+
+
+func _set_player_input(enabled: bool) -> void:
+	if enabled:
+		if _input_player != null and is_instance_valid(_input_player) and _input_player.has_method("set_input_enabled"):
+			_input_player.set_input_enabled(true)
+		_input_player = null
+		return
+	_input_player = null
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+	var player := scene.find_child("Player", true, false)
+	if player != null and player.has_method("set_input_enabled"):
+		_input_player = player
+		player.set_input_enabled(false)
