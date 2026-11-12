@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://dvvvhr68fa6xo"]
+[gd_scene load_steps=21 format=4 uid="uid://dvvvhr68fa6xo"]
 
 [ext_resource type="Script" uid="uid://dp4crsfs3sro2" path="res://Scenes/MainMenu/Scripts/Menu.gd" id="1_v763k"]
 [ext_resource type="Texture2D" uid="uid://dtlcrwqpv4o8i" path="res://Scenes/MainMenu/Sprites/MainMenuFinalFinal.png" id="2_qgdf6"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://nuw4fnvy5gur" path="res://Scenes/Surprise/Sprites/Surprise1.png" id="7_n5jej"]
 [ext_resource type="Texture2D" uid="uid://dhq6cksr1vkm0" path="res://Scenes/MainMenu/Sprites/MainMenuShort.png" id="8_2r307"]
 [ext_resource type="AudioStream" uid="uid://c04acd170mwia" path="res://Scenes/MainMenu/Audio/click.ogg" id="11_mdp32"]
+[ext_resource type="Texture2D" path="res://Scenes/MainMenu/Sprites/Continue_idle_Button.png" id="20_continue_idle"]
+[ext_resource type="Texture2D" path="res://Scenes/MainMenu/Sprites/Continue_hover_Button.png" id="21_continue_hover"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0qgbs"]
 atlas = ExtResource("2_qgdf6")
@@ -1233,12 +1235,22 @@ texture_normal = ExtResource("3_2r307")
 texture_hover = ExtResource("4_omq0y")
 stretch_mode = 0
 
+[node name="ContinueButton" type="TextureButton" parent="Buttons_Manager"]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 100.0
+offset_right = 457.0
+offset_bottom = 121.0
+texture_normal = ExtResource("20_continue_idle")
+texture_hover = ExtResource("21_continue_hover")
+stretch_mode = 0
+
 [node name="ExitButton" type="TextureButton" parent="Buttons_Manager"]
 layout_mode = 0
 offset_left = 400.0
-offset_top = 101.0
+offset_top = 124.0
 offset_right = 456.0
-offset_bottom = 121.0
+offset_bottom = 144.0
 texture_normal = ExtResource("5_agesy")
 texture_hover = ExtResource("6_mdp32")
 stretch_mode = 0
@@ -1267,4 +1279,5 @@ stream = ExtResource("11_mdp32")
 volume_db = 1.841
 
 [connection signal="pressed" from="Buttons_Manager/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Buttons_Manager/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="Buttons_Manager/ExitButton" to="." method="_on_exit_button_pressed"]

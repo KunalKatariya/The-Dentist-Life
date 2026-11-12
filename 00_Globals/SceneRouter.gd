@@ -34,8 +34,22 @@ func go_to_path(path: String, spawn: StringName = &"") -> void:
 		push_error("SceneRouter: empty scene path")
 		return
 	next_spawn = spawn
+	var resolved := _resolved_path(path)
+	# Remember where the player was last playing. Never resume into the menu.
+	if resolved != SCENES["menu"]:
+		GameState.set_last_scene(resolved)
 	destination_changed.emit(path)
 	get_tree().call_deferred("change_scene_to_file", path)
+
+
+func _resolved_path(path: String) -> String:
+	if not path.begins_with("uid://"):
+		return path
+	var id := ResourceUID.text_to_id(path)
+	if id == ResourceUID.INVALID_ID:
+		return path
+	var resolved := ResourceUID.get_id_path(id)
+	return resolved if not resolved.is_empty() else path
 
 
 ## Returns the requested spawn name once and clears it.

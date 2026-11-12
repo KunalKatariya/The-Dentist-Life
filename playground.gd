@@ -31,6 +31,7 @@ func _on_action_requested(action_name: String) -> void:
 func _input(event):
 	if event.is_action_pressed("esc") and !going_back:
 		# ESC key pressed
+		GameState.save_current_scene_state()
 		going_back = true
 		transition.show()
 		anim_player.play("Fade_Out")

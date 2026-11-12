@@ -23,12 +23,22 @@ var recovered_items: Array = []
 var stickers: Array = []
 ## Key: scene path (e.g. "res://playground.tscn"), value: Vector2.
 var scene_positions: Dictionary = {}
+## Scene the player was in when the game was last saved.
+var last_scene: String = ""
+## True when a readable save file exists (or one was just written).
+var save_available: bool = false
 
 var _loading: bool = false
 
 
 func _ready() -> void:
-	load_game()
+	save_available = load_game()
+
+
+func _notification(what: int) -> void:
+	# Save the exact spot when the player closes the window.
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		save_current_scene_state()
 
 
 # --- Flags -----------------------------------------------------------------
@@ -120,6 +130,36 @@ func has_scene_position(scene_path: String) -> bool:
 	return scene_positions.has(scene_path)
 
 
+## Record the scene the player is currently in so Continue can resume there.
+func set_last_scene(path: String) -> void:
+	if path.is_empty() or path == last_scene:
+		return
+	last_scene = path
+	save_game()
+
+
+func get_last_scene() -> String:
+	return last_scene
+
+
+## Save the current scene and the player's exact position. Used when the game
+## closes or when the player returns to the main menu.
+func save_current_scene_state() -> void:
+	var scene := get_tree().current_scene
+	if scene == null or scene.scene_file_path.is_empty():
+		return
+	var player := scene.find_child("Player", true, false)
+	if not (player is Node2D):
+		return
+	scene_positions[scene.scene_file_path] = (player as Node2D).global_position
+	last_scene = scene.scene_file_path
+	save_game()
+
+
+func has_save() -> bool:
+	return save_available
+
+
 # --- Save / load -----------------------------------------------------------
 
 func save_game() -> void:
@@ -136,6 +176,7 @@ func save_game() -> void:
 		"recovered_items": recovered_items,
 		"stickers": stickers,
 		"scene_positions": positions,
+		"last_scene": last_scene,
 	}
 	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file == null:
@@ -143,10 +184,12 @@ func save_game() -> void:
 		return
 	file.store_string(JSON.stringify(data))
 	file.close()
+	save_available = true
 
 
 func load_game() -> bool:
 	if not FileAccess.file_exists(SAVE_PATH):
+		save_available = false
 		return false
 	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
 	if file == null:
@@ -155,6 +198,7 @@ func load_game() -> bool:
 	file.close()
 	if typeof(parsed) != TYPE_DICTIONARY:
 		push_warning("GameState: save file is not valid JSON, ignoring it")
+		save_available = false
 		return false
 
 	_loading = true
@@ -162,6 +206,7 @@ func load_game() -> bool:
 	quest_stages = parsed.get("quest_stages", DEFAULT_QUEST_STAGES.duplicate())
 	recovered_items = parsed.get("recovered_items", [])
 	stickers = parsed.get("stickers", [])
+	last_scene = parsed.get("last_scene", "")
 
 	scene_positions.clear()
 	var positions: Dictionary = parsed.get("scene_positions", {})
@@ -170,6 +215,7 @@ func load_game() -> bool:
 		if typeof(value) == TYPE_ARRAY and value.size() >= 2:
 			scene_positions[path] = Vector2(float(value[0]), float(value[1]))
 	_loading = false
+	save_available = true
 
 	game_loaded.emit()
 	return true
@@ -181,5 +227,6 @@ func new_game() -> void:
 	recovered_items.clear()
 	stickers.clear()
 	scene_positions.clear()
+	last_scene = ""
 	_loading = false
 	save_game()

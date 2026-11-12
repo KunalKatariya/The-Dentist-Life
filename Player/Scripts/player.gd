@@ -25,12 +25,22 @@ func _set_saved_position():
 		var marker := _find_spawn_point(String(spawn_name))
 		if marker:
 			global_position = marker.global_position
+			_remember_position()
 			return
 
 	var current_scene_path = get_tree().current_scene.scene_file_path
 	if GameState.has_scene_position(current_scene_path):
 		var saved_position = GameState.get_scene_position(current_scene_path)
 		global_position = saved_position
+	_remember_position()
+
+
+func _remember_position() -> void:
+	# Keep a continue checkpoint for the scene the player just entered.
+	var scene := get_tree().current_scene
+	if scene == null or scene.scene_file_path.is_empty():
+		return
+	GameState.set_scene_position(scene.scene_file_path, global_position)
 
 func _find_spawn_point(spawn_name: String) -> Node2D:
 	for node in get_tree().get_nodes_in_group("spawn_points"):
