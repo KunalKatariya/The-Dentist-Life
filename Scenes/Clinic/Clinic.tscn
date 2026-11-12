@@ -157,6 +157,7 @@ size = Vector2(44, 43.25)
 size = Vector2(80, 19)
 
 [node name="Clinic" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_rqbh7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
