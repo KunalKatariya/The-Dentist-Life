@@ -144,8 +144,14 @@ func _refresh() -> void:
 		var mark := row["mark"] as Label
 		var name_label := row["name"] as Label
 		mark.text = "[x]" if have else "[ ]"
-		mark.modulate = Color(0.55, 1.0, 0.65) if have else Color(0.7, 0.7, 0.75)
-		name_label.modulate = Color.WHITE if have else Color(0.65, 0.65, 0.7)
+		mark.add_theme_color_override(
+			"font_color",
+			Color("#1E7A44") if have else Color("#8A7862")
+		)
+		name_label.add_theme_color_override(
+			"font_color",
+			Color("#33502F") if have else Color("#7C6B57")
+		)
 
 
 func _quest_text() -> String:

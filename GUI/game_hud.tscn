@@ -1,6 +1,19 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://GUI/game_hud.gd" id="1_hud"]
+[ext_resource type="Texture2D" path="res://GUI/sprites/wood_panel.png" id="2_wood"]
+[ext_resource type="FontFile" path="res://Scenes/DayNightCycle/assets/fonts/pixelmix/pixelmix.ttf" id="3_pixel"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_wood"]
+texture = ExtResource("2_wood")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
+content_margin_left = 8.0
+content_margin_top = 1.0
+content_margin_right = 8.0
+content_margin_bottom = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_light"]
 bg_color = Color(0.980392, 0.945098, 0.858824, 0.941176)
@@ -40,24 +53,26 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="CounterPanel" type="PanelContainer" parent="Root"]
-offset_left = 8.0
-offset_top = 8.0
+offset_left = 6.0
+offset_top = 46.0
 offset_right = 146.0
-offset_bottom = 26.0
-theme_override_styles/panel = SubResource("StyleBox_light")
+offset_bottom = 70.0
+theme_override_styles/panel = SubResource("StyleBox_wood")
 
 [node name="Counter" type="Label" parent="Root/CounterPanel"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.266667, 0.211765, 0.14902, 1)
-theme_override_font_sizes/font_size = 9
+theme_override_colors/font_color = Color(0.290196, 0.164706, 0.0941176, 1)
+theme_override_fonts/font = ExtResource("3_pixel")
+theme_override_font_sizes/font_size = 8
 text = "EQUIPMENT  0 / 6"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Hint" type="Label" parent="Root"]
 offset_left = 8.0
-offset_top = 28.0
+offset_top = 71.0
 offset_right = 170.0
-offset_bottom = 40.0
+offset_bottom = 83.0
 theme_override_colors/font_color = Color(0.980392, 0.945098, 0.858824, 1)
 theme_override_colors/font_outline_color = Color(0.156863, 0.12549, 0.0901961, 1)
 theme_override_constants/outline_size = 4
@@ -123,7 +138,7 @@ theme_override_constants/separation = 4
 
 [node name="Title" type="Label" parent="Root/Notebook/Panel/Margin/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.266667, 0.211765, 0.14902, 1)
+theme_override_colors/font_color = Color(0.231373, 0.129412, 0.0705882, 1)
 theme_override_font_sizes/font_size = 12
 text = "DETECTIVE NOTEBOOK"
 horizontal_alignment = 1
@@ -131,14 +146,14 @@ horizontal_alignment = 1
 [node name="Quest" type="Label" parent="Root/Notebook/Panel/Margin/VBox"]
 custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.352941, 0.282353, 0.196078, 1)
+theme_override_colors/font_color = Color(0.290196, 0.196078, 0.12549, 1)
 theme_override_font_sizes/font_size = 9
 text = "Recover the six pieces of stolen clinic equipment."
 autowrap_mode = 3
 
 [node name="Progress" type="Label" parent="Root/Notebook/Panel/Margin/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.470588, 0.392157, 0.286275, 1)
+theme_override_colors/font_color = Color(0.360784, 0.27451, 0.192157, 1)
 theme_override_font_sizes/font_size = 8
 text = "Equipment recovered:  0 / 6"
 
