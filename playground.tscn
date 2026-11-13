@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://ciw0kec5ov53g"]
+[gd_scene load_steps=34 format=4 uid="uid://ciw0kec5ov53g"]
 
 [ext_resource type="Script" uid="uid://cmit16kjp8r88" path="res://playground.gd" id="1_pio1y"]
 [ext_resource type="PackedScene" uid="uid://l162wshmnvw" path="res://Player/player.tscn" id="1_rupst"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://cjn8wqs6tgy71" path="res://Scenes/DayNightCycle/day-night-cycle/demo/daynightcycle_scene.tscn" id="20_x6kx1"]
 [ext_resource type="Texture2D" uid="uid://cxh3g6jdb1xs7" path="res://Tile Maps/Sprites/Gemini_Generated_Image_3vxlkh3vxlkh3vxl-Photoroom.png" id="21_jufm4"]
 [ext_resource type="Texture2D" uid="uid://d0m8rsnw53f80" path="res://Tile Maps/Sprites/ChatGPT Image Sep 5, 20Clinic.png" id="22_ymgag"]
+[ext_resource type="PackedScene" path="res://Scenes/NPC/bakery_cart.tscn" id="23_bakery"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pi42a"]
 texture = ExtResource("5_ynsuh")
@@ -3535,6 +3536,31 @@ script = ExtResource("15_jgc46")
 text = "Uff, mere mann ki baat chheen li haha.."
 metadata/_custom_type_script = "uid://celflw5ft7uxm"
 
+[node name="DialogBranch5" type="Node" parent="Npc/DialogInteraction/DialogChoice"]
+script = ExtResource("18_5m40n")
+text = "Any bakery tips?"
+required_flag = "villain_blorb_cleared"
+forbidden_flag = "villain_wobble_cleared"
+metadata/_custom_type_script = "uid://d2l41jli2hb5k"
+
+[node name="DialogText" type="Node" parent="Npc/DialogInteraction/DialogChoice/DialogBranch5"]
+script = ExtResource("15_jgc46")
+text = "Funny you ask. The bakery cart by the clinic keeps wobbling. I thought it was the wind. Then I saw a tooth in a chef hat trying to balance on a dental chair."
+npc_info = ExtResource("13_f7pug")
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="DialogText2" type="Node" parent="Npc/DialogInteraction/DialogChoice/DialogBranch5"]
+script = ExtResource("15_jgc46")
+text = "A tooth."
+npc_info = ExtResource("16_dk0co")
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
+[node name="DialogText3" type="Node" parent="Npc/DialogInteraction/DialogChoice/DialogBranch5"]
+script = ExtResource("15_jgc46")
+text = "A very confident tooth. Be careful, babe. He looked like he had been practicing."
+npc_info = ExtResource("13_f7pug")
+metadata/_custom_type_script = "uid://celflw5ft7uxm"
+
 [node name="DialogBranch4" type="Node" parent="Npc/DialogInteraction/DialogChoice"]
 script = ExtResource("18_5m40n")
 text = "I want some alone time"
@@ -3604,3 +3630,6 @@ texture = ExtResource("22_ymgag")
 position = Vector2(1380, 508.5)
 scale = Vector2(4.35458, -4.91163)
 shape = SubResource("RectangleShape2D_u2qr3")
+
+[node name="BakeryCart" parent="." instance=ExtResource("23_bakery")]
+position = Vector2(1540, 130)

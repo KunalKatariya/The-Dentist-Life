@@ -91,7 +91,13 @@ func _priya_repeat_dialog() -> Array[DialogItem]:
 		out.append(_line("You're enjoying this.", true))
 		out.append(_line("I'm enjoying the tea. The rest is a bonus."))
 	elif GameState.recovered_count() < ItemCatalog.TOTAL:
-		out.append(_line("One down! The exam station looks almost usable. Almost."))
+		var count := GameState.recovered_count()
+		if count <= 1:
+			out.append(_line("One down! The exam station looks almost usable. Almost."))
+		else:
+			out.append(_line("%d down. The clinic is starting to look like a clinic again." % count))
+		if GameState.has_item(&"chair"):
+			out.append(_line("Wobble left a note about the chair. It says it was 'warm and well loved'. I'm choosing to find that sweet."))
 		out.append(_line("Try the village next. Kunal has been pacing outside like a very handsome compass."))
 		out.append(_line("He's going to want a title.", true))
 		out.append(_line("Give him 'Chief Moral Support'. He'll cry."))
@@ -112,7 +118,9 @@ func _mehta_dialog() -> Array[DialogItem]:
 	out.append(_line("You're going to fight a sugar monster with a toothbrush, aren't you?"))
 	out.append(_line("Yes.", true))
 	out.append(_line("This is the best waiting room I've ever been in."))
-	if GameState.has_item(&"mirror_set"):
+	if GameState.has_flag("villain_blorb_cleared"):
+		out.append(_line("Also, the blob by the door is gone. Steve says the waiting room feels roomier. Steve is very brave."))
+	elif GameState.has_item(&"mirror_set"):
 		out.append(_line("Also, I saw the blob by the door. It waved at me. Steve did not wave back."))
 	else:
 		out.append(_line("Also, that round green blob by the right chair has been staring at me. I think it wants my tooth."))
