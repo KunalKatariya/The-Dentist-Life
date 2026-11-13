@@ -173,9 +173,9 @@ func _check_hub_and_encounter() -> void:
 	if bakery_branch != null:
 		_check(bakery_branch.is_available(),
 			"Kunal's hint survives finishing the bakery")
-		_check(bakery_branch.text == "What's next?",
-			"Kunal's hint moves on once both items are home")
-		_check(_choice_labels(choice).has("What's next?"),
+		_check(bakery_branch.text == "Any light tips?",
+			"Kunal's hint moves on to the curing light")
+		_check(_choice_labels(choice).has("Any light tips?"),
 			"Kunal's menu still has a progress option after the bakery")
 
 	hub.queue_free()

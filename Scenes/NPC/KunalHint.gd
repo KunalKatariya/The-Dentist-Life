@@ -43,9 +43,23 @@ func _hint_lines() -> Array[String]:
 			"A tooth.",
 			"A very confident tooth. Be careful, babe. He looked like he had been practicing.",
 		]
+	if not GameState.has_item(&"curing_light"):
+		return [
+			"Any light tips?",
+			"The tea cart by the clinic. There is a little blue glow under it that is not the lamp. Something is hoarding the curing light and sipping chai.",
+			"Something?",
+			"Something smoky with very tired eyes. It kept muttering that the light was too loud. Go gently, babe.",
+		]
+	if not GameState.has_item(&"xray"):
+		return [
+			"Any X-ray tips?",
+			"Down the badminton path. A very small skeleton has set the X-ray board up like a stage. He is showing his bones to anyone who will look.",
+			"A skeleton.",
+			"A polite one. He bows before he rattles. Copy his flashes and he will hand it over.",
+		]
 	return [
 		"What's next?",
-		"The clinic and the bakery are handled. The rest of town is quiet... for now. Go enjoy Priya's tea.",
+		"Two more pieces are still out there. I am still asking around, babe. The tea is getting cold.",
 		"That's it?",
-		"For now. I'll keep my ears open, babe.",
+		"For now. I'll keep my ears open.",
 	]
