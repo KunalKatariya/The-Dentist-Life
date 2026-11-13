@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://Challenges/challenge_base.tscn" id="1_base"]
+[ext_resource type="Script" path="res://Challenges/chair_balance.gd" id="2_chair"]
+
+[node name="ChairBalance" instance=ExtResource("1_base")]
+script = ExtResource("2_chair")
+challenge_title = "Chair Balance"
+instructions = "Wobble is perched on the stolen dental chair. Keep it upright with A/D or the arrow keys for 12 seconds."
+duration = 12.0
+success_message = "The chair stays upright. Wobble slides off, dizzy but impressed."
+failure_message = "The chair tips over! Wobble giggles and climbs back on.\nTry again, Doctor."
