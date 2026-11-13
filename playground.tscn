@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://ciw0kec5ov53g"]
+[gd_scene load_steps=35 format=4 uid="uid://ciw0kec5ov53g"]
 
 [ext_resource type="Script" uid="uid://cmit16kjp8r88" path="res://playground.gd" id="1_pio1y"]
 [ext_resource type="PackedScene" uid="uid://l162wshmnvw" path="res://Player/player.tscn" id="1_rupst"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://cxh3g6jdb1xs7" path="res://Tile Maps/Sprites/Gemini_Generated_Image_3vxlkh3vxlkh3vxl-Photoroom.png" id="21_jufm4"]
 [ext_resource type="Texture2D" uid="uid://d0m8rsnw53f80" path="res://Tile Maps/Sprites/ChatGPT Image Sep 5, 20Clinic.png" id="22_ymgag"]
 [ext_resource type="PackedScene" path="res://Scenes/NPC/bakery_cart.tscn" id="23_bakery"]
+[ext_resource type="Script" path="res://Scenes/NPC/KunalHint.gd" id="24_kunal_hint"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pi42a"]
 texture = ExtResource("5_ynsuh")
@@ -3537,11 +3538,8 @@ text = "Uff, mere mann ki baat chheen li haha.."
 metadata/_custom_type_script = "uid://celflw5ft7uxm"
 
 [node name="DialogBranch5" type="Node" parent="Npc/DialogInteraction/DialogChoice"]
-script = ExtResource("18_5m40n")
+script = ExtResource("24_kunal_hint")
 text = "Any bakery tips?"
-required_flag = "villain_blorb_cleared"
-forbidden_flag = "villain_wobble_cleared"
-metadata/_custom_type_script = "uid://d2l41jli2hb5k"
 
 [node name="DialogText" type="Node" parent="Npc/DialogInteraction/DialogChoice/DialogBranch5"]
 script = ExtResource("15_jgc46")

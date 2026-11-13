@@ -50,7 +50,7 @@ func _build_dialog() -> Array[DialogItem]:
 		"mehta":
 			return _mehta_dialog()
 		_:
-			if not GameState.has_flag("met_clerk"):
+			if not GameState.quest_started():
 				return _priya_first_dialog()
 			return _priya_repeat_dialog()
 
@@ -128,7 +128,9 @@ func _mehta_dialog() -> Array[DialogItem]:
 
 
 func _start_greet_timer() -> void:
-	if GameState.has_flag("met_clerk") or GameState.get_quest_stage("restore_clinic") > 0:
+	# The quest begins with this conversation, even for saves that arrived out
+	# of order before the intro was completed.
+	if GameState.quest_started():
 		return
 	var timer := Timer.new()
 	timer.wait_time = greet_delay
@@ -139,19 +141,25 @@ func _start_greet_timer() -> void:
 
 
 func _on_greet_timeout() -> void:
-	if GameState.has_flag("met_clerk"):
+	if GameState.quest_started():
 		return
 	var interaction := _interaction()
 	if interaction == null:
 		return
 	interaction.player_interact()
-	await interaction.finished
+
+
+## Grant the notebook and toothbrush whichever way the first Priya dialog was
+## opened: automatically on arrival or by the player pressing E.
+func _on_interaction_finished() -> void:
+	if dialog_key == "priya" and not GameState.quest_started():
+		_grant_intro_rewards()
+
+
+func _grant_intro_rewards() -> void:
+	if GameState.quest_started():
+		return
 	GameState.set_flag("met_clerk", true)
 	GameState.set_flag("got_notebook", true)
 	ActionRouter.run("start_quest")
 	ActionRouter.run("give_toothbrush")
-
-
-## The clinic has no Playground-specific dialog callback, so keep this quiet.
-func _on_interaction_finished() -> void:
-	pass

@@ -8,6 +8,7 @@ const PLAYER_INFO := preload("res://Scenes/NPC/npc_player.tres")
 
 var player_near: bool = false
 var _busy: bool = false
+var _active: bool = false
 var _sprite_base_y: float = 0.0
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var prompt: Label = $Prompt
@@ -36,16 +37,38 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
+	# The robbery only begins after Priya hands over the notebook. Until then
+	# the villain waits out of sight and cannot start a conversation.
+	_active = GameState.quest_started()
+	visible = _active
+	if not _active:
+		GameState.flag_changed.connect(_on_flag_changed)
+
 
 func _process(_delta: float) -> void:
-	if sprite != null:
-		sprite.position.y = _sprite_base_y + sin(Time.get_ticks_msec() / 380.0) * 2.0
+	if not _active or sprite == null:
+		return
+	sprite.position.y = _sprite_base_y + sin(Time.get_ticks_msec() / 380.0) * 2.0
+
+
+func _on_flag_changed(flag: String, value: Variant) -> void:
+	if flag == "got_notebook" and value == true:
+		_activate()
+
+
+func _activate() -> void:
+	if _active:
+		return
+	_active = true
+	visible = true
+	if player_near and not _busy:
+		prompt.show()
 
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		player_near = true
-		if not _busy:
+		if _active and not _busy:
 			prompt.show()
 
 
@@ -56,7 +79,7 @@ func _on_body_exited(body: Node2D) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if player_near and not _busy and event.is_action_pressed("interact"):
+	if _active and player_near and not _busy and event.is_action_pressed("interact"):
 		if get_tree().paused or DialogSystem.is_active:
 			return
 		get_viewport().set_input_as_handled()
@@ -64,6 +87,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _start_encounter() -> void:
+	if not _active:
+		return
 	_busy = true
 	prompt.hide()
 	await _show_lines(data.intro_lines)

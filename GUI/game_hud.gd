@@ -42,7 +42,7 @@ func _process(_delta: float) -> void:
 		path = get_tree().current_scene.scene_file_path
 	var show_hud := HUD_SCENES.has(path)
 	# Do not spoil the robbery before Priya has explained it.
-	if show_hud and not GameState.has_flag("got_notebook") and GameState.get_quest_stage("restore_clinic") <= 0:
+	if show_hud and not GameState.quest_started():
 		show_hud = false
 	root.visible = show_hud
 	if not root.visible and _notebook_open:

@@ -55,6 +55,12 @@ func has_flag(flag: String) -> bool:
 	return flags.get(flag, false) == true
 
 
+## The collection quest only begins after Priya's first conversation. This is
+## the single marker used by the HUD, villains and hub hints.
+func quest_started() -> bool:
+	return has_flag("got_notebook")
+
+
 func get_flag(flag: String, default_value: Variant = false) -> Variant:
 	return flags.get(flag, default_value)
 
