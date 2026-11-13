@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="VillainResource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Data/villain_resource.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets_Imported/villains/rattle.png" id="2_sprite"]
+[ext_resource type="Resource" path="res://Scenes/NPC/rattle_npc.tres" id="3_npc"]
+[ext_resource type="PackedScene" path="res://Challenges/xray_memory.tscn" id="4_challenge"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"rattle"
+display_name = "Rattle"
+sprite = ExtResource("2_sprite")
+npc_info = ExtResource("3_npc")
+challenge_scene = ExtResource("4_challenge")
+guarded_item_id = &"xray"
+intro_lines = PackedStringArray("Ah! An audience! Welcome to the Rattle Review.", "player:That is the clinic's X-ray board.", "It is also my stage. Look at these ribs. Perfectly filed. No notes.", "player:I need the machine back.", "Of course. After the show. Repeat my bone flashes and it is yours. Two rounds. I will even bow.")
+victory_lines = PackedStringArray("Bravo! Encore! No, no encore. You have earned the machine.", "player:Thank you.", "I shall miss the spotlight. Tell Priya my bones are available for the reopening. Free of charge.")
+retreat_lines = PackedStringArray("A stumble! The audience gasps. We shall take it from the top.", "player:One more try.", "That is the spirit. The bones believe in you.")

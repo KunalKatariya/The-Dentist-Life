@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://ciw0kec5ov53g"]
+[gd_scene load_steps=37 format=4 uid="uid://ciw0kec5ov53g"]
 
 [ext_resource type="Script" uid="uid://cmit16kjp8r88" path="res://playground.gd" id="1_pio1y"]
 [ext_resource type="PackedScene" uid="uid://l162wshmnvw" path="res://Player/player.tscn" id="1_rupst"]
@@ -24,6 +24,8 @@
 [ext_resource type="Texture2D" uid="uid://d0m8rsnw53f80" path="res://Tile Maps/Sprites/ChatGPT Image Sep 5, 20Clinic.png" id="22_ymgag"]
 [ext_resource type="PackedScene" path="res://Scenes/NPC/bakery_cart.tscn" id="23_bakery"]
 [ext_resource type="Script" path="res://Scenes/NPC/KunalHint.gd" id="24_kunal_hint"]
+[ext_resource type="PackedScene" path="res://Scenes/NPC/tea_lamp.tscn" id="25_tea_lamp"]
+[ext_resource type="PackedScene" path="res://Scenes/NPC/xray_board.tscn" id="26_xray_board"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pi42a"]
 texture = ExtResource("5_ynsuh")
@@ -3631,3 +3633,9 @@ shape = SubResource("RectangleShape2D_u2qr3")
 
 [node name="BakeryCart" parent="." instance=ExtResource("23_bakery")]
 position = Vector2(1540, 130)
+
+[node name="TeaLamp" parent="." instance=ExtResource("25_tea_lamp")]
+position = Vector2(1395, 185)
+
+[node name="XrayBoard" parent="." instance=ExtResource("26_xray_board")]
+position = Vector2(505, 650)

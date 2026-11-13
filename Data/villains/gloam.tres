@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="VillainResource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Data/villain_resource.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets_Imported/villains/gloam.png" id="2_sprite"]
+[ext_resource type="Resource" path="res://Scenes/NPC/gloam_npc.tres" id="3_npc"]
+[ext_resource type="PackedScene" path="res://Challenges/curing_beam.tscn" id="4_challenge"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"gloam"
+display_name = "Gloam"
+sprite = ExtResource("2_sprite")
+npc_info = ExtResource("3_npc")
+challenge_scene = ExtResource("4_challenge")
+guarded_item_id = &"curing_light"
+intro_lines = PackedStringArray("Oh. Hello. Please do not turn on the big light.", "player:That is the clinic's curing light.", "It is a very good light. Warm. Quiet. It hums a little song. I have been drinking tea with it.", "player:Gloam, the clinic needs it back.", "Then catch the little beam. If it lets you catch it, it chooses you. That is how lights work. I am almost sure.")
+victory_lines = PackedStringArray("You caught it. It likes you. It never sat that still for me.", "player:I will take good care of it.", "Tell the dentist lady I only borrowed it for the evenings. The tea cart gets dark.", "And no, you cannot have the lamp. The lamp is mine. The light is yours.")
+retreat_lines = PackedStringArray("Missed. The light is shy. Try again when your hands are steadier.", "player:I will be back.", "I will put the kettle on. No hard feelings, Doctor.")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets_Imported/town/tea_lamp.png" id="1_lamp"]
+[ext_resource type="PackedScene" path="res://Systems/villain.tscn" id="2_villain"]
+[ext_resource type="Resource" path="res://Data/villains/gloam.tres" id="3_gloam"]
+
+[node name="TeaLamp" type="Node2D"]
+
+[node name="Lamp" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("1_lamp")
+
+[node name="Gloam" parent="." instance=ExtResource("2_villain")]
+z_index = 1
+position = Vector2(0, 24)
+data = ExtResource("3_gloam")
