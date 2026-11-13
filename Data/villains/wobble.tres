@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="VillainResource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Data/villain_resource.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets_Imported/villains/wobble.png" id="2_sprite"]
+[ext_resource type="Resource" path="res://Scenes/NPC/wobble_npc.tres" id="3_npc"]
+[ext_resource type="PackedScene" path="res://Challenges/chair_balance.tscn" id="4_challenge"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"wobble"
+display_name = "Wobble"
+sprite = ExtResource("2_sprite")
+npc_info = ExtResource("3_npc")
+challenge_scene = ExtResource("4_challenge")
+guarded_item_id = &"chair"
+intro_lines = PackedStringArray("Careful! Careful! This chair is mine now. I am testing it.", "player:That chair belongs to the clinic.", "It belonged to the clinic. Now it is a throne. A wobbly throne. The best kind.", "player:You are a tooth.", "A molar, thank you. And I have excellent balance. Better than yours, probably.", "player:Move. I am taking it back.", "Fine! But first you have to keep the chair upright. If it falls, you lose. I do not make the rules. I do, actually. I made them just now.")
+victory_lines = PackedStringArray("Whoa—okay—okay! You are very good at not dropping furniture.", "player:The chair?", "Take it. It is too tall for me anyway. I am going back to the bakery. They have a cinnamon roll with my name on it.", "Tell the dentist lady I kept it warm. That is all I did. I kept it warm.")
+retreat_lines = PackedStringArray("Ha! The chair falls, the tooth wins. That is the saying, right?", "player:I will be back.", "Bring a cushion. For the chair. Not for me. I am perfect.")
