@@ -139,18 +139,20 @@ func _check_pickups_and_bell() -> void:
 		await _free_scene(clinic)
 		return
 
-	player.global_position = sterilizer.global_position
+	player.global_position = sterilizer.global_position + Vector2(0, -16)
 	await _wait_physics(4)
 	_check(sterilizer.player_near, "the player can reach the sterilizer")
+	_check(sterilizer.prompt.visible, "the sterilizer shows its E prompt")
 	sterilizer._pick_up()
 	await get_tree().process_frame
 	_check(GameState.has_item(&"sterilizer"), "the sterilizer goes into the notebook")
 	_check(GameState.get_quest_stage("restore_clinic") == 3,
 		"five of six keeps the hunt going")
 
-	player.global_position = records.global_position
+	player.global_position = records.global_position + Vector2(0, 16)
 	await _wait_physics(4)
 	_check(records.player_near, "the player can reach the records folder")
+	_check(records.prompt.visible, "the records folder shows its E prompt")
 	records._pick_up()
 	await get_tree().process_frame
 	_check(GameState.has_item(&"records"), "the records folder goes into the notebook")
@@ -159,9 +161,10 @@ func _check_pickups_and_bell() -> void:
 	_check(GameState.has_flag("equipment_complete"), "the equipment flag is set")
 
 	_check(bell.visible, "the reception bell appears once all six are home")
-	player.global_position = bell.global_position
+	player.global_position = bell.global_position + Vector2(-15, 13)
 	await _wait_physics(4)
 	_check(bell.player_near, "the player can reach the reception bell")
+	_check(bell.prompt.visible, "the reception bell shows its E prompt")
 	bell._ring()
 	await get_tree().process_frame
 	await get_tree().process_frame
