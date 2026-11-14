@@ -22,6 +22,7 @@ var _notebook_open: bool = false
 var _rows: Array = []
 var _toast_timer: Timer
 var _player: Node = null
+var _hint_scene: String = ""
 
 
 func _ready() -> void:
@@ -45,8 +46,16 @@ func _process(_delta: float) -> void:
 	if show_hud and not GameState.quest_started():
 		show_hud = false
 	root.visible = show_hud
+	_update_hint(path)
 	if not root.visible and _notebook_open:
 		close_notebook()
+
+
+func _update_hint(path: String) -> void:
+	if path == _hint_scene:
+		return
+	_hint_scene = path
+	hint_label.text = "N  Notebook   H  Call Kunal" if path == "res://playground.tscn" else "N  Notebook"
 
 
 func _unhandled_input(event: InputEvent) -> void:

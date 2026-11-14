@@ -123,6 +123,7 @@ func _check_hub_before_and_after_quest() -> void:
 	_check(hint != null, "Kunal keeps his progress hint")
 	if hint != null:
 		_check(not hint.is_available(), "Kunal's hint stays quiet before Priya's intro")
+	_check(InputMap.has_action("call_hint"), "the hub can summon Kunal with H")
 
 	GameState.set_flag("got_notebook", true)
 	await get_tree().process_frame
@@ -159,8 +160,22 @@ func _check_hub_before_and_after_quest() -> void:
 	GameState.recover_item(&"xray")
 	GameState.set_flag("villain_rattle_cleared", true)
 	if hint != null:
+		_check(hint.is_available() and hint.text == "Any cleaning tips?",
+			"Kunal points back at the clinic once the X-ray is home")
+
+	GameState.recover_item(&"sterilizer")
+	if hint != null:
+		_check(hint.is_available() and hint.text == "Any paperwork tips?",
+			"Kunal points at the records folder after the sterilizer")
+
+	GameState.recover_item(&"records")
+	if hint != null:
 		_check(hint.is_available() and hint.text == "What's next?",
-			"Kunal still has a line while two pieces remain")
+			"Kunal points at the reception bell once all six are home")
+
+	GameState.set_flag("clinic_restored", true)
+	if hint != null:
+		_check(not hint.is_available(), "Kunal's hint retires once the clinic reopens")
 
 	hub.queue_free()
 	await get_tree().process_frame

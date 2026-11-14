@@ -1,5 +1,9 @@
 extends Node2D  # Or whatever your root node is
 
+const PLAYER_INFO := preload("res://Scenes/NPC/npc_player.tres")
+const SUMMON_SPEED := 320.0
+const RETURN_SPEED := 260.0
+
 @onready var transition = $Transition
 @onready var anim_player = $Transition/AnimationPlayer
 @onready var npc = $Npc
@@ -9,11 +13,17 @@ extends Node2D  # Or whatever your root node is
 @onready var path_chai = $route_to_chai
 var going_back = false
 var next_action: String = ""
+var _kunal_home: Vector2 = Vector2.ZERO
+var _kunal_busy: bool = false
+var _kunal_tween: Tween = null
 
 func _ready():
 	# Optional: Fade in when the scene starts
 	transition.show()
 	anim_player.play("Fade_In")
+
+	# Remember where Kunal stands so he can go back after a summoned hint.
+	_kunal_home = npc.global_position
 
 	# Connect animation finished signal
 	anim_player.animation_finished.connect(_on_animation_finished)
@@ -21,6 +31,124 @@ func _ready():
 	# Dialog branch actions are routed globally; react to the hub ones here.
 	if not ActionRouter.action_requested.is_connected(_on_action_requested):
 		ActionRouter.action_requested.connect(_on_action_requested)
+
+
+## H summons Kunal to the player. He walks over, gives the current progress
+## hint, then wanders back to his spot. The normal E conversation still only
+## works when the player is actually standing next to him.
+func _unhandled_input(event: InputEvent) -> void:
+	if going_back or _kunal_busy or DialogSystem.is_active:
+		return
+	if event.is_action_pressed("call_hint") and not event.is_echo():
+		get_viewport().set_input_as_handled()
+		_summon_kunal()
+
+
+func _summon_kunal() -> void:
+	if _kunal_busy:
+		return
+	_kunal_busy = true
+	_set_kunal_interaction_enabled(false)
+	player.set_input_enabled(false)
+
+	# Stand beside the player instead of on top of them.
+	var side := 30.0 if npc.global_position.x <= player.global_position.x else -30.0
+	var target: Vector2 = player.global_position + Vector2(side, 0)
+	if npc.global_position.distance_to(target) > 6.0:
+		var tween := _walk_kunal(target, SUMMON_SPEED)
+		await tween.finished
+	npc.animation.play("idle")
+	npc.sprite.flip_h = player.global_position.x < npc.global_position.x
+
+	await _show_kunal_hint()
+
+	# Hand control back before Kunal heads home, so the player is never stuck
+	# watching him walk the whole way across the village.
+	_set_kunal_interaction_enabled(true)
+	player.set_input_enabled(true)
+	_kunal_busy = false
+	_send_kunal_home()
+
+
+func _set_kunal_interaction_enabled(enabled: bool) -> void:
+	var interaction := npc.get_node_or_null("DialogInteraction") as DialogInteraction
+	if interaction == null:
+		return
+	interaction.enabled = enabled
+	if not enabled:
+		interaction.player_in_area = false
+		interaction.animation_player.play("hide")
+		return
+	# Re-arm the prompt without making the player step away and back.
+	var scene := get_tree().current_scene
+	var player_node: Node = scene.find_child("Player", true, false) if scene != null else null
+	if player_node is Player and interaction.overlaps_body(player_node):
+		interaction._on_area_enter(player_node)
+
+
+func _walk_kunal(target: Vector2, speed: float) -> Tween:
+	if _kunal_tween != null and _kunal_tween.is_valid():
+		_kunal_tween.kill()
+	npc.animation.play("walk_right")
+	npc.sprite.flip_h = target.x < npc.global_position.x
+	_kunal_tween = create_tween()
+	var duration := maxf(0.2, npc.global_position.distance_to(target) / speed)
+	_kunal_tween.tween_property(npc, "global_position", target, duration)
+	return _kunal_tween
+
+
+func _send_kunal_home() -> void:
+	if npc.global_position.distance_to(_kunal_home) <= 6.0:
+		_finish_kunal_return(_kunal_tween)
+		return
+	var tween := _walk_kunal(_kunal_home, RETURN_SPEED)
+	tween.finished.connect(_finish_kunal_return.bind(tween))
+
+
+func _finish_kunal_return(tween: Tween) -> void:
+	if tween != _kunal_tween:
+		return
+	npc.animation.play("idle")
+	npc.sprite.flip_h = false
+	_kunal_tween = null
+
+
+func _show_kunal_hint() -> void:
+	var items := _hint_dialog_items()
+	DialogSystem.show_dialog(items)
+	await DialogSystem.finished
+	for line in items:
+		if is_instance_valid(line):
+			line.queue_free()
+
+
+func _hint_dialog_items() -> Array[DialogItem]:
+	var items: Array[DialogItem] = []
+
+	var greeting := DialogText.new()
+	greeting.text = "You called, babe? I came as fast as I could."
+	greeting.npc_info = npc.npc_resource
+	items.append(greeting)
+
+	var lines: Array[String]
+	if not GameState.quest_started():
+		lines = [
+			"Is Priya looking for me?",
+			"She is. The dentist lady at the clinic. Go hear her out first, then I will have all the gossip for you.",
+		]
+	else:
+		var hint := npc.get_node_or_null("DialogInteraction/DialogChoice/DialogBranch5") as KunalHint
+		lines = hint.hint_lines() if hint != null else [
+			"Any tips?",
+			"Give me a minute, babe. I am still asking around.",
+		]
+
+	for i in lines.size():
+		var line := DialogText.new()
+		line.text = lines[i]
+		line.npc_info = PLAYER_INFO if i == 0 else npc.npc_resource
+		items.append(line)
+	return items
 
 
 func _on_action_requested(action_name: String) -> void:

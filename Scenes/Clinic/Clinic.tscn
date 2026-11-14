@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cpik4eq43fhu"]
+[gd_scene load_steps=30 format=3 uid="uid://cpik4eq43fhu"]
 
 [ext_resource type="Texture2D" uid="uid://cubr5s11kot8m" path="res://Scenes/Clinic/Sprites/Geminiclinic.png" id="1_nl862"]
 [ext_resource type="Script" uid="uid://b0qeicqigc818" path="res://Scenes/Clinic/Scripts/Clinic.gd" id="1_rqbh7"]
@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" path="res://Systems/villain.tscn" id="14_villain"]
 [ext_resource type="Resource" path="res://Data/villains/blorb.tres" id="15_blorb"]
 [ext_resource type="PackedScene" path="res://Systems/item_shelf.tscn" id="16_shelf"]
+[ext_resource type="PackedScene" path="res://Systems/item_pickup.tscn" id="17_pickup"]
+[ext_resource type="PackedScene" path="res://Systems/reception_bell.tscn" id="18_bell"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s52m0"]
 texture = ExtResource("4_nl862")
@@ -291,11 +293,24 @@ dialog_key = "mehta"
 [node name="DialogInteraction" parent="Mehta" instance=ExtResource("10_dialog")]
 
 [node name="Blorb" parent="." instance=ExtResource("14_villain")]
-position = Vector2(300, 182)
+position = Vector2(335, 100)
 data = ExtResource("15_blorb")
 
 [node name="ItemShelf" parent="." instance=ExtResource("16_shelf")]
 position = Vector2(240, 44)
+
+[node name="SterilizerPickup" parent="." instance=ExtResource("17_pickup")]
+position = Vector2(318, 198)
+item_id = &"sterilizer"
+required_flag = "villain_rattle_cleared"
+
+[node name="RecordsPickup" parent="." instance=ExtResource("17_pickup")]
+position = Vector2(205, 82)
+item_id = &"records"
+required_flag = "villain_rattle_cleared"
+
+[node name="ReceptionBell" parent="." instance=ExtResource("18_bell")]
+position = Vector2(345, 72)
 
 [node name="clinic_door" type="Node2D" parent="." groups=["spawn_points"]]
 position = Vector2(241, 205)

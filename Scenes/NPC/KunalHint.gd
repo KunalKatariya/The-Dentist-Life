@@ -1,7 +1,7 @@
 @tool
 class_name KunalHint extends DialogBranch
 ## A hub hint that follows the player's current progress instead of being tied
-## to one fixed flag. It stays available until the equipment hunt is over.
+## to one fixed flag. It stays available until the clinic reopens.
 
 func _ready() -> void:
 	super._ready()
@@ -13,11 +13,11 @@ func is_available() -> bool:
 	if Engine.is_editor_hint():
 		return true
 	_refresh()
-	return GameState.quest_started() and GameState.recovered_count() < ItemCatalog.TOTAL
+	return GameState.quest_started() and not GameState.has_flag("clinic_restored")
 
 
 func _refresh() -> void:
-	var lines := _hint_lines()
+	var lines := hint_lines()
 	text = lines[0]
 
 	var labels: Array[DialogText] = []
@@ -28,7 +28,16 @@ func _refresh() -> void:
 		labels[i].text = lines[i + 1]
 
 
-func _hint_lines() -> Array[String]:
+## The hint conversation for the player's current progress. The first line is
+## the question the player asks; the rest are Kunal's answers.
+func hint_lines() -> Array[String]:
+	if GameState.has_flag("clinic_restored") or GameState.get_quest_stage("restore_clinic") >= 5:
+		return [
+			"How is the clinic?",
+			"Open and sparkling, babe. You did it. Now sit down before you find another emergency.",
+			"I might just sit.",
+			"Good. I will bring chai.",
+		]
 	if not GameState.has_item(&"mirror_set"):
 		return [
 			"Any clinic tips?",
@@ -57,9 +66,23 @@ func _hint_lines() -> Array[String]:
 			"A skeleton.",
 			"A polite one. He bows before he rattles. Copy his flashes and he will hand it over.",
 		]
+	if not GameState.has_item(&"sterilizer"):
+		return [
+			"Any cleaning tips?",
+			"The clinic itself, babe. Priya's sterilizer never left the building. Check the treatment room, on the right side near the chairs.",
+			"Under our noses.",
+			"Classic. Take a proper look around the room before you head back out.",
+		]
+	if not GameState.has_item(&"records"):
+		return [
+			"Any paperwork tips?",
+			"The records folder is still in the clinic too. Somebody stacked it on the floor by the equipment shelf at the back wall.",
+			"Anything else?",
+			"Not yet. Once those two are home, the little reception bell is all that is left.",
+		]
 	return [
 		"What's next?",
-		"Two more pieces are still out there. I am still asking around, babe. The tea is getting cold.",
-		"That's it?",
-		"For now. I'll keep my ears open.",
+		"All six, babe. Even the bell is waiting. Ring it at the clinic reception and tell Priya the clinic is open.",
+		"The bell?",
+		"The little one on the counter. Ring it and I will bring chai for the reopening.",
 	]

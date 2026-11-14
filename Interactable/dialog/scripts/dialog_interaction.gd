@@ -60,6 +60,11 @@ func is_available() -> bool:
 
 
 func _on_area_enter(body: Node) -> void:
+	# Only the player arms the prompt. The NPC's own body (and other bodies on
+	# the same collision layers) must not make a distant conversation look
+	# available.
+	if not body is Player:
+		return
 	if not is_available() or dialog_items.is_empty():
 		return
 	player_in_area = true
@@ -67,6 +72,8 @@ func _on_area_enter(body: Node) -> void:
 
 
 func _on_area_exit(body: Node) -> void:
+	if not body is Player:
+		return
 	player_in_area = false
 	animation_player.play("hide")
 
