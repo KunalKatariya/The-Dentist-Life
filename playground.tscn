@@ -3635,7 +3635,7 @@ shape = SubResource("RectangleShape2D_u2qr3")
 position = Vector2(1540, 130)
 
 [node name="TeaLamp" parent="." instance=ExtResource("25_tea_lamp")]
-position = Vector2(1395, 185)
+position = Vector2(1160, 620)
 
 [node name="XrayBoard" parent="." instance=ExtResource("26_xray_board")]
 position = Vector2(505, 650)

@@ -1,0 +1,200 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://GUI/ending_card.gd" id="1_card"]
+[ext_resource type="Script" path="res://GUI/confetti.gd" id="2_confetti"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
+bg_color = Color(0.980392, 0.945098, 0.858824, 0.984314)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.411765, 0.337255, 0.231373, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.313726)
+shadow_size = 5
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button"]
+bg_color = Color(0.913725, 0.858824, 0.733333, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.411765, 0.337255, 0.231373, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_hover"]
+bg_color = Color(0.964706, 0.909804, 0.784314, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.290196, 0.231373, 0.152941, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_pressed"]
+bg_color = Color(0.858824, 0.792157, 0.65098, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.290196, 0.231373, 0.152941, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="EndingCard" type="CanvasLayer"]
+process_mode = 3
+layer = 20
+script = ExtResource("1_card")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0352941, 0.0313725, 0.0470588, 0.741176)
+
+[node name="Confetti" type="Control" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_confetti")
+
+[node name="Panel" type="PanelContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -174.0
+offset_top = -99.0
+offset_right = 174.0
+offset_bottom = 99.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBox_panel")
+
+[node name="Margin" type="MarginContainer" parent="Root/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.231373, 0.129412, 0.0705882, 1)
+theme_override_font_sizes/font_size = 16
+text = "THE CLINIC IS OPEN"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.486275, 0.419608, 0.341176, 1)
+theme_override_font_sizes/font_size = 7
+text = "THE GREAT CLINIC ROBBERY  -  CASE CLOSED"
+horizontal_alignment = 1
+
+[node name="Divider" type="ColorRect" parent="Root/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+color = Color(0.411765, 0.337255, 0.231373, 0.4)
+
+[node name="Stats" type="Label" parent="Root/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.290196, 0.196078, 0.12549, 1)
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 9
+text = "Equipment returned     6 / 6
+Villains befriended     4 / 4
+Stickers collected      5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Flavor" type="Label" parent="Root/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.360784, 0.27451, 0.192157, 1)
+theme_override_font_sizes/font_size = 8
+text = "The waiting room is full and the kettle is on. Welcome back, Doctor."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Stay" type="Button" parent="Root/Panel/Margin/VBox/Buttons"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.231373, 0.180392, 0.117647, 1)
+theme_override_colors/font_hover_color = Color(0.231373, 0.180392, 0.117647, 1)
+theme_override_colors/font_pressed_color = Color(0.231373, 0.180392, 0.117647, 1)
+theme_override_colors/font_focus_color = Color(0.231373, 0.180392, 0.117647, 1)
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+theme_override_styles/pressed = SubResource("StyleBox_button_pressed")
+theme_override_styles/focus = SubResource("StyleBox_button_hover")
+text = "Stay in the clinic"
+
+[node name="Menu" type="Button" parent="Root/Panel/Margin/VBox/Buttons"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.231373, 0.180392, 0.117647, 1)
+theme_override_colors/font_hover_color = Color(0.231373, 0.180392, 0.117647, 1)
+theme_override_colors/font_pressed_color = Color(0.231373, 0.180392, 0.117647, 1)
+theme_override_colors/font_focus_color = Color(0.231373, 0.180392, 0.117647, 1)
+theme_override_font_sizes/font_size = 9
+theme_override_styles/normal = SubResource("StyleBox_button")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+theme_override_styles/pressed = SubResource("StyleBox_button_pressed")
+theme_override_styles/focus = SubResource("StyleBox_button_hover")
+text = "Main menu"
+
+[node name="Footer" type="Label" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.552941, 0.486275, 0.4, 1)
+theme_override_font_sizes/font_size = 7
+text = "Thank you for playing."
+horizontal_alignment = 1

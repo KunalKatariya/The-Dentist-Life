@@ -46,6 +46,8 @@ func _refresh_dialog() -> void:
 
 
 func _build_dialog() -> Array[DialogItem]:
+	if GameState.has_flag("clinic_restored"):
+		return _post_finale_dialog()
 	match dialog_key:
 		"mehta":
 			return _mehta_dialog()
@@ -98,13 +100,52 @@ func _priya_repeat_dialog() -> Array[DialogItem]:
 			out.append(_line("%d down. The clinic is starting to look like a clinic again." % count))
 		if GameState.has_item(&"chair"):
 			out.append(_line("Wobble left a note about the chair. It says it was 'warm and well loved'. I'm choosing to find that sweet."))
-		out.append(_line("Try the village next. Kunal has been pacing outside like a very handsome compass."))
-		out.append(_line("He's going to want a title.", true))
-		out.append(_line("Give him 'Chief Moral Support'. He'll cry."))
+		if count >= 4:
+			if GameState.has_item(&"sterilizer") and GameState.has_item(&"records"):
+				out.append(_line("The last pieces are already here. Check the right treatment chair and the back shelf."))
+			elif GameState.has_item(&"sterilizer"):
+				out.append(_line("One last piece, Doctor: the records folder under the back shelf. It never left the building."))
+			elif GameState.has_item(&"records"):
+				out.append(_line("One last piece, Doctor: the sterilizer by the right treatment chair. It never left the building."))
+			else:
+				out.append(_line("Two pieces left, and they never left the building. Check the right treatment chair and the back shelf."))
+		else:
+			out.append(_line("Try the village next. Kunal has been pacing outside like a very handsome compass."))
+			out.append(_line("He's going to want a title.", true))
+			out.append(_line("Give him 'Chief Moral Support'. He'll cry."))
 	else:
 		out.append(_line("All six. Doctor, I don't know whether to hug you or update your will."))
 		out.append(_line("The waiting room wants a reopening day. Mr. Mehta has already written a speech for Steve."))
 		out.append(_line("Of course he has.", true))
+	return out
+
+
+func _post_finale_dialog() -> Array[DialogItem]:
+	if dialog_key == "mehta":
+		return _mehta_post_finale_dialog()
+	return _priya_post_finale_dialog()
+
+
+func _priya_post_finale_dialog() -> Array[DialogItem]:
+	var out: Array[DialogItem] = []
+	out.append(_line("Welcome back, Doctor. The kettle is on and Mr. Mehta has already booked Steve in for a cleaning."))
+	out.append(_line("How is Steve?", true))
+	out.append(_line("Brave. Nervous. He asked for the chair with the good cushion."))
+	out.append(_line("And the clinic?", true))
+	out.append(_line("Full. Actually full. I have never been so happy to see a waiting room."))
+	out.append(_line("Kunal's banner is slightly crooked.", true))
+	out.append(_line("It is perfect. Do not touch it."))
+	return out
+
+
+func _mehta_post_finale_dialog() -> Array[DialogItem]:
+	var out: Array[DialogItem] = []
+	out.append(_line("Doctor! You are open. Steve and I have an appointment."))
+	out.append(_line("How is Steve?", true))
+	out.append(_line("Much better. He has stopped throbbing at water. He only throbs at Mondays now."))
+	out.append(_line("That is normal.", true))
+	out.append(_line("I wrote you a speech, but Steve ate it. He is nervous around paper."))
+	out.append(_line("We will fix that too.", true))
 	return out
 
 

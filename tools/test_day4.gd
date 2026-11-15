@@ -93,7 +93,7 @@ func _check_hub_before_and_after_quest() -> void:
 		hub.queue_free()
 		return
 
-	_check(lamp.position == Vector2(1395, 185), "tea lamp sits beside the tea cart")
+	_check(lamp.position == Vector2(1160, 620), "tea lamp sits down by the dance academy")
 	_check(board.position == Vector2(505, 650), "X-ray board sits by the court path")
 
 	var gloam := lamp.get_node_or_null("Gloam")

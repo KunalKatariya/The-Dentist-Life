@@ -123,6 +123,15 @@ func _hide_toast() -> void:
 		_toast_timer = null
 
 
+## Clear any pickup toast so it does not sit behind the reopening card.
+func clear_toast() -> void:
+	toast_panel.hide()
+	if _toast_timer != null and is_instance_valid(_toast_timer):
+		_toast_timer.stop()
+		_toast_timer.queue_free()
+		_toast_timer = null
+
+
 func _build_rows() -> void:
 	for item in ItemCatalog.ITEMS:
 		var typed_item: ItemResource = item

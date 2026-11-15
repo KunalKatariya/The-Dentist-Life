@@ -4,6 +4,9 @@ class_name ReceptionBell extends Area2D
 
 const PLAYER_INFO := preload("res://Scenes/NPC/npc_player.tres")
 const PRIYA_INFO := preload("res://Scenes/NPC/priya.tres")
+const MEHTA_INFO := preload("res://Scenes/NPC/mehta.tres")
+const KUNAL_INFO := preload("res://Scenes/NPC/npc_01.tres")
+const ENDING_CARD := preload("res://GUI/ending_card.tscn")
 
 var player_near: bool = false
 var _time: float = 0.0
@@ -84,6 +87,14 @@ func _ring() -> void:
 		[PRIYA_INFO, "All six. Even the little bell. I do not know whether to laugh or cry."],
 		[PLAYER_INFO, "Then let us open the clinic."],
 		[PRIYA_INFO, "Ring it, Doctor."],
+		[PRIYA_INFO, "That is the sound I have been waiting for."],
+		[MEHTA_INFO, "Steve and I would like to congratulate you. Steve is crying. I am also crying."],
+		[PLAYER_INFO, "Is Steve going to be okay?"],
+		[MEHTA_INFO, "He has an appointment. First one on the new books."],
+		[KUNAL_INFO, "I made a banner! It says 'The Dentist Life'. I ran out of letters after DENTIST."],
+		[PRIYA_INFO, "It is perfect. Hang it where the mirror used to be."],
+		[KUNAL_INFO, "Doctor, you brushed a sugar creature. I am telling everyone."],
+		[PRIYA_INFO, "The kettle is on, the chairs are mostly upholstered, and the waiting room is full. Welcome back, Doctor."],
 	]
 	var items: Array[DialogItem] = []
 	for entry in lines:
@@ -101,5 +112,15 @@ func _ring() -> void:
 	GameState.set_flag("clinic_restored", true)
 	GameState.set_quest_stage("restore_clinic", 5)
 	GameState.add_sticker("clinic_restored")
-	GameHUD.toast("The clinic is open again!")
+	_show_ending_card()
 	queue_free()
+
+
+func _show_ending_card() -> void:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+	var card := ENDING_CARD.instantiate()
+	scene.add_child(card)
+	if card.has_method("open"):
+		card.open()

@@ -71,7 +71,7 @@ func _check_hub_and_encounter() -> void:
 	if bakery == null:
 		hub.queue_free()
 		return
-	_check(bakery.position == Vector2(1540, 130), "bakery cart sits beside the tea cart")
+	_check(bakery.position == Vector2(1540, 130), "bakery cart sits by the clinic")
 
 	var cart := bakery.get_node_or_null("Cart") as Sprite2D
 	var wobble := bakery.get_node_or_null("Wobble")
