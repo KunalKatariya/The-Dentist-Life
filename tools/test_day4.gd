@@ -145,7 +145,11 @@ func _check_hub_before_and_after_quest() -> void:
 	GameState.set_flag("villain_wobble_cleared", true)
 	if hint != null:
 		_check(hint.is_available() and hint.text == "Any light tips?",
-			"Kunal points at the tea cart once the chair is home")
+			"Kunal points at the tea lamp once the chair is home")
+		var light_lines: Array[String] = (hint as KunalHint).hint_lines()
+		_check("tea lamp" in light_lines[1], "the light hint names the tea lamp")
+		_check("Dance Academy" in light_lines[1], "the light hint points at the dance academy")
+		_check(not ("tea cart" in light_lines[1]), "the light hint no longer says tea cart")
 		_check(_choice_labels(choice).has("Any light tips?"),
 			"Kunal's menu shows the light option")
 

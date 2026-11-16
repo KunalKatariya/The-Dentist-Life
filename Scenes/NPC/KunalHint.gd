@@ -55,7 +55,7 @@ func hint_lines() -> Array[String]:
 	if not GameState.has_item(&"curing_light"):
 		return [
 			"Any light tips?",
-			"The tea cart down by Gunika's Dance Academy. There is a little blue glow under it that is not the lamp. Something is hoarding the curing light and sipping chai.",
+			"The tea lamp on the road just down from Gunika's Dance Academy. There is a little blue glow beside it that is not the lamp. Something is hoarding the curing light and sipping chai.",
 			"Something?",
 			"Something smoky with very tired eyes. It kept muttering that the light was too loud. Go gently, babe.",
 		]

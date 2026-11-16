@@ -49,7 +49,7 @@ func _check_hint_lines() -> void:
 	GameState.recover_item(&"mirror_set")
 	_check(hint.hint_lines()[0] == "Any bakery tips?", "hints move to the bakery")
 	GameState.recover_item(&"chair")
-	_check(hint.hint_lines()[0] == "Any light tips?", "hints move to the tea cart")
+	_check(hint.hint_lines()[0] == "Any light tips?", "hints move to the tea lamp")
 	GameState.recover_item(&"curing_light")
 	_check(hint.hint_lines()[0] == "Any X-ray tips?", "hints move to the court")
 	GameState.recover_item(&"xray")
