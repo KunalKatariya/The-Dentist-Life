@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets_Imported/town/records_cart.png" id="1_cart"]
+[ext_resource type="PackedScene" path="res://Systems/villain.tscn" id="2_villain"]
+[ext_resource type="Resource" path="res://Data/villains/redtape.tres" id="3_redtape"]
+
+[node name="RecordsCart" type="Node2D"]
+
+[node name="Cart" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("1_cart")
+
+[node name="Redtape" parent="." instance=ExtResource("2_villain")]
+z_index = 1
+position = Vector2(0, 20)
+data = ExtResource("3_redtape")

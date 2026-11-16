@@ -7,7 +7,7 @@ extends Node
 const HUB_PATH := "res://playground.tscn"
 const CLINIC_PATH := "res://Scenes/Clinic/Clinic.tscn"
 const CARD_PATH := "res://GUI/ending_card.tscn"
-const VILLAIN_IDS := ["blorb", "wobble", "gloam", "rattle"]
+const VILLAIN_IDS := ["blorb", "wobble", "gloam", "rattle", "mildew", "redtape"]
 const ALL_ITEMS := [&"mirror_set", &"chair", &"curing_light", &"xray", &"sterilizer", &"records"]
 
 var failures: int = 0
@@ -52,7 +52,8 @@ func _check_ending_card() -> void:
 
 	var stats: String = card.stats_label.text
 	_check("6 / 6" in stats, "the card reports all six pieces of equipment")
-	_check("4 / 4" in stats, "the card reports all four villains befriended")
+	_check("Villains befriended    6 / 6" in stats,
+		"the card reports all six villains befriended")
 	_check("Stickers collected" in stats, "the card shows the sticker count")
 	_check("Steve" in card.flavor_label.text, "the card closes on the waiting-room joke")
 	_check(card.stay_button.text == "Stay in the clinic", "the card offers staying in the clinic")
@@ -165,8 +166,8 @@ func _check_post_finale_dialog() -> void:
 		_check("appointment" in text, "Mr. Mehta books Steve in after the reopening")
 	await _free_scene(clinic)
 
-	# The last two pickups are inside the clinic, so Priya should stop sending
-	# the player back to the village.
+	# The last two pieces are in the village, so Priya should point at Mildew
+	# and Redtape instead of the clinic.
 	GameState.new_game()
 	GameState.set_flag("got_notebook", true)
 	GameState.set_quest_stage("restore_clinic", 3)
@@ -175,17 +176,19 @@ func _check_post_finale_dialog() -> void:
 	var hunt := await _fresh_clinic()
 	var hunting_priya := hunt.get_node_or_null("Priya") as ClinicNpc
 	var hunt_text := _dialog_text(hunting_priya._build_dialog())
-	_check("never left the building" in hunt_text,
-		"Priya points at the two clinic pickups instead of the village")
-	_check(not "Try the village next" in hunt_text,
-		"Priya stops sending the player to the village at four items")
+	_check("old farm well" in hunt_text,
+		"Priya points at Mildew by the old well")
+	_check("flower shop" in hunt_text,
+		"Priya points at Redtape at the flower shop")
+	_check(not "never left the building" in hunt_text,
+		"Priya no longer hides the last two inside the clinic")
 	GameState.recover_item(&"sterilizer")
 	hunt_text = _dialog_text(hunting_priya._build_dialog())
 	_check("records folder" in hunt_text, "Priya points at the last records folder")
 	GameState.recover_item(&"records")
 	hunt_text = _dialog_text(hunting_priya._build_dialog())
 	_check("All six" in hunt_text,
-		"Priya wraps up once the last clinic pickup is home")
+		"Priya wraps up once the last piece is home")
 	await _free_scene(hunt)
 
 
@@ -200,25 +203,37 @@ func _check_villain_spacing() -> void:
 	var bakery := hub.get_node_or_null("BakeryCart") as Node2D
 	var lamp := hub.get_node_or_null("TeaLamp") as Node2D
 	var xray := hub.get_node_or_null("XrayBoard") as Node2D
-	_check(bakery != null and lamp != null and xray != null, "all three hub villains load")
-	if bakery == null or lamp == null or xray == null:
+	var nook := hub.get_node_or_null("MildewNook") as Node2D
+	var cart := hub.get_node_or_null("RecordsCart") as Node2D
+	_check(
+		bakery != null and lamp != null and xray != null and nook != null and cart != null,
+		"all five hub villains load",
+	)
+	if bakery == null or lamp == null or xray == null or nook == null or cart == null:
 		await _free_scene(hub)
 		return
 
 	_check(bakery.position == Vector2(1540, 130), "Wobble stays at the bakery cart")
 	_check(lamp.position == Vector2(1160, 620), "Gloam moves down beside the dance academy")
 	_check(xray.position == Vector2(505, 650), "Rattle stays at the X-ray board")
+	_check(nook.position == Vector2(48, 62), "Mildew stands right beside the old well")
+	_check(cart.position == Vector2(860, -150), "Redtape stays at the flower shop")
 
-	var distances := [
-		bakery.position.distance_to(lamp.position),
-		bakery.position.distance_to(xray.position),
-		lamp.position.distance_to(xray.position),
+	var spots: Array[Vector2] = [
+		bakery.position,
+		lamp.position,
+		xray.position,
+		nook.position,
+		cart.position,
 	]
-	var closest: float = distances[0]
-	for distance in distances:
-		closest = min(closest, distance)
+	var closest := 1e20
+	for i in spots.size():
+		for j in range(i + 1, spots.size()):
+			closest = minf(closest, spots[i].distance_to(spots[j]))
 	_check(closest >= 500.0,
-		"the three villains are at least 500 pixels apart (closest %.0f)" % closest)
+		"the five villains are at least 500 pixels apart (closest %.0f)" % closest)
+	_check(nook.position.distance_to(Vector2(0, 75)) < 90.0,
+		"Mildew is genuinely beside the well")
 	await _free_scene(hub)
 
 

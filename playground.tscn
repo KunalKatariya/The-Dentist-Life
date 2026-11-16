@@ -26,6 +26,8 @@
 [ext_resource type="Script" path="res://Scenes/NPC/KunalHint.gd" id="24_kunal_hint"]
 [ext_resource type="PackedScene" path="res://Scenes/NPC/tea_lamp.tscn" id="25_tea_lamp"]
 [ext_resource type="PackedScene" path="res://Scenes/NPC/xray_board.tscn" id="26_xray_board"]
+[ext_resource type="PackedScene" path="res://Scenes/NPC/mildew_nook.tscn" id="27_mildew_nook"]
+[ext_resource type="PackedScene" path="res://Scenes/NPC/records_cart.tscn" id="28_records_cart"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pi42a"]
 texture = ExtResource("5_ynsuh")
@@ -3639,3 +3641,9 @@ position = Vector2(1160, 620)
 
 [node name="XrayBoard" parent="." instance=ExtResource("26_xray_board")]
 position = Vector2(505, 650)
+
+[node name="MildewNook" parent="." instance=ExtResource("27_mildew_nook")]
+position = Vector2(48, 62)
+
+[node name="RecordsCart" parent="." instance=ExtResource("28_records_cart")]
+position = Vector2(860, -150)

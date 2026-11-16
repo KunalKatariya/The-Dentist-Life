@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://Assets_Imported/town/mildew_patch.png" id="1_patch"]
+[ext_resource type="PackedScene" path="res://Systems/villain.tscn" id="2_villain"]
+[ext_resource type="Resource" path="res://Data/villains/mildew.tres" id="3_mildew"]
+
+[node name="MildewNook" type="Node2D"]
+
+[node name="DampPatch" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("1_patch")
+
+[node name="Mildew" parent="." instance=ExtResource("2_villain")]
+z_index = 1
+position = Vector2(0, 22)
+data = ExtResource("3_mildew")

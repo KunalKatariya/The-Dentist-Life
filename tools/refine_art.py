@@ -77,6 +77,15 @@ WOOD_DARK = (126, 82, 48, 255)
 IRON = (74, 80, 90, 255)
 IRON_LIGHT = (126, 134, 146, 255)
 
+MOLD = (126, 158, 96, 255)
+MOLD_LIGHT = (170, 200, 128, 255)
+MOLD_DARK = (84, 110, 70, 255)
+MOLD_SLIME = (156, 198, 112, 255)
+
+RED_TAPE = (198, 74, 66, 255)
+RED_TAPE_DARK = (150, 46, 44, 255)
+RED_TAPE_LIGHT = (230, 120, 108, 255)
+
 
 def new(width: int, height: int) -> Image.Image:
     return Image.new("RGBA", (width, height), (0, 0, 0, 0))
@@ -636,6 +645,189 @@ def rattle_frame(expr: int) -> Image.Image:
     return frame
 
 
+def mildew_frame(expr: int) -> Image.Image:
+    blink = expr in (1, 3)
+    talking = expr in (2, 3)
+    frame = portrait_wall((96, 120, 102, 255), (78, 100, 86, 255),
+                          (114, 142, 116, 255), (72, 92, 78, 255))
+    d = ImageDraw.Draw(frame)
+
+    # damp stone wall: mortar lines and moss creeping between the blocks
+    for y in (18, 40, 62, 84):
+        d.line([(0, y), (99, y)], fill=(62, 82, 70, 255))
+    for x, y in ((16, 26), (44, 48), (70, 30), (84, 70)):
+        d.ellipse([x - 5, y - 4, x + 5, y + 4], fill=(88, 124, 82, 255))
+    # dripping pipe and a rusty valve behind Mildew
+    d.rectangle([78, 4, 84, 54], fill=IRON, outline=INK)
+    d.rectangle([74, 12, 90, 18], fill=IRON_LIGHT, outline=INK)
+    d.ellipse([76, 8, 88, 20], fill=IRON, outline=INK)
+    d.arc([77, 9, 87, 19], 30, 300, fill=IRON_LIGHT)
+    d.rectangle([80, 54, 82, 66], fill=(112, 176, 128, 255))
+    for y in (60, 88):
+        d.ellipse([74, y, 94, y + 8], fill=(74, 96, 82, 255))
+    # a mug of something warm on a crate
+    d.rectangle([6, 104, 28, 130], fill=WOOD_DARK, outline=INK)
+    d.rectangle([8, 106, 26, 128], fill=WOOD)
+    d.rectangle([10, 110, 18, 120], fill=CREAM, outline=WOOD_DARK)
+    d.arc([18, 111, 24, 119], 270, 90, fill=WOOD_DARK)
+    d.line([(12, 106), (11, 110)], fill=(220, 230, 210, 255))
+
+    # mold body: soft lump with dripping edges
+    d.ellipse([10, 60, 90, 170], fill=INK)
+    d.ellipse([12, 62, 88, 166], fill=MOLD_DARK)
+    d.ellipse([16, 66, 84, 158], fill=MOLD)
+    d.ellipse([23, 72, 62, 124], fill=MOLD_LIGHT)
+    d.arc([18, 112, 82, 160], 20, 160, fill=(70, 94, 62, 255), width=2)
+    # drips along the bottom
+    for x, y, w, h in ((18, 142, 14, 18), (42, 148, 12, 14), (66, 140, 14, 20)):
+        d.ellipse([x, y, x + w, y + h], fill=MOLD_DARK)
+        d.ellipse([x + 1, y, x + w - 1, y + h - 1], fill=MOLD_SLIME)
+    # fuzzy spores on the shoulders
+    for x, y in ((20, 78), (74, 74), (14, 104), (82, 108), (28, 128),
+                 (70, 126), (26, 58), (66, 56)):
+        d.ellipse([x - 3, y - 3, x + 3, y + 3], fill=MOLD_LIGHT)
+        d.rectangle([x, y - 4, x + 1, y - 2], fill=(206, 228, 170, 255))
+
+    # folded towel hat: Mildew likes the warm damp
+    d.polygon([(28, 58), (50, 48), (72, 58), (68, 66), (32, 66)], fill=INK)
+    d.polygon([(30, 58), (50, 50), (70, 58), (67, 63), (33, 63)], fill=CREAM)
+    d.line([(33, 60), (67, 60)], fill=(214, 198, 168, 255))
+    d.rectangle([46, 50, 54, 56], fill=PINK, outline=PINK_DARK)
+
+    # tired, kind eyes
+    d.ellipse([26, 80, 44, 98], fill=WHITE, outline=INK)
+    d.ellipse([56, 80, 74, 98], fill=WHITE, outline=INK)
+    if blink:
+        d.rectangle([29, 88, 41, 91], fill=INK)
+        d.rectangle([59, 88, 71, 91], fill=INK)
+    else:
+        d.ellipse([31, 84, 39, 94], fill=(54, 86, 56, 255))
+        d.ellipse([61, 84, 69, 94], fill=(54, 86, 56, 255))
+        d.ellipse([33, 86, 36, 90], fill=INK)
+        d.ellipse([63, 86, 66, 90], fill=INK)
+        d.rectangle([32, 83, 35, 85], fill=WHITE)
+        d.rectangle([62, 83, 65, 85], fill=WHITE)
+    # heavy eyelids
+    d.line([(26, 80), (44, 82)], fill=INK)
+    d.line([(56, 82), (74, 80)], fill=INK)
+    # eyebrows droop outward
+    d.line([(25, 73), (43, 76)], fill=MOLD_DARK)
+    d.line([(57, 76), (75, 73)], fill=MOLD_DARK)
+
+    # nose and a wobbly mouth
+    d.line([(50, 96), (47, 104), (52, 105)], fill=(64, 88, 56, 255))
+    if talking:
+        d.ellipse([39, 108, 61, 124], fill=(52, 72, 46, 255), outline=INK)
+        d.ellipse([44, 116, 56, 122], fill=PINK_DARK)
+    else:
+        d.arc([40, 106, 60, 120], 20, 160, fill=INK, width=2)
+    soft(frame, [28, 104, 38, 112], (210, 160, 150, 110))
+    soft(frame, [62, 104, 72, 112], (210, 160, 150, 110))
+
+    # little hands holding a scrub brush
+    d.ellipse([12, 126, 30, 142], fill=MOLD, outline=MOLD_DARK)
+    d.ellipse([70, 126, 88, 142], fill=MOLD, outline=MOLD_DARK)
+    d.rectangle([70, 112, 94, 124], fill=WOOD, outline=WOOD_DARK)
+    d.rectangle([72, 108, 92, 114], fill=CREAM, outline=WOOD_DARK)
+    for x in range(74, 92, 5):
+        d.line([(x, 108), (x, 102)], fill=(226, 220, 200, 255))
+
+    # spores floating in the damp air
+    for x, y in ((18, 34), (84, 42), (12, 50), (90, 90)):
+        d.rectangle([x, y, x + 1, y + 1], fill=(196, 222, 160, 255))
+
+    portrait_border(frame)
+    return frame
+
+
+def redtape_frame(expr: int) -> Image.Image:
+    blink = expr in (1, 3)
+    talking = expr in (2, 3)
+    frame = portrait_wall((240, 226, 206, 255), (224, 208, 188, 255),
+                          (250, 240, 220, 255), (196, 178, 156, 255))
+    d = ImageDraw.Draw(frame)
+
+    # filing shelves and folders behind Redtape
+    d.rectangle([4, 12, 96, 60], fill=WOOD_DARK, outline=INK)
+    for shelf_y in (28, 46):
+        d.line([(6, shelf_y), (94, shelf_y)], fill=WOOD)
+    for x, color in ((8, (204, 168, 96, 255)), (20, (186, 148, 86, 255)),
+                     (32, (214, 180, 110, 255)), (64, (198, 162, 94, 255)),
+                     (76, (178, 140, 80, 255))):
+        d.rectangle([x, 14, x + 8, 27], fill=color, outline=INK_SOFT)
+        d.rectangle([x + 2, 18, x + 6, 20], fill=CREAM)
+    # a big red stamp on the wall
+    d.rectangle([66, 64, 94, 92], outline=RED_TAPE_DARK)
+    d.rectangle([69, 67, 91, 89], outline=RED_TAPE)
+    d.line([(72, 74), (88, 74)], fill=RED_TAPE, width=2)
+    d.line([(72, 80), (84, 80)], fill=RED_TAPE, width=2)
+    d.line([(76, 84), (88, 84)], fill=RED_TAPE, width=2)
+    # potted plant: the flower shop next door
+    d.rectangle([6, 112, 22, 140], fill=(154, 110, 74, 255), outline=INK)
+    for x, y in ((8, 102), (14, 96), (20, 104)):
+        d.ellipse([x - 5, y - 6, x + 5, y + 4], fill=(118, 168, 116, 255))
+
+    # stack of paper body with jagged edges
+    d.polygon([(14, 66), (86, 66), (90, 152), (82, 146), (76, 154),
+               (68, 148), (60, 156), (52, 148), (44, 156), (36, 148),
+               (28, 154), (20, 146), (10, 152)], fill=INK)
+    d.polygon([(16, 68), (84, 68), (88, 150), (80, 144), (74, 151),
+               (66, 145), (58, 152), (50, 145), (42, 152), (34, 145),
+               (26, 151), (18, 144), (12, 150)], fill=PAPER)
+    d.polygon([(20, 70), (80, 70), (82, 104), (20, 104)], fill=IVORY_LIGHT)
+    # ruled lines
+    for y in (78, 86, 94):
+        d.line([(24, y), (78, y)], fill=(210, 198, 178, 255))
+    # red tape bands
+    d.rectangle([12, 108, 90, 118], fill=RED_TAPE_DARK)
+    d.rectangle([13, 109, 89, 116], fill=RED_TAPE)
+    d.line([(16, 111), (86, 111)], fill=RED_TAPE_LIGHT)
+    d.polygon([(12, 126), (90, 136), (90, 144), (12, 134)], fill=RED_TAPE_DARK)
+    d.polygon([(13, 127), (89, 137), (89, 142), (13, 132)], fill=RED_TAPE)
+    d.line([(16, 130), (84, 139)], fill=RED_TAPE_LIGHT)
+
+    # eyes: round glasses, very serious
+    d.ellipse([24, 84, 48, 108], fill=WHITE, outline=INK)
+    d.ellipse([56, 84, 80, 108], fill=WHITE, outline=INK)
+    if blink:
+        d.rectangle([28, 95, 44, 98], fill=INK)
+        d.rectangle([60, 95, 76, 98], fill=INK)
+    else:
+        d.ellipse([33, 91, 41, 101], fill=(74, 62, 48, 255))
+        d.ellipse([65, 91, 73, 101], fill=(74, 62, 48, 255))
+        d.ellipse([35, 93, 38, 97], fill=INK)
+        d.ellipse([67, 93, 70, 97], fill=INK)
+        d.rectangle([34, 90, 37, 92], fill=WHITE)
+        d.rectangle([66, 90, 69, 92], fill=WHITE)
+    d.ellipse([23, 83, 49, 109], outline=(58, 46, 42, 255))
+    d.ellipse([55, 83, 81, 109], outline=(58, 46, 42, 255))
+    d.line([(48, 94), (56, 94)], fill=(58, 46, 42, 255))
+    # angry brows
+    d.polygon([(22, 78), (48, 84), (46, 88), (22, 82)], fill=INK)
+    d.polygon([(58, 84), (82, 78), (82, 82), (60, 88)], fill=INK)
+
+    # mouth and a paper-clip ear
+    if talking:
+        d.ellipse([40, 118, 62, 134], fill=(80, 60, 52, 255), outline=INK)
+        d.ellipse([45, 126, 57, 132], fill=PINK_DARK)
+    else:
+        d.line([(40, 124), (62, 124)], fill=INK, width=2)
+    d.rectangle([82, 96, 92, 108], fill=(206, 214, 218, 255), outline=INK_SOFT)
+
+    # hands: one holds a stamp, one holds a folder
+    d.ellipse([6, 128, 26, 146], fill=PAPER, outline=WOOD_DARK)
+    d.ellipse([74, 128, 94, 146], fill=PAPER, outline=WOOD_DARK)
+    d.rectangle([6, 112, 24, 128], fill=WOOD, outline=INK)
+    d.rectangle([8, 114, 22, 120], fill=RED_TAPE)
+    d.rectangle([10, 104, 20, 114], fill=WOOD_LIGHT, outline=WOOD_DARK)
+    d.rectangle([72, 110, 96, 128], fill=CREAM, outline=WOOD_DARK)
+    d.line([(76, 114), (92, 114)], fill=(198, 178, 150, 255))
+    d.line([(76, 120), (88, 120)], fill=(198, 178, 150, 255))
+
+    portrait_border(frame)
+    return frame
+
+
 # ---------------------------------------------------------------------------
 # NPC world sheets: eight 32x32 frames (idle 0-3, walk 4-7)
 # ---------------------------------------------------------------------------
@@ -905,6 +1097,103 @@ def rattle_sprite() -> Image.Image:
     return im
 
 
+def mildew_sprite() -> Image.Image:
+    im = new(64, 64)
+    d = ImageDraw.Draw(im)
+    # fuzzy shadow-ish outline kept soft so the scene shadow stays visible
+    d.ellipse([8, 18, 56, 60], fill=INK)
+    d.ellipse([10, 20, 54, 58], fill=MOLD_DARK)
+    d.ellipse([13, 23, 51, 55], fill=MOLD)
+    d.ellipse([17, 26, 38, 42], fill=MOLD_LIGHT)
+    d.arc([14, 38, 50, 58], 20, 160, fill=(70, 94, 62, 255), width=2)
+    # drips
+    for x, y, w, h in ((12, 50, 10, 12), (28, 54, 8, 8), (44, 50, 10, 12)):
+        d.ellipse([x, y, x + w, y + h], fill=MOLD_DARK)
+        d.ellipse([x + 1, y, x + w - 1, y + h - 1], fill=MOLD_SLIME)
+    # spores
+    for x, y, r in ((18, 28, 3), (42, 30, 4), (16, 42, 3), (46, 44, 3)):
+        d.ellipse([x - r, y - r, x + r, y + r], fill=(188, 216, 148, 255))
+        d.ellipse([x - r + 1, y - r + 1, x + r - 1, y + r - 1], fill=(222, 238, 190, 255))
+    # towel hat
+    d.polygon([(20, 18), (32, 12), (44, 18), (42, 24), (22, 24)], fill=INK)
+    d.polygon([(22, 18), (32, 14), (42, 18), (40, 22), (24, 22)], fill=CREAM)
+    d.rectangle([29, 14, 35, 18], fill=PINK, outline=PINK_DARK)
+    # droopy eyes
+    for cx in (24, 40):
+        d.ellipse([cx - 7, 26, cx + 7, 36], fill=WHITE, outline=INK)
+        d.ellipse([cx - 3, 29, cx + 3, 35], fill=(54, 86, 56, 255))
+        d.ellipse([cx - 1, 30, cx + 1, 33], fill=INK)
+        d.rectangle([cx - 3, 27, cx - 2, 29], fill=WHITE)
+    d.line([(16, 24), (24, 26)], fill=MOLD_DARK)
+    d.line([(40, 26), (48, 24)], fill=MOLD_DARK)
+    # mouth
+    d.arc([24, 38, 40, 46], 20, 160, fill=INK, width=2)
+    soft(im, [17, 38, 23, 42], (210, 160, 150, 110))
+    soft(im, [41, 38, 47, 42], (210, 160, 150, 110))
+    # little arms and a scrub brush
+    d.ellipse([4, 38, 14, 48], fill=MOLD, outline=MOLD_DARK)
+    d.ellipse([50, 40, 62, 50], fill=MOLD, outline=MOLD_DARK)
+    d.rectangle([50, 34, 62, 40], fill=WOOD, outline=WOOD_DARK)
+    d.rectangle([49, 30, 63, 35], fill=CREAM, outline=WOOD_DARK)
+    for x in (51, 55, 59):
+        d.line([(x, 30), (x, 26)], fill=(226, 220, 200, 255))
+    # floating spores
+    for x, y in ((8, 18), (54, 20), (6, 30)):
+        d.rectangle([x, y, x + 1, y + 1], fill=(210, 232, 176, 255))
+    return im
+
+
+def redtape_sprite() -> Image.Image:
+    im = new(64, 64)
+    d = ImageDraw.Draw(im)
+    # jagged paper body
+    d.polygon([(10, 12), (54, 12), (58, 56), (52, 52), (46, 58),
+               (40, 52), (34, 58), (28, 52), (22, 58), (16, 52), (8, 56)],
+              fill=INK)
+    d.polygon([(12, 14), (52, 14), (56, 54), (50, 50), (44, 56),
+               (38, 50), (32, 56), (26, 50), (20, 56), (14, 50), (10, 54)],
+              fill=PAPER)
+    d.polygon([(15, 16), (49, 16), (51, 34), (13, 34)], fill=IVORY_LIGHT)
+    for y in (20, 25, 30):
+        d.line([(18, y), (47, y)], fill=(210, 198, 178, 255))
+    # red tape bands
+    d.rectangle([8, 36, 56, 44], fill=RED_TAPE_DARK)
+    d.rectangle([9, 37, 55, 42], fill=RED_TAPE)
+    d.line([(11, 39), (53, 39)], fill=RED_TAPE_LIGHT)
+    d.polygon([(8, 46), (56, 50), (56, 56), (8, 52)], fill=RED_TAPE_DARK)
+    d.polygon([(9, 47), (55, 51), (55, 54), (9, 50)], fill=RED_TAPE)
+    # glasses and eyes
+    d.ellipse([16, 16, 30, 30], fill=WHITE, outline=INK)
+    d.ellipse([34, 16, 48, 30], fill=WHITE, outline=INK)
+    d.ellipse([21, 20, 27, 27], fill=(74, 62, 48, 255))
+    d.ellipse([39, 20, 45, 27], fill=(74, 62, 48, 255))
+    d.ellipse([23, 22, 25, 24], fill=INK)
+    d.ellipse([41, 22, 43, 24], fill=INK)
+    d.rectangle([17, 18, 19, 20], fill=WHITE)
+    d.rectangle([35, 18, 37, 20], fill=WHITE)
+    d.ellipse([15, 15, 31, 31], outline=(58, 46, 42, 255))
+    d.ellipse([33, 15, 49, 31], outline=(58, 46, 42, 255))
+    d.line([(30, 22), (34, 22)], fill=(58, 46, 42, 255))
+    # stern brows
+    d.line([(14, 12), (30, 16)], fill=INK)
+    d.line([(34, 16), (50, 12)], fill=INK)
+    # mouth
+    d.line([(24, 34), (40, 34)], fill=INK, width=2)
+    # paper arms with a stamp and folder
+    d.line([(10, 44), (2, 34)], fill=INK, width=3)
+    d.line([(10, 44), (3, 35)], fill=PAPER, width=1)
+    d.line([(54, 44), (62, 34)], fill=INK, width=3)
+    d.line([(54, 44), (61, 35)], fill=PAPER, width=1)
+    d.rectangle([0, 26, 10, 34], fill=WOOD, outline=INK)
+    d.rectangle([1, 22, 9, 27], fill=RED_TAPE)
+    d.rectangle([56, 26, 64, 40], fill=CREAM, outline=WOOD_DARK)
+    d.line([(58, 30), (62, 30)], fill=(198, 178, 150, 255))
+    # little legs
+    d.rectangle([18, 54, 24, 60], fill=PAPER, outline=INK)
+    d.rectangle([40, 54, 46, 60], fill=PAPER, outline=INK)
+    return im
+
+
 # ---------------------------------------------------------------------------
 # Props
 # ---------------------------------------------------------------------------
@@ -1004,6 +1293,66 @@ def xray_board() -> Image.Image:
     d.rectangle([31, 36, 40, 38], fill=CYAN_DARK)
     for x, y in ((5, 3), (41, 3), (5, 37), (41, 37)):
         d.rectangle([x, y, x + 2, y + 2], fill=IRON_LIGHT)
+    return im
+
+
+def mildew_patch() -> Image.Image:
+    im = new(48, 32)
+    d = ImageDraw.Draw(im)
+    # wet floor puddle
+    d.ellipse([1, 21, 44, 31], fill=(74, 108, 88, 255))
+    d.ellipse([3, 22, 41, 29], fill=(98, 138, 108, 255))
+    d.ellipse([7, 23, 24, 27], fill=(132, 174, 132, 255))
+    d.line([(8, 26), (18, 26)], fill=(176, 210, 168, 255))
+    # mop leaning on a bucket
+    d.line([(9, 4), (16, 24)], fill=INK, width=3)
+    d.line([(9, 5), (16, 24)], fill=WOOD, width=1)
+    d.rectangle([4, 1, 13, 6], fill=(200, 196, 176, 255), outline=INK)
+    for x in (5, 8, 11):
+        d.line([(x, 6), (x - 1, 10)], fill=(226, 220, 200, 255))
+    # bucket
+    d.polygon([(28, 14), (46, 14), (43, 28), (31, 28)], fill=INK)
+    d.polygon([(29, 15), (45, 15), (42, 27), (32, 27)], fill=IRON)
+    d.polygon([(31, 16), (35, 16), (33, 26), (30, 26)], fill=IRON_LIGHT)
+    d.arc([28, 9, 46, 18], 180, 360, fill=IRON_LIGHT)
+    d.ellipse([32, 16, 42, 22], fill=(120, 168, 126, 255))
+    # moss clumps
+    for x, y in ((6, 20), (40, 21), (18, 29)):
+        d.ellipse([x - 3, y - 2, x + 3, y + 2], fill=MOLD)
+        d.ellipse([x - 1, y - 3, x + 2, y], fill=MOLD_LIGHT)
+    return im
+
+
+def records_cart() -> Image.Image:
+    im = new(48, 48)
+    d = ImageDraw.Draw(im)
+    # cart body
+    d.rectangle([5, 24, 42, 40], fill=INK)
+    d.rectangle([7, 26, 40, 38], fill=WOOD)
+    d.line([(8, 28), (39, 28)], fill=WOOD_LIGHT)
+    d.line([(8, 34), (39, 34)], fill=(156, 102, 60, 255))
+    # folders and papers piled on top
+    for x, y, w, h, color in (
+        (8, 18, 12, 8, (204, 168, 96, 255)),
+        (20, 15, 14, 10, (230, 218, 194, 255)),
+        (32, 17, 10, 9, (186, 148, 86, 255)),
+    ):
+        d.rectangle([x, y, x + w, y + h], fill=color, outline=INK_SOFT)
+        d.rectangle([x + 2, y + 2, x + w - 3, y + 3], fill=CREAM)
+        d.line([(x + 2, y + h - 3), (x + w - 3, y + h - 3)],
+               fill=(170, 148, 118, 255))
+    # red tape wrapped around the stack
+    d.rectangle([18, 12, 22, 38], fill=RED_TAPE_DARK)
+    d.rectangle([19, 12, 21, 38], fill=RED_TAPE)
+    d.line([(12, 23), (36, 23)], fill=RED_TAPE_DARK)
+    # wheels
+    for cx in (14, 35):
+        d.ellipse([cx - 6, 36, cx + 6, 46], fill=INK)
+        d.ellipse([cx - 4, 37, cx + 4, 44], fill=WOOD_DARK)
+        d.rectangle([cx - 1, 39, cx + 1, 43], fill=IRON)
+    # handle
+    d.line([(41, 26), (47, 18)], fill=WOOD_DARK, width=2)
+    d.line([(46, 18), (47, 16)], fill=IRON, width=2)
     return im
 
 
@@ -1233,11 +1582,19 @@ def main() -> None:
     save(rattle_sprite(), "Assets_Imported/villains/rattle.png")
     save(sheet([rattle_frame(i) for i in range(4)]),
          "Assets_Imported/villains/rattle_portrait.png")
+    save(mildew_sprite(), "Assets_Imported/villains/mildew.png")
+    save(sheet([mildew_frame(i) for i in range(4)]),
+         "Assets_Imported/villains/mildew_portrait.png")
+    save(redtape_sprite(), "Assets_Imported/villains/redtape.png")
+    save(sheet([redtape_frame(i) for i in range(4)]),
+         "Assets_Imported/villains/redtape_portrait.png")
 
     # Props and UI
     save(bakery_cart(), "Assets_Imported/town/bakery_cart.png")
     save(tea_lamp(), "Assets_Imported/town/tea_lamp.png")
     save(xray_board(), "Assets_Imported/town/xray_board.png")
+    save(mildew_patch(), "Assets_Imported/town/mildew_patch.png")
+    save(records_cart(), "Assets_Imported/town/records_cart.png")
     for image, name in (
         (mirror_icon(), "mirror_set"),
         (chair_icon(), "chair"),

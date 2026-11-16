@@ -102,13 +102,16 @@ func _priya_repeat_dialog() -> Array[DialogItem]:
 			out.append(_line("Wobble left a note about the chair. It says it was 'warm and well loved'. I'm choosing to find that sweet."))
 		if count >= 4:
 			if GameState.has_item(&"sterilizer") and GameState.has_item(&"records"):
-				out.append(_line("The last pieces are already here. Check the right treatment chair and the back shelf."))
+				out.append(_line("The last two are still out there. Kunal says the whole village is talking about a damp spa and a very angry in-tray."))
 			elif GameState.has_item(&"sterilizer"):
-				out.append(_line("One last piece, Doctor: the records folder under the back shelf. It never left the building."))
+				out.append(_line("One last piece, Doctor: the records folder. A stack of paper at the flower shop has appointed itself the filing department."))
+				out.append(_line("Of course it has.", true))
 			elif GameState.has_item(&"records"):
-				out.append(_line("One last piece, Doctor: the sterilizer by the right treatment chair. It never left the building."))
+				out.append(_line("One last piece, Doctor: the sterilizer. Mildew has it by the old farm well and is calling it a warm spa."))
+				out.append(_line("I am not going to ask what a warm spa is.", true))
 			else:
-				out.append(_line("Two pieces left, and they never left the building. Check the right treatment chair and the back shelf."))
+				out.append(_line("Two pieces left, both in the village. Mildew is keeping the sterilizer damp by the old farm well, and Redtape has the records at the flower shop."))
+				out.append(_line("Paper with a grievance. My favourite.", true))
 		else:
 			out.append(_line("Try the village next. Kunal has been pacing outside like a very handsome compass."))
 			out.append(_line("He's going to want a title.", true))
@@ -117,6 +120,7 @@ func _priya_repeat_dialog() -> Array[DialogItem]:
 		out.append(_line("All six. Doctor, I don't know whether to hug you or update your will."))
 		out.append(_line("The waiting room wants a reopening day. Mr. Mehta has already written a speech for Steve."))
 		out.append(_line("Of course he has.", true))
+		out.append(_line("The little reception bell is on the counter. Ring it and we are open."))
 	return out
 
 

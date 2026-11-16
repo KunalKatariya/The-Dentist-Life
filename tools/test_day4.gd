@@ -1,11 +1,11 @@
 extends Node
 ## Smoke test for the Day 4 slice: Gloam at the tea lamp, Rattle at the X-ray
-## board, the curing-beam and bone-flash challenges, and Kunal's next hints.
+## board, the curing-beam and bone-toss challenges, and Kunal's next hints.
 ## Run with: godot --headless --path . res://tools/test_day4.tscn
 
 const HUB_PATH := "res://playground.tscn"
 const BEAM_PATH := "res://Challenges/curing_beam.tscn"
-const MEMORY_PATH := "res://Challenges/xray_memory.tscn"
+const BONE_PATH := "res://Challenges/bone_toss.tscn"
 
 var failures: int = 0
 var _save_backup: String = ""
@@ -20,7 +20,7 @@ func _ready() -> void:
 	_check_resources()
 	await _check_hub_before_and_after_quest()
 	await _check_curing_beam_mechanics()
-	await _check_xray_mechanics()
+	await _check_bone_toss_mechanics()
 	await _check_gloam_encounter()
 	await _check_rattle_encounter()
 
@@ -218,51 +218,51 @@ func _check_curing_beam_mechanics() -> void:
 	_check(not get_tree().paused, "leaving the curing challenge unpauses the world")
 
 
-func _check_xray_mechanics() -> void:
-	var memory: XrayMemory = load(MEMORY_PATH).instantiate()
-	add_child(memory)
+func _check_bone_toss_mechanics() -> void:
+	var toss: BoneToss = load(BONE_PATH).instantiate()
+	add_child(toss)
 	await get_tree().process_frame
-	_check(get_tree().paused, "the bone-flash challenge pauses the world")
-	_check(memory.title_label.text == "Bone Flashes", "bone-flash challenge has its title")
-	_check(memory.duration == 25.0, "bone-flash challenge gives twenty-five seconds")
-	_check(memory.showing, "the first sequence plays before input")
-	_check(memory.sequence.size() == 3, "the first round is three flashes")
+	_check(get_tree().paused, "the bone-toss challenge pauses the world")
+	_check(toss.title_label.text == "Bone Toss", "bone-toss challenge has its title")
+	_check(toss.duration == 22.0, "bone-toss challenge gives twenty-two seconds")
+	_check(toss.catches_needed == 8, "eight catches win the X-ray machine")
+	_check(toss.max_drops == 3, "three dropped bones end the attempt")
+	_check(toss.play_area.get_child_count() >= 4, "bone-toss builds a stage and plate")
+	_check(toss.tray_x > 0.0, "the plate starts on the stage")
 
-	memory.showing = false
-	for direction in memory.sequence.duplicate():
-		memory._handle_input(direction)
-	_check(memory.round_index == 1, "repeating three flashes clears the first round")
-	_check(memory.showing, "the second sequence plays automatically")
-	_check(memory.sequence.size() == 4, "the second round is four flashes")
+	for i in 8:
+		toss.bone_at_plate(false)
+		toss._on_tick(0.001)
+	await get_tree().process_frame
+	_check(toss.catches >= 8, "catching eight bones fills the bone meter")
+	_check(not toss.running, "eight catches complete the challenge")
+	_check(toss.continue_button.visible, "bone-toss shows continue on success")
+	toss._on_continue_pressed()
+	await get_tree().process_frame
+	_check(not get_tree().paused, "finishing the bone-toss challenge unpauses the world")
 
-	memory.showing = false
-	for direction in memory.sequence.duplicate():
-		memory._handle_input(direction)
+	var golden: BoneToss = load(BONE_PATH).instantiate()
+	add_child(golden)
 	await get_tree().process_frame
-	_check(memory.round_index == 2, "repeating four flashes clears the second round")
-	_check(not memory.running, "two clean rounds complete the challenge")
-	_check(memory.continue_button.visible, "the X-ray challenge shows continue on success")
-	memory._on_continue_pressed()
+	golden.bone_at_plate(true)
+	golden._on_tick(0.001)
+	_check(golden.catches == 2, "a golden bone counts double")
+	golden.queue_free()
 	await get_tree().process_frame
-	_check(not get_tree().paused, "finishing the X-ray challenge unpauses the world")
 
-	var mistaken: XrayMemory = load(MEMORY_PATH).instantiate()
-	add_child(mistaken)
+	var dropping: BoneToss = load(BONE_PATH).instantiate()
+	add_child(dropping)
 	await get_tree().process_frame
-	mistaken.showing = false
-	mistaken._handle_input(_wrong_direction(mistaken.sequence[0]))
-	_check(mistaken.mistakes == 1, "a wrong flash is counted")
-	_check(mistaken.showing, "a wrong flash replays the sequence")
-	_check(mistaken.sequence.size() >= 3, "the replay keeps a full sequence")
-	mistaken.showing = false
-	mistaken._handle_input(_wrong_direction(mistaken.sequence[0]))
+	for i in 3:
+		dropping.bone_past_plate()
+		dropping._on_tick(0.001)
 	await get_tree().process_frame
-	_check(mistaken.mistakes == 2, "a second wrong flash is counted")
-	_check(not mistaken.running, "two wrong flashes end the attempt")
-	_check(mistaken.retry_button.visible, "the X-ray failure offers a retry")
-	mistaken.queue_free()
+	_check(dropping.drops == 3, "each dropped bone is counted")
+	_check(not dropping.running, "three dropped bones end the attempt")
+	_check(dropping.retry_button.visible, "the bone-toss failure offers a retry")
+	dropping.queue_free()
 	await get_tree().process_frame
-	_check(not get_tree().paused, "freeing a failed X-ray challenge unpauses the world")
+	_check(not get_tree().paused, "freeing a failed bone-toss challenge unpauses the world")
 
 
 func _check_gloam_encounter() -> void:
@@ -332,15 +332,14 @@ func _check_rattle_encounter() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 
-	var challenge: Node = hub.get_node_or_null("XrayMemory")
-	_check(challenge != null, "the bone-flash challenge opens after Rattle's intro")
+	var challenge: Node = hub.get_node_or_null("BoneToss")
+	_check(challenge != null, "the bone-toss challenge opens after Rattle's intro")
 	if challenge != null:
-		for round_index in 2:
-			challenge.showing = false
-			for direction in challenge.sequence.duplicate():
-				challenge._handle_input(direction)
+		for i in 8:
+			challenge.bone_at_plate(false)
+			challenge._on_tick(0.001)
 		await get_tree().process_frame
-		_check(not challenge.running, "two clean rounds beat Rattle")
+		_check(not challenge.running, "eight caught bones beat Rattle")
 		challenge._on_continue_pressed()
 		await get_tree().create_timer(0.2).timeout
 
@@ -369,13 +368,6 @@ func _fresh_hub() -> Node:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	return hub
-
-
-func _wrong_direction(correct: String) -> String:
-	for direction in XrayMemory.DIRECTIONS:
-		if direction != correct:
-			return direction
-	return "up"
 
 
 func _choice_labels(choice: DialogChoice) -> Array[String]:

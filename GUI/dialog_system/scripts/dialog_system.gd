@@ -80,9 +80,17 @@ func hide_dialog() -> void:
 	pass
 
 func start_dialog() -> void:
+	# show_dialog() waits a frame before starting, so a dialog that is dismissed
+	# in that same frame would otherwise reach this point with stale items.
+	if not is_active:
+		return
 	waiting_for_choice = false
 	show_dialog_button_indicator(false)
+	if dialog_item_index < 0 or dialog_item_index >= dialog_items.size():
+		return
 	var _d : DialogItem = dialog_items[ dialog_item_index ]
+	if not is_instance_valid(_d):
+		return
 	
 	if _d is DialogText:
 		set_dialog_text(_d as DialogText)

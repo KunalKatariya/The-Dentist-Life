@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="VillainResource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Data/villain_resource.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets_Imported/villains/redtape.png" id="2_sprite"]
+[ext_resource type="Resource" path="res://Scenes/NPC/redtape_npc.tres" id="3_npc"]
+[ext_resource type="PackedScene" path="res://Challenges/redtape_quiz.tscn" id="4_challenge"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"redtape"
+display_name = "Redtape"
+sprite = ExtResource("2_sprite")
+npc_info = ExtResource("3_npc")
+challenge_scene = ExtResource("4_challenge")
+guarded_item_id = &"records"
+intro_lines = PackedStringArray("HALT. This acquisition is not in order.", "player:Those are the clinic's patient records.", "They are UNSIGNED. UNSTAMPED. UNFILED. And you are clearly not licensed.", "player:I am a dentist.", "Then you will not mind Form 27-B: five questions on orthodontics. They get harder as you go. One wrong answer is tolerated.", "player:That is not a real form.", "It is now. Begin.")
+victory_lines = PackedStringArray("Filed. Stamped. Approved. I have not felt this light since the filing cabinet was reorganized by colour.", "player:I will take the records.", "Take them. Take the whole in-tray. I am going to sit in the flower shop and smell something that is not paper.")
+retreat_lines = PackedStringArray("Incorrect. Please resubmit the entire form from the beginning.", "player:I will be back.", "I will keep your place in the queue. There is no queue. But I will keep it.")

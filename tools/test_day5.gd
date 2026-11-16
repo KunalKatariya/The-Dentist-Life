@@ -1,7 +1,7 @@
 extends Node
-## Smoke test for the Day 5 slice: summoning Kunal for a hint, the two clinic
-## pickups, the reception-bell finale and the proximity fix that keeps E from
-## opening a conversation with a distant NPC.
+## Smoke test for the Day 5 slice: summoning Kunal for a hint, the two village
+## villains who hold the last equipment, the reception-bell finale and the
+## proximity fix that keeps E from opening a conversation with a distant NPC.
 ## Run with: godot --headless --path . res://tools/test_day5.tscn
 
 const HUB_PATH := "res://playground.tscn"
@@ -53,9 +53,9 @@ func _check_hint_lines() -> void:
 	GameState.recover_item(&"curing_light")
 	_check(hint.hint_lines()[0] == "Any X-ray tips?", "hints move to the court")
 	GameState.recover_item(&"xray")
-	_check(hint.hint_lines()[0] == "Any cleaning tips?", "hints send the player back to the clinic")
+	_check(hint.hint_lines()[0] == "Any cleaning tips?", "hints send the player to the old farm")
 	GameState.recover_item(&"sterilizer")
-	_check(hint.hint_lines()[0] == "Any paperwork tips?", "hints point at the records folder")
+	_check(hint.hint_lines()[0] == "Any paperwork tips?", "hints point at the flower shop")
 	GameState.recover_item(&"records")
 	_check(hint.hint_lines()[0] == "What's next?", "hints finish with the reception bell")
 	GameState.set_flag("clinic_restored", true)
@@ -126,41 +126,55 @@ func _check_summon() -> void:
 
 
 func _check_pickups_and_bell() -> void:
+	# The last two pieces live in the village now, guarded by Mildew and Redtape.
+	var hub := await _fresh_hub()
+	GameState.set_flag("got_notebook", true)
+	GameState.set_quest_stage("restore_clinic", 3)
+	for item in [&"mirror_set", &"chair", &"curing_light", &"xray"]:
+		GameState.recover_item(item)
+	await get_tree().process_frame
+
+	var nook := hub.get_node_or_null("MildewNook") as Node2D
+	var cart := hub.get_node_or_null("RecordsCart") as Node2D
+	_check(nook != null, "Mildew waits in the village")
+	_check(cart != null, "Redtape waits in the village")
+	if nook != null:
+		var mildew := nook.get_node_or_null("Mildew")
+		_check(mildew != null and mildew.visible and mildew._active,
+			"Mildew is visible beside the old well")
+		_check(nook.position.distance_to(Vector2(0, 75)) < 90.0,
+			"Mildew stands by the well")
+	if cart != null:
+		var redtape := cart.get_node_or_null("Redtape")
+		_check(redtape != null and redtape.visible and redtape._active,
+			"Redtape is visible at the flower shop")
+	await _free_scene(hub)
+
 	var clinic := await _fresh_clinic_with_four_items()
-	var sterilizer := clinic.get_node_or_null("SterilizerPickup") as ItemPickup
-	var records := clinic.get_node_or_null("RecordsPickup") as ItemPickup
 	var bell := clinic.get_node_or_null("ReceptionBell") as ReceptionBell
 	var player := clinic.get_node_or_null("Player") as Node2D
-	_check(sterilizer != null and sterilizer.visible, "the sterilizer appears after Rattle")
-	_check(records != null and records.visible, "the records folder appears after Rattle")
+	_check(clinic.get_node_or_null("SterilizerPickup") == null,
+		"the sterilizer is no longer inside the clinic")
+	_check(clinic.get_node_or_null("RecordsPickup") == null,
+		"the records are no longer inside the clinic")
 	_check(bell != null and not bell.visible, "the reception bell waits for all six pieces")
 
-	if sterilizer == null or records == null or bell == null or player == null:
+	if bell == null or player == null:
 		await _free_scene(clinic)
 		return
 
-	player.global_position = sterilizer.global_position + Vector2(0, -16)
-	await _wait_physics(4)
-	_check(sterilizer.player_near, "the player can reach the sterilizer")
-	_check(sterilizer.prompt.visible, "the sterilizer shows its E prompt")
-	sterilizer._pick_up()
+	GameState.recover_item(&"sterilizer")
 	await get_tree().process_frame
 	_check(GameState.has_item(&"sterilizer"), "the sterilizer goes into the notebook")
 	_check(GameState.get_quest_stage("restore_clinic") == 3,
 		"five of six keeps the hunt going")
+	_check(not bell.visible, "the bell stays hidden at five pieces")
 
-	player.global_position = records.global_position + Vector2(0, 16)
-	await _wait_physics(4)
-	_check(records.player_near, "the player can reach the records folder")
-	_check(records.prompt.visible, "the records folder shows its E prompt")
-	records._pick_up()
+	GameState.recover_item(&"records")
 	await get_tree().process_frame
-	_check(GameState.has_item(&"records"), "the records folder goes into the notebook")
-	_check(GameState.get_quest_stage("restore_clinic") == 4,
-		"all six pieces complete the equipment hunt")
-	_check(GameState.has_flag("equipment_complete"), "the equipment flag is set")
-
+	_check(GameState.has_item(&"records"), "the records go into the notebook")
 	_check(bell.visible, "the reception bell appears once all six are home")
+
 	player.global_position = bell.global_position + Vector2(-15, 13)
 	await _wait_physics(4)
 	_check(bell.player_near, "the player can reach the reception bell")

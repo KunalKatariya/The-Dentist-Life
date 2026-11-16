@@ -120,7 +120,23 @@ func _win() -> void:
 	GameState.add_sticker(data.id)
 	GameState.set_quest_stage("restore_clinic", 4 if GameState.recovered_count() >= ItemCatalog.TOTAL else 3)
 	await _show_lines(data.victory_lines)
+	if GameState.recovered_count() >= ItemCatalog.TOTAL:
+		GameState.set_flag("equipment_complete", true)
+		await _show_return_to_clinic()
 	queue_free()
+
+
+## The last recovery nudges the player back to Priya and the reception bell.
+## The line is deliberately in the player's voice so it reads like a thought.
+func _show_return_to_clinic() -> void:
+	if GameState.has_flag("clinic_restored") or GameState.has_flag("clinic_return_prompted"):
+		return
+	GameState.set_flag("clinic_return_prompted", true)
+	await _show_lines(PackedStringArray([
+		"player:Hmm, I should head back to the clinic…",
+		"player:That should be all six.",
+		"player:Priya will want to hear it. I hope she has the kettle on.",
+	]))
 
 
 func _show_lines(lines: PackedStringArray) -> void:

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="VillainResource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://Data/villain_resource.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets_Imported/villains/mildew.png" id="2_sprite"]
+[ext_resource type="Resource" path="res://Scenes/NPC/mildew_npc.tres" id="3_npc"]
+[ext_resource type="PackedScene" path="res://Challenges/pressure_purge.tscn" id="4_challenge"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"mildew"
+display_name = "Mildew"
+sprite = ExtResource("2_sprite")
+npc_info = ExtResource("3_npc")
+challenge_scene = ExtResource("4_challenge")
+guarded_item_id = &"sterilizer"
+intro_lines = PackedStringArray("Ohh. A visitor. Mind the damp.", "player:That is the clinic's sterilizer.", "The warm box? It hums and makes everything soft and steamy. I have been keeping it company by the old well.", "player:I need it back, Mildew.", "I thought you might. The pressure valve is stuck though — all that warm has to go somewhere.", "Vent it when the needle sits in the green. Five good breaths and the lid will open. I will even hold the towel.")
+victory_lines = PackedStringArray("Ahh. Listen to that hiss. The box is calm now.", "player:Thank you. Are you going to be all right out here?", "I have the puddle. I have the towel. I will be fine.", "Tell Priya the sterilizer only smelled a little like a cellar. That is a compliment, where I come from.")
+retreat_lines = PackedStringArray("The gauge whistled. Very dramatic.", "player:I will be back.", "I will keep the towel warm. It is the least I can do.")

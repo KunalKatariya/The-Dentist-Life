@@ -6,8 +6,8 @@ const ITEMS := [
 	preload("res://Data/items/mirror_set.tres"),
 	preload("res://Data/items/chair.tres"),
 	preload("res://Data/items/curing_light.tres"),
-	preload("res://Data/items/sterilizer.tres"),
 	preload("res://Data/items/xray.tres"),
+	preload("res://Data/items/sterilizer.tres"),
 	preload("res://Data/items/records.tres"),
 ]
 

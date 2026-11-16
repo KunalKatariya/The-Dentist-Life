@@ -3,7 +3,15 @@ extends CanvasLayer
 ## scoreboard of the adventure, and two ways out. It pauses the game while it
 ## is up and restores the player as soon as it closes.
 
-const VILLAIN_IDS := ["blorb", "wobble", "gloam", "rattle"]
+const VILLAIN_IDS := ["blorb", "wobble", "gloam", "rattle", "mildew", "redtape"]
+
+const FANFARE := [
+	{"freq": 523.25, "length": 0.12},
+	{"freq": 659.25, "length": 0.12},
+	{"freq": 783.99, "length": 0.12},
+	{"freq": 1046.50, "length": 0.42},
+]
+const FANFARE_RATE := 22050.0
 
 @onready var confetti: Control = $Root/Confetti
 @onready var stats_label: Label = $Root/Panel/Margin/VBox/Stats
@@ -14,6 +22,7 @@ const VILLAIN_IDS := ["blorb", "wobble", "gloam", "rattle"]
 var _open: bool = false
 var _leaving: bool = false
 var _player: Node = null
+var _fanfare_player: AudioStreamPlayer = null
 
 
 func _ready() -> void:
@@ -39,6 +48,7 @@ func open() -> void:
 		GameHUD.clear_toast()
 	show()
 	confetti.start()
+	_play_fanfare()
 	_set_player_input(false)
 	get_tree().paused = true
 	stay_button.grab_focus()
@@ -49,9 +59,55 @@ func close() -> void:
 		return
 	_open = false
 	confetti.stop()
+	if _fanfare_player != null and is_instance_valid(_fanfare_player):
+		_fanfare_player.stop()
 	hide()
 	get_tree().paused = false
 	_set_player_input(true)
+
+
+## A tiny code-generated fanfare. Keeping it in code avoids a new audio asset
+## and it is skipped entirely when the game is running headless.
+func _play_fanfare() -> void:
+	if AudioServer.get_driver_name() == "Dummy":
+		return
+	if _fanfare_player != null and is_instance_valid(_fanfare_player):
+		_fanfare_player.queue_free()
+	var stream := AudioStreamGenerator.new()
+	stream.mix_rate = FANFARE_RATE
+	stream.buffer_length = 2.0
+	_fanfare_player = AudioStreamPlayer.new()
+	_fanfare_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	_fanfare_player.stream = stream
+	add_child(_fanfare_player)
+	_fanfare_player.play()
+	var playback := _fanfare_player.get_stream_playback() as AudioStreamGeneratorPlayback
+	if playback == null:
+		return
+
+	var frames := PackedVector2Array()
+	var sample_rate := FANFARE_RATE
+	for note in FANFARE:
+		var length: float = note["length"]
+		var freq: float = note["freq"]
+		var count := int(length * sample_rate)
+		for i in count:
+			var t := float(i) / sample_rate
+			var attack := minf(1.0, t * 90.0)
+			var release := minf(1.0, (length - t) * 24.0)
+			var envelope := maxf(0.0, attack * release)
+			var wave := (
+				sin(TAU * freq * t) * 0.34
+				+ sin(TAU * freq * 2.0 * t) * 0.12
+				+ sin(TAU * freq * 3.0 * t) * 0.05
+			)
+			var sample := wave * envelope
+			frames.append(Vector2(sample, sample))
+		# Short breath between notes.
+		for i in int(0.02 * sample_rate):
+			frames.append(Vector2.ZERO)
+	if playback.can_push_buffer(frames.size()):
+		playback.push_buffer(frames)
 
 
 func _refresh_stats() -> void:

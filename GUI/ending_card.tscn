@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://GUI/ending_card.gd" id="1_card"]
 [ext_resource type="Script" path="res://GUI/confetti.gd" id="2_confetti"]
+[ext_resource type="Script" path="res://GUI/bunting.gd" id="3_bunting"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
 bg_color = Color(0.980392, 0.945098, 0.858824, 0.984314)
@@ -54,6 +55,18 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
+[sub_resource type="StyleBoxFlat" id="StyleBox_ribbon"]
+bg_color = Color(0.792157, 0.239216, 0.219608, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.980392, 0.780392, 0.301961, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
 [node name="EndingCard" type="CanvasLayer"]
 process_mode = 3
 layer = 20
@@ -76,6 +89,16 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0352941, 0.0313725, 0.0470588, 0.741176)
 
+[node name="Bunting" type="Control" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_bunting")
+
 [node name="Confetti" type="Control" parent="Root"]
 layout_mode = 1
 anchors_preset = 15
@@ -94,9 +117,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -174.0
-offset_top = -99.0
+offset_top = -107.0
 offset_right = 174.0
-offset_bottom = 99.0
+offset_bottom = 107.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBox_panel")
@@ -112,11 +135,23 @@ theme_override_constants/margin_bottom = 12
 layout_mode = 2
 theme_override_constants/separation = 4
 
+[node name="Ribbon" type="PanelContainer" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_ribbon")
+
+[node name="RibbonLabel" type="Label" parent="Root/Panel/Margin/VBox/Ribbon"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94902, 0.811765, 1)
+theme_override_font_sizes/font_size = 8
+text = "★  REOPENING DAY  ★"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Title" type="Label" parent="Root/Panel/Margin/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.231373, 0.129412, 0.0705882, 1)
 theme_override_font_sizes/font_size = 16
-text = "THE CLINIC IS OPEN"
+text = "THE CLINIC IS OPEN!"
 horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="Root/Panel/Margin/VBox"]

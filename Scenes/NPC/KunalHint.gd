@@ -64,21 +64,21 @@ func hint_lines() -> Array[String]:
 			"Any X-ray tips?",
 			"Down the badminton path. A very small skeleton has set the X-ray board up like a stage. He is showing his bones to anyone who will look.",
 			"A skeleton.",
-			"A polite one. He bows before he rattles. Copy his flashes and he will hand it over.",
+			"A polite one. He bows before he rattles. Catch his tossed bones on the X-ray plate and he will hand it over.",
 		]
 	if not GameState.has_item(&"sterilizer"):
 		return [
 			"Any cleaning tips?",
-			"The clinic itself, babe. Priya's sterilizer never left the building. Check the treatment room, on the right side near the chairs.",
-			"Under our noses.",
-			"Classic. Take a proper look around the room before you head back out.",
+			"The old farm on the west side, by the well. Something soft and green has wrapped the sterilizer in a towel and is calling it a spa.",
+			"Something green.",
+			"Mildew. Smells like a wet cellar but seems friendly. The pressure gauge is stuck, so be ready to vent it.",
 		]
 	if not GameState.has_item(&"records"):
 		return [
 			"Any paperwork tips?",
-			"The records folder is still in the clinic too. Somebody stacked it on the floor by the equipment shelf at the back wall.",
-			"Anything else?",
-			"Not yet. Once those two are home, the little reception bell is all that is left.",
+			"The flower shop north of the square. A stack of paper grew arms and is demanding every file in triplicate. It has the patient records.",
+			"Paper with arms.",
+			"Redtape. Very serious. Very stamp-happy. Five orthodontistry questions, each harder than the last, and one wrong answer is tolerated.",
 		]
 	return [
 		"What's next?",
