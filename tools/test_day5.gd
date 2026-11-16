@@ -174,6 +174,11 @@ func _check_pickups_and_bell() -> void:
 	await get_tree().process_frame
 	_check(GameState.has_item(&"records"), "the records go into the notebook")
 	_check(bell.visible, "the reception bell appears once all six are home")
+	var bell_sprite := bell.get_node_or_null("Sprite2D") as Sprite2D
+	_check(ItemCatalog.get_item(ItemCatalog.BELL_ID) != null,
+		"the reception bell has an item entry")
+	_check(bell_sprite != null and bell_sprite.texture != null,
+		"the reception bell shows its icon on the counter")
 
 	player.global_position = bell.global_position + Vector2(-15, 13)
 	await _wait_physics(4)

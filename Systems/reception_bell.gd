@@ -11,6 +11,7 @@ const ENDING_CARD := preload("res://GUI/ending_card.tscn")
 var player_near: bool = false
 var _time: float = 0.0
 var _ringing: bool = false
+var _announced: bool = false
 var _sprite_base_y: float = 0.0
 
 @onready var sprite: Sprite2D = $Sprite2D
@@ -47,6 +48,22 @@ func _refresh_lock() -> void:
 	if not unlocked:
 		player_near = false
 		prompt.hide()
+		return
+	if not _announced:
+		_announced = true
+		_announce_bell()
+
+
+## Let the player know the finale is waiting without covering the item toast.
+func _announce_bell() -> void:
+	if GameHUD == null:
+		return
+	get_tree().create_timer(1.4, true).timeout.connect(_show_bell_toast)
+
+
+func _show_bell_toast() -> void:
+	if visible and not _ringing:
+		GameHUD.toast("The reception bell is ready on the clinic counter.")
 
 
 func _on_item_recovered(_item_id: StringName) -> void:

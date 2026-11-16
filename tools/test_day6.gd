@@ -49,6 +49,9 @@ func _check_ending_card() -> void:
 	_check(card.visible and card.is_open(), "opening the card shows it")
 	_check(GameState.has_flag("ending_seen"), "opening the card records the ending")
 	_check(get_tree().paused, "the ending card pauses the world")
+	var track: AudioStream = card.CELEBRATION_MUSIC
+	_check(track != null and track.get_length() > 1.0,
+		"the reopening card plays the birthday song")
 
 	var stats: String = card.stats_label.text
 	_check("6 / 6" in stats, "the card reports all six pieces of equipment")

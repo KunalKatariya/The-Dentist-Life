@@ -11,11 +11,14 @@ const ITEMS := [
 	preload("res://Data/items/records.tres"),
 ]
 
+const BELL := preload("res://Data/items/bell.tres")
 const TOTAL := 6
 const BELL_ID := &"bell"
 
 
 static func get_item(id: StringName) -> ItemResource:
+	if id == BELL_ID:
+		return BELL
 	for item in ITEMS:
 		if item.id == id:
 			return item
