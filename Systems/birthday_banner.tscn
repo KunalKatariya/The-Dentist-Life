@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Systems/birthday_banner.gd" id="1_banner"]
+
+[node name="BirthdayBanner" type="Node2D"]
+z_index = 2
+script = ExtResource("1_banner")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -80.0
+offset_top = 0.0
+offset_right = 80.0
+offset_bottom = 18.0
+theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "Happy Birthday Dr. Gunika!"
+horizontal_alignment = 1
+vertical_alignment = 1

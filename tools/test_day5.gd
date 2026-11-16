@@ -153,6 +153,10 @@ func _check_pickups_and_bell() -> void:
 	var clinic := await _fresh_clinic_with_four_items()
 	var bell := clinic.get_node_or_null("ReceptionBell") as ReceptionBell
 	var player := clinic.get_node_or_null("Player") as Node2D
+	var banner := clinic.get_node_or_null("BirthdayBanner") as Node2D
+	_check(banner != null, "the clinic has a birthday banner")
+	_check(banner != null and not banner.visible,
+		"the birthday banner waits for the equipment")
 	_check(clinic.get_node_or_null("SterilizerPickup") == null,
 		"the sterilizer is no longer inside the clinic")
 	_check(clinic.get_node_or_null("RecordsPickup") == null,
@@ -169,6 +173,8 @@ func _check_pickups_and_bell() -> void:
 	_check(GameState.get_quest_stage("restore_clinic") == 3,
 		"five of six keeps the hunt going")
 	_check(not bell.visible, "the bell stays hidden at five pieces")
+	_check(banner != null and not banner.visible,
+		"the banner stays hidden at five pieces")
 
 	GameState.recover_item(&"records")
 	await get_tree().process_frame
@@ -179,6 +185,13 @@ func _check_pickups_and_bell() -> void:
 		"the reception bell has an item entry")
 	_check(bell_sprite != null and bell_sprite.texture != null,
 		"the reception bell shows its icon on the counter")
+	if banner != null:
+		var banner_label := banner.get_node_or_null("Label") as Label
+		_check(banner.visible, "the birthday banner hangs once all six are home")
+		_check(banner_label != null and banner_label.text == "Happy Birthday Dr. Gunika!",
+			"the banner wishes Dr. Gunika a happy birthday")
+		_check(banner_label != null and banner_label.get_theme_font_size("font_size") >= 10,
+			"the banner text is big enough to read")
 
 	player.global_position = bell.global_position + Vector2(-15, 13)
 	await _wait_physics(4)

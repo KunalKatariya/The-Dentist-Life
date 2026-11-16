@@ -86,7 +86,6 @@ func _refresh_stats() -> void:
 	stats_label.text = "\n".join([
 		"Equipment returned     %d / %d" % [equipment, ItemCatalog.TOTAL],
 		"Villains befriended    %d / %d" % [villains, VILLAIN_IDS.size()],
-		"Stickers collected     %d" % GameState.stickers.size(),
 	])
 	if equipment >= ItemCatalog.TOTAL and villains >= VILLAIN_IDS.size():
 		flavor_label.text = "Priya has put the kettle on. Mr. Mehta has booked Steve in for a cleaning."

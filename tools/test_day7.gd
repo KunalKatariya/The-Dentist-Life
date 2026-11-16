@@ -117,6 +117,12 @@ func _check_redtape_quiz() -> void:
 	_check(quiz.question_total() == 5, "Form 27-B has five questions")
 	_check(quiz.option_buttons.size() == 4, "each question offers four answers")
 	_check(quiz.max_mistakes == 2, "one wrong answer is tolerated")
+	_check(quiz.instructions_label.get_theme_font_size("font_size") >= 12,
+		"the quiz question is set in readable type")
+	_check(quiz.status_label.get_theme_font_size("font_size") >= 10,
+		"the quiz status line is set in readable type")
+	_check(quiz.option_buttons[0].get_theme_font_size("font_size") >= 11,
+		"the quiz answers are set in readable type")
 
 	quiz.answer_delay = 0.0
 	for i in 5:

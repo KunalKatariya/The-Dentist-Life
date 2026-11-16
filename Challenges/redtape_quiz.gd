@@ -7,6 +7,10 @@ class_name RedtapeQuiz extends ChallengeBase
 ## review releases the patient records.
 
 const LETTERS: Array[String] = ["A", "B", "C", "D"]
+const BOLD: FontFile = preload("res://GUI/fonts/Abaddon Bold.ttf")
+const QUESTION_FONT_SIZE := 13
+const OPTION_FONT_SIZE := 12
+const STATUS_FONT_SIZE := 10
 
 const QUESTIONS := [
 	{
@@ -58,6 +62,23 @@ var _rng := RandomNumberGenerator.new()
 func _ready() -> void:
 	_rng.randomize()
 	super._ready()
+	_style_typography()
+
+
+## The form is read at 480x270, so the default 8-9px antialiased type was too
+## soft. Bold, larger and brighter keeps every question readable.
+func _style_typography() -> void:
+	instructions_label.add_theme_font_override("font", BOLD)
+	instructions_label.add_theme_font_size_override("font_size", QUESTION_FONT_SIZE)
+	instructions_label.add_theme_color_override("font_color", Color(1.0, 0.96, 0.85, 1.0))
+	instructions_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.55))
+	instructions_label.add_theme_constant_override("shadow_offset_x", 1)
+	instructions_label.add_theme_constant_override("shadow_offset_y", 1)
+	instructions_label.custom_minimum_size = Vector2(0, 28)
+
+	status_label.add_theme_font_override("font", BOLD)
+	status_label.add_theme_font_size_override("font_size", STATUS_FONT_SIZE)
+	status_label.add_theme_color_override("font_color", Color(0.95, 0.92, 0.83, 1.0))
 
 
 func _on_attempt_started() -> void:
@@ -212,7 +233,7 @@ func _apply_selection() -> void:
 		)
 		button.add_theme_color_override(
 			"font_color",
-			Color(1.0, 0.92, 0.62, 1.0) if is_selected else Color(0.92, 0.90, 0.84, 1.0),
+			Color(1.0, 0.95, 0.68, 1.0) if is_selected else Color(0.96, 0.94, 0.88, 1.0),
 		)
 
 
@@ -229,16 +250,21 @@ func _build_play_area() -> void:
 	if width <= 50.0:
 		width = 368.0
 	var button_width := (width - 10.0) * 0.5
-	var button_height := 26.0
+	var button_height := 27.0
 	for i in 4:
 		var button := Button.new()
 		button.focus_mode = Control.FOCUS_NONE
-		button.add_theme_font_size_override("font_size", 8)
+		button.add_theme_font_override("font", BOLD)
+		button.add_theme_font_size_override("font_size", OPTION_FONT_SIZE)
+		button.add_theme_color_override("font_color", Color(0.96, 0.94, 0.88, 1.0))
+		button.add_theme_color_override("font_hover_color", Color(1.0, 0.95, 0.70, 1.0))
+		button.add_theme_color_override("font_pressed_color", Color(1.0, 0.95, 0.70, 1.0))
+		button.add_theme_color_override("font_disabled_color", Color(0.72, 0.69, 0.63, 1.0))
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.clip_text = true
 		button.position = Vector2(
 			3.0 + float(i % 2) * (button_width + 4.0),
-			3.0 + float(i / 2) * (button_height + 3.0),
+			2.0 + float(i / 2) * (button_height + 2.0),
 		)
 		button.size = Vector2(button_width, button_height)
 		button.pressed.connect(_on_option_pressed.bind(i))
@@ -250,24 +276,24 @@ func _build_styles() -> void:
 	if _style_normal != null:
 		return
 	_style_normal = StyleBoxFlat.new()
-	_style_normal.bg_color = Color(0.19, 0.17, 0.24, 0.96)
+	_style_normal.bg_color = Color(0.16, 0.14, 0.21, 0.98)
 	_style_normal.border_width_left = 1
 	_style_normal.border_width_top = 1
 	_style_normal.border_width_right = 1
 	_style_normal.border_width_bottom = 1
-	_style_normal.border_color = Color(0.38, 0.34, 0.44, 1.0)
+	_style_normal.border_color = Color(0.55, 0.50, 0.62, 1.0)
 	_style_normal.corner_radius_top_left = 2
 	_style_normal.corner_radius_top_right = 2
 	_style_normal.corner_radius_bottom_right = 2
 	_style_normal.corner_radius_bottom_left = 2
 
 	_style_selected = StyleBoxFlat.new()
-	_style_selected.bg_color = Color(0.44, 0.30, 0.18, 0.98)
+	_style_selected.bg_color = Color(0.52, 0.33, 0.16, 0.98)
 	_style_selected.border_width_left = 2
 	_style_selected.border_width_top = 2
 	_style_selected.border_width_right = 2
 	_style_selected.border_width_bottom = 2
-	_style_selected.border_color = Color(0.96, 0.78, 0.36, 1.0)
+	_style_selected.border_color = Color(1.0, 0.84, 0.42, 1.0)
 	_style_selected.corner_radius_top_left = 2
 	_style_selected.corner_radius_top_right = 2
 	_style_selected.corner_radius_bottom_right = 2

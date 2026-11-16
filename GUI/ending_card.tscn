@@ -167,14 +167,13 @@ layout_mode = 2
 color = Color(0.411765, 0.337255, 0.231373, 0.4)
 
 [node name="Stats" type="Label" parent="Root/Panel/Margin/VBox"]
-custom_minimum_size = Vector2(0, 52)
+custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.290196, 0.196078, 0.12549, 1)
 theme_override_constants/line_spacing = 4
 theme_override_font_sizes/font_size = 9
 text = "Equipment returned     6 / 6
-Villains befriended     4 / 4
-Stickers collected      5"
+Villains befriended     6 / 6"
 horizontal_alignment = 1
 vertical_alignment = 1
 

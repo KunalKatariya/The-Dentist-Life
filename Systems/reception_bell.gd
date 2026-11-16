@@ -108,8 +108,8 @@ func _ring() -> void:
 		[MEHTA_INFO, "Steve and I would like to congratulate you. Steve is crying. I am also crying."],
 		[PLAYER_INFO, "Is Steve going to be okay?"],
 		[MEHTA_INFO, "He has an appointment. First one on the new books."],
-		[KUNAL_INFO, "I made a banner! It says 'The Dentist Life'. I ran out of letters after DENTIST."],
-		[PRIYA_INFO, "It is perfect. Hang it where the mirror used to be."],
+		[KUNAL_INFO, "I hung the banner! It says 'Happy Birthday Dr. Gunika!'. I ran out of gold letters after BIRTHDAY."],
+		[PRIYA_INFO, "It is perfect. Right above the shelf, where she will see it first thing."],
 		[KUNAL_INFO, "Doctor, you brushed a sugar creature. I am telling everyone."],
 		[PRIYA_INFO, "The kettle is on, the chairs are mostly upholstered, and the waiting room is full. Welcome back, Doctor."],
 	]

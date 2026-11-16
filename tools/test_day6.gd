@@ -57,7 +57,7 @@ func _check_ending_card() -> void:
 	_check("6 / 6" in stats, "the card reports all six pieces of equipment")
 	_check("Villains befriended    6 / 6" in stats,
 		"the card reports all six villains befriended")
-	_check("Stickers collected" in stats, "the card shows the sticker count")
+	_check(not ("Stickers collected" in stats), "the card leaves out the sticker count")
 	_check("Steve" in card.flavor_label.text, "the card closes on the waiting-room joke")
 	_check(card.stay_button.text == "Stay in the clinic", "the card offers staying in the clinic")
 	_check(card.menu_button.text == "Main menu", "the card offers the main menu")

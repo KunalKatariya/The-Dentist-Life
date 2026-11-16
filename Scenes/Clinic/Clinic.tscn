@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cpik4eq43fhu"]
+[gd_scene load_steps=32 format=3 uid="uid://cpik4eq43fhu"]
 
 [ext_resource type="Texture2D" uid="uid://cubr5s11kot8m" path="res://Scenes/Clinic/Sprites/Geminiclinic.png" id="1_nl862"]
 [ext_resource type="Script" uid="uid://b0qeicqigc818" path="res://Scenes/Clinic/Scripts/Clinic.gd" id="1_rqbh7"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://Scenes/NPC/FinaleGuest.gd" id="19_guest"]
 [ext_resource type="Resource" path="res://Scenes/NPC/npc_01.tres" id="20_kunal"]
 [ext_resource type="Script" path="res://Interactable/dialog/scripts/dialog_text.gd" id="21_kunaltext"]
+[ext_resource type="PackedScene" path="res://Systems/birthday_banner.tscn" id="22_banner"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s52m0"]
 texture = ExtResource("4_nl862")
@@ -300,6 +301,9 @@ data = ExtResource("15_blorb")
 
 [node name="ItemShelf" parent="." instance=ExtResource("16_shelf")]
 position = Vector2(240, 44)
+
+[node name="BirthdayBanner" parent="." instance=ExtResource("22_banner")]
+position = Vector2(240, 4)
 
 [node name="Kunal" parent="." instance=ExtResource("9_npc")]
 position = Vector2(285, 170)
